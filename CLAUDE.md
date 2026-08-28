@@ -34,15 +34,25 @@ DNS liegt bei IONOS und wird ausschließlich von Kristoffer geändert.
 
 ## Struktur
 
-- `index.html` — die eigentliche Seite. Alles in einer Datei: Design-Tokens in
-  `:root`, Sections `#home`, `#about`, `#calculator`, Nav, Cookie-Banner,
-  Rechner-Formular.
+- `index.html` — die Relaunch-Seite (DC Explorer). One-Pager mit Anker-Nav,
+  Design-Tokens in `:root`, DE default + EN-Toggle (`.de`/`.en`-Spans,
+  Klasse `lang-en` auf `body`), Cookie-Banner mit Opt-in-GA.
 - `imprint.html`, `datenschutz.html` — Rechtstexte, eigenes Nav zurück zu `index.html`
-- `app/` — Demos (`dc_diagnostic_demo.html`, `smartere-demo.html`) plus Hersteller-Logos
-- `index_old.html`, `index2_pre_sticker.html`, `index_calc_coming_soon.html`,
-  `test.html`, `waiting_list.html`, `investors.html`, `onepager.html`,
-  `dc_check.html` — **Altstände**, nicht mehr verlinkt. Beim Redesign
-  aussortieren, nicht versehentlich mitpflegen.
+- `assets/` — Bilder der Relaunch-Seite (Partner-Logos, Referenz-Logos, Favicons)
+- `app/` — Demos (`dc_diagnostic_demo.html`, `smartere-demo.html`) plus
+  Hersteller-Logos. **`app/smartere-demo.html` wird in Outreach-Mails als
+  Demo-Link verschickt und muss erreichbar bleiben.**
+- Die Altstände (alter Einspar-Rechner, `index_old.html`, `test.html`, Decks
+  usw.) wurden im August 2026 gelöscht; alles liegt in der Git-Historie.
+
+## Textregeln
+
+- Keine Gedankenstriche (– / —) im Seitentext, DE wie EN. Komma, Doppelpunkt
+  oder Punkt stattdessen.
+- E-Mail-Adressen stehen nie im Klartext im Quelltext; alle Mail-Links werden
+  per JS zusammengesetzt (Klasse `.mail-link` bzw. Inline-Script im Impressum).
+- Kein pauschaler Spar-Prozentsatz, keine Preise, nichts als "validiert"
+  bezeichnen; nur Hartig und Phenogy sind namentlich nennbare Kunden.
 
 ## Design
 
@@ -53,18 +63,17 @@ Verbindliche Marken-Vorgaben:
 
 ## Externe Abhängigkeiten
 
-- **Rechner-Backend**: Cloudflare Worker
-  `https://kodnyx-calculator.kristoffer-285.workers.dev` (`/calculate`, `/submit`).
-  Liegt auf einem **privaten** Cloudflare-Account — gleiches Umzugsthema wie das
-  GitHub-Repo, noch offen.
-- **Google Analytics** GA4 `G-WJ4861VRQT`, hinter dem Cookie-Banner
-- **Formspree** für Formularversand
-- **Google Fonts**
+- **Google Analytics** GA4 `G-WJ4861VRQT` — lädt erst nach Einwilligung im
+  Cookie-Banner (Opt-in; Ablehnung = lädt nie). Consent-Key im localStorage:
+  `cookie-consent`.
+- **Google Fonts** (Plus Jakarta Sans)
+- Der alte Rechner-Worker (`kodnyx-calculator.kristoffer-285.workers.dev`,
+  privater Cloudflare-Account) wird von der Seite nicht mehr genutzt, existiert
+  aber noch.
 
 ## Bekannte Baustellen
 
-- Repo ist ~61 MB, darunter ein 6,5-MB-Foto (`DSC03355.jpg`) und ein 4,3-MB-Logo
-  (`kodnyx_white_logo.png`). Ladezeit ist ein Redesign-Thema.
-- „Enforce HTTPS" ist am Live-Repo **aus** — beim Cutover aktivieren.
+- „Enforce HTTPS" ist am Live-Repo **aus** — beim Cutover aktivieren (am neuen
+  Repo ist es bereits an).
 - Die Domain ist bei GitHub **nicht verifiziert** (kein `_github-pages-challenge`
   TXT-Record) — beim Cutover für die Org `kodnyx13` nachholen.
