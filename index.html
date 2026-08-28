@@ -3,2153 +3,605 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kodnyx – Electrical Architecture Optimisation</title>
-  <meta name="description" content="Kodnyx helps electrical engineering planners optimise AC, DC and hybrid electrical architecture in industrial facilities – unlocking up to 35% in electricity savings." />
-
-  <!-- Google Fonts: Plus Jakarta Sans -->
+  <title>Kodnyx – Elektrifizierung, die sich rechnet</title>
+  <meta name="description" content="Der DC Explorer rechnet Standorte live im Gespräch durch. Vom Netzanschluss bis zur Stromverteilung: AC oder DC?" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal:       #0E4C52;
+    --teal-deep:  #0A3A3F;
+    --teal-light: #5FB7B0;
+    --orange:     #F79646;
+    --paper:      #FFFFFF;
+    --mist:       #F4F6F5;
+    --ink:        #0D1F22;
+    --ink-mid:    #3A5C60;
+    --line:       rgba(14,76,82,.14);
+    --ok:         #2F8C6A;
+    --ok-tint:    #EDF6F1;
+    --warn:       #C97A1F;
+    --warn-tint:  #FBF3E8;
+    --font: 'Plus Jakarta Sans', 'Segoe UI', system-ui, sans-serif;
+    --nav-h: 66px;
+  }
 
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WJ4861VRQT"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-WJ4861VRQT');
-  </script>
+  * , *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: calc(var(--nav-h) + 16px); }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body {
+    margin: 0;
+    font-family: var(--font);
+    color: var(--ink);
+    background: var(--paper);
+    font-size: 16.5px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
 
-  <style>
-    /* ─── TOKENS ─────────────────────────────────────────────── */
-    :root {
-      --teal:        #0E4C52;
-      --teal-light:  #5FB7B0;
-      --orange:      #F79646;
-      --white:       #FFFFFF;
-      --off-white:   #F4F6F5;
-      --text-dark:   #0D1F22;
-      --text-mid:    #3A5C60;
-      --border:      rgba(14,76,82,0.12);
-      --font:        'Plus Jakarta Sans', sans-serif;
-      --nav-h:       72px;
-    }
+  /* language toggle: DE default, body.lang-en shows EN */
+  .en { display: none; }
+  body.lang-en .en { display: revert; }
+  body.lang-en .de { display: none; }
+  span.en, body.lang-en span.en { }
 
-    /* ─── RESET ──────────────────────────────────────────────── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: var(--font);
-      color: var(--text-dark);
-      background: var(--white);
-      -webkit-font-smoothing: antialiased;
-    }
-    a { text-decoration: none; color: inherit; }
-    img { display: block; max-width: 100%; }
+  h1, h2, h3 { line-height: 1.15; text-wrap: balance; margin: 0; }
+  p { margin: 0; }
+  a { color: inherit; }
+  img { max-width: 100%; }
 
-    /* ─── NAV ────────────────────────────────────────────────── */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      height: var(--nav-h);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 5%;
-      background: transparent;
-      transition: background 0.35s ease, box-shadow 0.35s ease;
-    }
-    nav.scrolled {
-      background: var(--teal);
-      box-shadow: 0 2px 20px rgba(0,0,0,0.25);
-    }
-    .nav-logo img {
-      height: 36px;
-      width: auto;
-    }
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 36px;
-      list-style: none;
-    }
-    .nav-links a {
-      font-size: 0.9rem;
-      font-weight: 500;
-      color: rgba(255,255,255,0.85);
-      letter-spacing: 0.03em;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--white); }
-    .nav-lang {
-      display: flex;
-      gap: 6px;
-      align-items: center;
-    }
-    .lang-btn {
-      background: none;
-      border: 1px solid rgba(255,255,255,0.35);
-      color: rgba(255,255,255,0.75);
-      font-family: var(--font);
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      padding: 4px 10px;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .lang-btn.active,
-    .lang-btn:hover {
-      background: rgba(255,255,255,0.15);
-      border-color: rgba(255,255,255,0.7);
-      color: var(--white);
-    }
-    .nav-cta {
-      background: var(--orange) !important;
-      color: var(--white) !important;
-      border: none !important;
-      font-family: var(--font);
-      font-size: 0.88rem;
-      font-weight: 600;
-      padding: 10px 22px;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: all 0.2s;
-      white-space: nowrap;
-    }
-    .nav-cta:hover { background: #e07e2e !important; transform: translateY(-1px); }
+  .wrap { max-width: 1060px; margin: 0 auto; padding: 0 24px; }
 
-    /* hamburger */
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      cursor: pointer;
-      padding: 6px;
-    }
-    .hamburger span {
-      display: block;
-      width: 24px;
-      height: 2px;
-      background: var(--white);
-      border-radius: 2px;
-      transition: all 0.3s;
-    }
+  .kicker {
+    font-size: 12.5px; font-weight: 700; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--teal-light);
+  }
 
-    /* ─── HERO ───────────────────────────────────────────────── */
-    .hero {
-      position: relative;
-      height: 100vh;
-      min-height: 600px;
-      display: flex;
-      align-items: center;
-      overflow: hidden;
-    }
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      background-image: url('DSC03355.jpg');
-      background-size: cover;
-      background-position: center 30%;
-      transform: scale(1.04);
-      transition: transform 8s ease;
-    }
-    .hero-bg.loaded { transform: scale(1); }
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        105deg,
-        rgba(14,76,82,0.88) 0%,
-        rgba(14,76,82,0.72) 55%,
-        rgba(14,76,82,0.45) 100%
-      );
-    }
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      padding: 0 5%;
-      max-width: 760px;
-      margin-top: var(--nav-h);
-    }
-    .hero-eyebrow {
-      display: inline-block;
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--teal-light);
-      margin-bottom: 20px;
-      opacity: 0;
-      animation: fadeUp 0.6s 0.2s forwards;
-    }
-    .hero h1 {
-      font-size: clamp(2.1rem, 4.5vw, 3.4rem);
-      font-weight: 800;
-      line-height: 1.12;
-      color: var(--white);
-      letter-spacing: -0.02em;
-      margin-bottom: 24px;
-      opacity: 0;
-      animation: fadeUp 0.6s 0.35s forwards;
-    }
-    .hero h1 em {
-      font-style: normal;
-      color: var(--teal-light);
-    }
-    .hero-sub {
-      font-size: clamp(1rem, 1.8vw, 1.2rem);
-      font-weight: 400;
-      line-height: 1.65;
-      color: rgba(255,255,255,0.88);
-      max-width: 540px;
-      margin-bottom: 40px;
-      opacity: 0;
-      animation: fadeUp 0.6s 0.5s forwards;
-    }
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      opacity: 0;
-      animation: fadeUp 0.6s 0.65s forwards;
-    }
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--orange);
-      color: var(--white);
-      font-family: var(--font);
-      font-size: 0.95rem;
-      font-weight: 700;
-      padding: 14px 28px;
-      border-radius: 7px;
-      border: none;
-      cursor: pointer;
-      transition: all 0.25s;
-      letter-spacing: 0.01em;
-    }
-    .btn-primary:hover { background: #e07e2e; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(247,150,70,0.35); }
-    .btn-ghost {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: rgba(255,255,255,0.1);
-      backdrop-filter: blur(8px);
-      color: var(--white);
-      font-family: var(--font);
-      font-size: 0.95rem;
-      font-weight: 600;
-      padding: 14px 28px;
-      border-radius: 7px;
-      border: 1px solid rgba(255,255,255,0.3);
-      cursor: pointer;
-      transition: all 0.25s;
-    }
-    .btn-ghost:hover { background: rgba(255,255,255,0.18); border-color: rgba(255,255,255,0.6); }
-    .play-icon {
-      width: 20px; height: 20px;
-      background: var(--white);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-    }
-    .play-icon::after {
-      content: '';
-      border-style: solid;
-      border-width: 5px 0 5px 9px;
-      border-color: transparent transparent transparent var(--teal);
-      margin-left: 2px;
-    }
+  /* ── nav ──────────────────────────────────────── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    background: var(--teal);
+    border-bottom: 1px solid rgba(255,255,255,.08);
+  }
+  .nav-inner {
+    max-width: 1060px; margin: 0 auto; padding: 0 24px;
+    height: var(--nav-h);
+    display: flex; align-items: center; gap: 26px;
+  }
+  .nav-logo img { height: 30px; display: block; }
+  .nav-links { display: flex; gap: 24px; margin-left: auto; align-items: center; }
+  .nav-links a {
+    color: #DCEBE9; text-decoration: none; font-size: 14.5px; font-weight: 500;
+  }
+  .nav-links a:hover { color: #fff; }
+  .lang-btn {
+    background: none; border: none; color: #DCEBE9;
+    font: 600 13px var(--font); letter-spacing: .06em;
+    padding: 5px 4px; cursor: pointer;
+  }
+  .lang-btn:hover { color: #fff; }
+  .btn {
+    display: inline-block; text-decoration: none; font-weight: 700;
+    font-size: 15px; padding: 12px 22px; border-radius: 6px;
+    border: none; cursor: pointer;
+  }
+  .btn-orange { background: var(--orange); color: #2B1A05; }
+  .btn-orange:hover { filter: brightness(1.06); }
+  .btn-teal { background: var(--teal); color: #fff; }
+  .btn-teal:hover { filter: brightness(1.15); }
+  .btn-ghost {
+    background: none; color: #fff; border: 1px solid rgba(255,255,255,.45);
+    font-weight: 600;
+  }
+  .btn-ghost:hover { border-color: #fff; }
+  .nav-cta { padding: 9px 16px; font-size: 14px; }
+  @media (max-width: 860px) {
+    .nav-links a.anchor { display: none; }
+  }
 
-    /* hero stat bar */
-    .hero-stats {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      z-index: 2;
-      background: rgba(14,76,82,0.75);
-      backdrop-filter: blur(12px);
-      border-top: 1px solid rgba(95,183,176,0.25);
-      display: flex;
-      justify-content: center;
-      gap: 0;
-    }
-    .hero-stat {
-      flex: 1;
-      max-width: 280px;
-      padding: 22px 32px;
-      text-align: center;
-      border-right: 1px solid rgba(95,183,176,0.2);
-    }
-    .hero-stat:last-child { border-right: none; }
-    .hero-stat-number {
-      font-size: 1.9rem;
-      font-weight: 800;
-      color: var(--teal-light);
-      letter-spacing: -0.02em;
-      line-height: 1;
-    }
-    .hero-stat-label {
-      font-size: 0.78rem;
-      font-weight: 500;
-      color: rgba(255,255,255,0.7);
-      margin-top: 5px;
-      letter-spacing: 0.02em;
-    }
+  /* ── hero ─────────────────────────────────────── */
+  .hero {
+    background: var(--teal-deep);
+    color: #fff;
+    padding: calc(var(--nav-h) + 84px) 0 92px;
+    text-align: center;
+  }
+  .hero .sub { margin: 0 auto; }
+  .hero .hero-ctas, .hero .chips { justify-content: center; }
+  .hero h1 {
+    font-size: clamp(38px, 6vw, 62px); font-weight: 800;
+    letter-spacing: -0.02em; margin: 14px 0 22px; color: #fff;
+  }
+  .hero .sub {
+    font-size: 18.5px; font-weight: 400; color: #C9DEDC;
+    max-width: 640px; line-height: 1.6;
+  }
+  .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 34px; }
+  .chips { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 46px; }
+  .chip {
+    font-size: 13px; font-weight: 600; letter-spacing: .02em;
+    padding: 6px 14px; border-radius: 999px; border: 1px solid;
+  }
+  .chip-ok, .chip-warn, .chip-bad { color: #BFDAD7; border-color: rgba(191,218,215,.38); }
+  .chip-note  { color: #9FB9B7; border: none; padding-left: 0; font-weight: 500; }
 
-    /* ─── SECTIONS SHARED ────────────────────────────────────── */
-    section { padding: 96px 5%; }
-    .section-label {
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--teal-light);
-      margin-bottom: 14px;
-    }
-    .section-title {
-      font-size: clamp(1.7rem, 3vw, 2.4rem);
-      font-weight: 800;
-      line-height: 1.15;
-      letter-spacing: -0.02em;
-      color: var(--teal);
-      margin-bottom: 20px;
-    }
-    .section-body {
-      font-size: 1.05rem;
-      line-height: 1.7;
-      color: var(--text-mid);
-      max-width: 580px;
-    }
-    .container { max-width: 1120px; margin: 0 auto; }
+  /* ── sections ─────────────────────────────────── */
+  section { padding: 88px 0; }
+  section.mist { background: var(--mist); }
+  .sect-kicker {
+    font-size: 12.5px; font-weight: 700; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--teal-light);
+  }
+  section h2 {
+    font-size: clamp(26px, 3.6vw, 36px); font-weight: 800;
+    letter-spacing: -0.015em; color: var(--teal);
+    margin: 12px 0 18px; max-width: 720px;
+  }
+  .lead { max-width: 680px; color: var(--ink-mid); font-size: 17px; }
 
-    /* ─── PROBLEM ────────────────────────────────────────────── */
-    .problem {
-      background: var(--off-white);
-    }
-    .problem-inner {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: start;
-    }
-    .problem-cards {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      margin-top: 8px;
-    }
-    .problem-card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-left: 3px solid var(--teal-light);
-      border-radius: 8px;
-      padding: 22px 24px;
-    }
-    .problem-card h3 {
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: var(--teal);
-      margin-bottom: 7px;
-    }
-    .problem-card p {
-      font-size: 0.9rem;
-      line-height: 1.6;
-      color: var(--text-mid);
-    }
+  /* Weiche */
+  .fork { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 40px; }
+  @media (max-width: 780px) { .fork { grid-template-columns: 1fr; } }
+  .fork { gap: 56px; }
+  .fork-card { display: flex; flex-direction: column; gap: 14px; }
+  .fork-card h3 { font-size: 20px; font-weight: 700; color: var(--teal); }
+  .fork-card p { color: var(--ink-mid); font-size: 15.5px; }
+  .fork-card > p:first-of-type { flex: 1; }
+  .fork-eg { font-size: 13px; color: var(--ink-mid); opacity: .75; }
+  .fork-btn { align-self: flex-start; }
+  .fork-note { font-size: 12.5px; color: var(--ink-mid); opacity: .75; margin-top: -4px; }
+  .fork-link {
+    font-weight: 700; font-size: 15px; color: var(--teal);
+    text-decoration: none; border-bottom: 2px solid var(--teal-light);
+    align-self: flex-start; padding-bottom: 2px;
+  }
+  .fork-link:hover { color: var(--teal-light); }
 
-    /* ─── SOLUTION ───────────────────────────────────────────── */
-    .solution { background: var(--white); }
-    .solution-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 28px;
-      margin-top: 56px;
-    }
-    .solution-card {
-      background: var(--off-white);
-      border-radius: 10px;
-      padding: 32px 28px;
-      position: relative;
-      overflow: hidden;
-      transition: transform 0.25s, box-shadow 0.25s;
-    }
-    .solution-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 40px rgba(14,76,82,0.1);
-    }
-    .solution-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
-      background: var(--teal-light);
-    }
-    .solution-step {
-      font-size: 0.72rem;
-      font-weight: 800;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--teal-light);
-      margin-bottom: 14px;
-    }
-    .solution-card h3 {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--teal);
-      margin-bottom: 10px;
-      line-height: 1.3;
-    }
-    .solution-card p {
-      font-size: 0.9rem;
-      line-height: 1.65;
-      color: var(--text-mid);
-    }
-    .solution-header {
-      max-width: 640px;
-    }
+  /* So funktioniert's */
+  .how-grid { display: grid; grid-template-columns: 5fr 6fr; gap: 48px; margin-top: 44px; align-items: start; }
+  @media (max-width: 900px) { .how-grid { grid-template-columns: 1fr; } }
+  .how-points { display: flex; flex-direction: column; gap: 26px; }
+  .how-point h3 { font-size: 17px; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
+  .how-point p { color: var(--ink-mid); font-size: 15.5px; }
+  .how-result {
+    margin-top: 4px; padding: 4px 0 4px 20px;
+    border-left: 3px solid var(--teal-light);
+    font-size: 15.5px; color: var(--ink);
+  }
+  .how-result ul { margin: 8px 0 0; padding-left: 18px; display: flex; flex-direction: column; gap: 6px; color: var(--ink-mid); }
+  .caveat { margin-top: 34px; font-size: 12.5px; color: var(--ink-mid); opacity: .75; max-width: 820px; line-height: 1.6; }
 
-    /* ─── REFERENCES ─────────────────────────────────────────── */
-    .references { background: var(--off-white); }
-    .references-inner {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 64px;
-      align-items: start;
-    }
-    .reference-card {
-      background: var(--white);
-      border-radius: 12px;
-      padding: 40px;
-      box-shadow: 0 4px 24px rgba(14,76,82,0.07);
-    }
-    .reference-card-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 28px;
-      padding-bottom: 24px;
-      border-bottom: 1px solid var(--border);
-    }
-    .reference-card-header img {
-      height: 42px;
-      width: auto;
-    }
-    .reference-tag {
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--teal-light);
-      background: rgba(95,183,176,0.1);
-      padding: 4px 10px;
-      border-radius: 4px;
-    }
-    .reference-detail {
-      font-size: 0.88rem;
-      font-weight: 600;
-      color: var(--text-mid);
-      margin-bottom: 4px;
-    }
-    .reference-list {
-      list-style: none;
-      margin: 20px 0 28px;
-    }
-    .reference-list li {
-      font-size: 0.9rem;
-      color: var(--text-mid);
-      line-height: 1.5;
-      padding: 7px 0;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-    }
-    .reference-list li::before {
-      content: '✓';
-      color: var(--teal-light);
-      font-weight: 700;
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
-    .reference-result {
-      background: linear-gradient(135deg, var(--teal) 0%, #0a3a3f 100%);
-      border-radius: 8px;
-      padding: 20px 24px;
-      margin-top: 8px;
-    }
-    .reference-result-number {
-      font-size: 2.2rem;
-      font-weight: 800;
-      color: var(--teal-light);
-      letter-spacing: -0.02em;
-      line-height: 1;
-    }
-    .reference-result-label {
-      font-size: 0.85rem;
-      color: rgba(255,255,255,0.75);
-      margin-top: 4px;
-      line-height: 1.4;
-    }
-    .reference-result-next {
-      font-size: 0.8rem;
-      color: rgba(255,255,255,0.55);
-      margin-top: 8px;
-      padding-top: 8px;
-      border-top: 1px solid rgba(255,255,255,0.1);
-    }
-    .reference-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--teal);
-      font-size: 0.88rem;
-      font-weight: 700;
-      margin-top: 24px;
-      padding: 10px 0;
-      border-bottom: 2px solid var(--teal-light);
-      transition: gap 0.2s;
-    }
-    .reference-cta:hover { gap: 12px; }
+  /* stylised tool mock */
+  .mock {
+    background: var(--paper); border: 1px solid var(--line); border-radius: 12px;
+    box-shadow: 0 18px 44px rgba(14,76,82,.10);
+    overflow: hidden; font-size: 13px;
+  }
+  .mock-head {
+    background: var(--teal); color: #fff; padding: 10px 18px;
+    display: flex; align-items: center; gap: 10px;
+    font-weight: 700; font-size: 12.5px; letter-spacing: .08em; text-transform: uppercase;
+  }
+  .mock-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--teal-light); }
+  .mock-body { padding: 20px; display: flex; flex-direction: column; gap: 18px; }
+  .sliders { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 22px; }
+  @media (max-width: 480px) { .sliders { grid-template-columns: 1fr; } }
+  .slider-row { display: flex; flex-direction: column; gap: 7px; }
+  .slider-label { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+  .slider-label .lbl { color: var(--ink-mid); font-weight: 500; }
+  .slider-label .val { font-weight: 800; color: var(--ink); font-size: 14px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .track { position: relative; height: 5px; border-radius: 3px; background: #E3ECEA; }
+  .fill { position: absolute; inset: 0 auto 0 0; border-radius: 3px; background: var(--teal-light); }
+  .thumb {
+    position: absolute; top: 50%; transform: translate(-50%,-50%);
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--paper); border: 3.5px solid var(--teal);
+  }
+  .verdicts { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 480px) { .verdicts { grid-template-columns: 1fr; } }
+  .verdict { border-radius: 8px; padding: 14px 16px; border: 1px solid; }
+  .verdict .v-arch { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; opacity: .75; }
+  .verdict .v-band { font-size: 16px; font-weight: 800; letter-spacing: .02em; margin: 2px 0 8px; }
+  .verdict p { font-size: 12.5px; line-height: 1.5; }
+  .v-warn { background: var(--warn-tint); border-color: rgba(201,122,31,.3); color: #5C3A10; }
+  .v-warn .v-band { color: var(--warn); }
+  .v-ok { background: var(--ok-tint); border-color: rgba(47,140,106,.3); color: #1C4A38; }
+  .v-ok .v-band { color: var(--ok); }
+  .mock-note { text-align: center; font-size: 12px; color: var(--ink-mid); opacity: .7; margin-top: 12px; }
 
-    /* MD Quote */
-    .reference-quote {
-      margin-top: 24px;
-      padding-top: 24px;
-      border-top: 1px solid var(--border);
-    }
-    .reference-quote-body {
-      display: flex;
-      gap: 16px;
-      align-items: flex-start;
-    }
-    .reference-quote-photo {
-      flex-shrink: 0;
-      width: 64px;
-      height: 64px;
-      border-radius: 50%;
-      overflow: hidden;
-      border: 2px solid var(--teal-light);
-    }
-    .reference-quote-photo img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .reference-quote-text blockquote {
-      font-size: 0.9rem;
-      line-height: 1.65;
-      color: var(--text-dark);
-      font-style: italic;
-      margin-bottom: 10px;
-      position: relative;
-      padding-left: 16px;
-      border-left: 3px solid var(--teal-light);
-    }
-    .reference-quote-attribution {
-      font-size: 0.78rem;
-      font-weight: 700;
-      color: var(--teal);
-      line-height: 1.5;
-    }
-    .reference-quote-attribution span {
-      font-weight: 400;
-      color: var(--text-mid);
-    }
+  /* Einsatzfelder */
+  .fields-strip {
+    margin-top: 36px; display: flex; flex-wrap: wrap; gap: 12px;
+  }
+  .field-tag {
+    background: var(--paper); border: 1px solid var(--line); border-radius: 999px;
+    padding: 9px 18px; font-size: 14.5px; font-weight: 600; color: var(--teal);
+  }
 
-    .references-context {
-      padding-top: 8px;
-    }
-    .references-context .section-body {
-      margin-bottom: 32px;
-    }
+  /* Hintergrund */
+  .why-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 22px; margin-top: 40px; }
+  @media (max-width: 860px) { .why-grid { grid-template-columns: 1fr; } }
+  .why-card { border-top: 3px solid var(--teal-light); padding-top: 18px; }
+  .why-card p { color: var(--ink-mid); font-size: 15.5px; }
+  .why-card strong { color: var(--ink); }
+  .wp-slot {
+    margin-top: 44px; border: 1.5px dashed var(--line); border-radius: 10px;
+    padding: 18px 22px; font-size: 13.5px; color: var(--ink-mid);
+    display: flex; align-items: center; gap: 12px;
+  }
+  .wp-slot .tag {
+    font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--ink-mid); border: 1px solid var(--line);
+    padding: 3px 8px; border-radius: 4px; white-space: nowrap;
+  }
 
-    /* ─── CALCULATOR ─────────────────────────────────────────── */
-    .calculator { background: var(--white); }
+  /* Referenzen */
+  .refs { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 40px; }
+  @media (max-width: 780px) { .refs { grid-template-columns: 1fr; } }
+  .refs { gap: 56px; }
+  .ref-card h3 a { text-decoration: none; color: inherit; }
+  .ref-card h3 a:hover { color: var(--teal-light); }
+  .ref-logo {
+    display: inline-flex; align-items: center; border-radius: 6px;
+    margin-bottom: 16px; height: 46px; padding: 0 14px;
+  }
+  .ref-logo.on-teal { background: var(--teal); }
+  .ref-logo img { height: 24px; width: auto; display: block; }
+  .wall-img { height: 40px; width: auto; max-width: 170px; object-fit: contain; display: block; }
+  .wall-tile.has-img { justify-content: center; gap: 8px; }
+  .wall-combo { display: flex; align-items: center; gap: 9px; }
+  .wall-combo .w-name { font-weight: 800; font-size: 16px; color: var(--teal); }
+  .wall-combo img { height: 26px; width: auto; }
+  .ref-tag {
+    display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--teal); background: rgba(95,183,176,.16);
+    padding: 4px 10px; border-radius: 4px; margin-bottom: 14px;
+  }
+  .ref-card h3 { font-size: 19px; font-weight: 800; color: var(--teal); margin-bottom: 10px; }
+  .ref-card p { color: var(--ink-mid); font-size: 15px; }
+  blockquote {
+    margin: 44px auto 0; max-width: 780px;
+    border-left: 3px solid var(--teal-light); padding: 6px 0 6px 26px;
+    font-size: 17.5px; font-weight: 500; color: var(--ink); line-height: 1.6;
+  }
+  .quote-src { margin-top: 12px; font-size: 13.5px; color: var(--ink-mid); font-weight: 400; }
 
-    .calculator-inner {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 72px;
-      align-items: start;
-    }
+  /* logo wall */
+  .wall { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 36px; }
+  .wall { gap: 40px; align-items: center; }
+  .wall-link { display: flex; align-items: center; text-decoration: none; }
+  .wall-link img, .wall-link .wall-combo { transition: transform .18s ease; }
+  .wall-link:hover img, .wall-link:hover .wall-combo { transform: scale(1.06); }
+  @media (prefers-reduced-motion: reduce) {
+    .wall-link img, .wall-link .wall-combo { transition: none; }
+    .wall-link:hover img, .wall-link:hover .wall-combo { transform: none; }
+  }
+  .wall-tile { display: flex; align-items: center; min-width: 0; }
+  .wall .w-role { display: none; }
+  .wall-tile .w-name { font-weight: 800; font-size: 15px; color: var(--teal); letter-spacing: .01em; }
+  .wall-tile .w-role { font-size: 11.5px; color: var(--ink-mid); text-transform: uppercase; letter-spacing: .08em; font-weight: 600; }
+  .wall-note { margin-top: 16px; font-size: 12.5px; color: var(--ink-mid); opacity: .7; }
 
-    /* ── Left column: intro text ── */
-    .calc-intro { padding-top: 4px; }
+  /* team */
+  .team-names { display: flex; flex-wrap: wrap; gap: 14px 34px; margin-top: 26px; }
+  .team-names div { font-size: 15.5px; }
+  .team-names .nm { font-weight: 700; color: var(--ink); }
+  .team-names .rl { color: var(--ink-mid); }
+  .about-contact { margin-top: 28px; font-size: 15px; display: flex; gap: 12px; align-items: center; }
+  .about-contact a { color: var(--teal); font-weight: 700; text-decoration: none; border-bottom: 2px solid var(--teal-light); padding-bottom: 1px; }
+  .about-contact a:hover { color: var(--teal-light); }
 
-    /* ── Right column: the card ── */
-    .calc-card {
-      background: var(--teal);
-      border-radius: 14px;
-      padding: 36px 40px 40px;
-      position: relative;
-      overflow: hidden;
-    }
-    .calc-card::before {
-      content: '';
-      position: absolute;
-      top: -60px; right: -60px;
-      width: 200px; height: 200px;
-      border-radius: 50%;
-      background: rgba(95,183,176,0.08);
-      pointer-events: none;
-    }
+  /* final CTA */
+  .cta-final { background: var(--teal); color: #fff; text-align: left; }
+  .cta-final h2 { color: #fff; }
+  .cta-final .lead { color: #C9DEDC; }
+  .cta-final .hero-ctas { margin-top: 30px; }
 
-    /* ── Form fields ── */
-    .calc-form { position: relative; z-index: 1; }
+  footer {
+    background: var(--teal-deep); color: #9FB9B7;
+    padding: 30px 0; font-size: 13.5px;
+  }
+  .foot-inner {
+    max-width: 1060px; margin: 0 auto; padding: 0 24px;
+    display: flex; flex-wrap: wrap; gap: 10px 28px; align-items: center;
+  }
+  footer a { color: #C9DEDC; text-decoration: none; }
+  footer a:hover { color: #fff; }
+  .foot-spacer { flex: 1; }
 
-    .calc-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-
-    .calc-field { margin-bottom: 14px; }
-    .calc-field.full { grid-column: 1 / -1; }
-
-    .calc-field label {
-      display: block;
-      font-size: 0.73rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.55);
-      margin-bottom: 6px;
-    }
-
-    .calc-field input[type="number"],
-    .calc-field input[type="text"],
-    .calc-field select {
-      width: 100%;
-      background: rgba(255,255,255,0.09);
-      border: 1px solid rgba(255,255,255,0.18);
-      border-radius: 6px;
-      padding: 10px 14px;
-      color: var(--white);
-      font-family: var(--font);
-      font-size: 0.9rem;
-      font-weight: 500;
-      outline: none;
-      transition: border-color 0.2s, background 0.2s;
-      -webkit-appearance: none;
-      appearance: none;
-    }
-    .calc-field input[type="number"]:focus,
-    .calc-field input[type="text"]:focus,
-    .calc-field select:focus {
-      border-color: var(--teal-light);
-      background: rgba(255,255,255,0.13);
-    }
-    .calc-field input[type="number"]::placeholder,
-    .calc-field input[type="text"]::placeholder { color: rgba(255,255,255,0.3); }
-
-    .calc-field select option { background: var(--teal); color: var(--white); }
-
-    .calc-hint {
-      cursor: help;
-      font-size: 0.8em;
-      opacity: 0.6;
-      vertical-align: middle;
-    }
-    .calc-hint:hover { opacity: 1; }
-    /* select arrow */
-    .calc-select-wrap { position: relative; }
-    .calc-select-wrap::after {
-      content: '';
-      position: absolute;
-      right: 14px; top: 50%;
-      transform: translateY(-50%);
-      border-style: solid;
-      border-width: 5px 4px 0 4px;
-      border-color: rgba(255,255,255,0.5) transparent transparent transparent;
-      pointer-events: none;
-    }
-
-    /* ── Slider fields ── */
-    .calc-slider-wrap {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .calc-slider-wrap input[type="range"] {
-      flex: 1;
-      -webkit-appearance: none;
-      appearance: none;
-      height: 4px;
-      border-radius: 2px;
-      background: rgba(255,255,255,0.18);
-      outline: none;
-      border: none;
-      padding: 0;
-    }
-    .calc-slider-wrap input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      width: 16px; height: 16px;
-      border-radius: 50%;
-      background: var(--teal-light);
-      cursor: pointer;
-      border: 2px solid var(--white);
-      box-shadow: 0 1px 4px rgba(0,0,0,0.3);
-    }
-    .calc-slider-wrap input[type="range"]::-moz-range-thumb {
-      width: 16px; height: 16px;
-      border-radius: 50%;
-      background: var(--teal-light);
-      cursor: pointer;
-      border: 2px solid var(--white);
-    }
-    .calc-slider-val {
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--teal-light);
-      min-width: 28px;
-      text-align: right;
-      font-variant-numeric: tabular-nums;
-    }
-    .calc-slider-hints {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 3px;
-    }
-    .calc-slider-hints span {
-      font-size: 0.68rem;
-      color: rgba(255,255,255,0.35);
-    }
-
-    /* ── Demand charge toggle ── */
-    .calc-toggle-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 14px;
-    }
-    .calc-toggle-row label {
-      font-size: 0.73rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.55);
-      cursor: pointer;
-      user-select: none;
-    }
-    .toggle-switch {
-      position: relative;
-      width: 36px; height: 20px;
-      flex-shrink: 0;
-    }
-    .toggle-switch input { opacity: 0; width: 0; height: 0; position: absolute; }
-    .toggle-track {
-      position: absolute;
-      inset: 0;
-      border-radius: 10px;
-      background: rgba(255,255,255,0.18);
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    .toggle-track::after {
-      content: '';
-      position: absolute;
-      left: 3px; top: 3px;
-      width: 14px; height: 14px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.6);
-      transition: transform 0.2s, background 0.2s;
-    }
-    .toggle-switch input:checked + .toggle-track { background: var(--teal-light); }
-    .toggle-switch input:checked + .toggle-track::after {
-      transform: translateX(16px);
-      background: var(--white);
-    }
-    #demand-field { display: none; }
-    #demand-field.visible { display: block; }
-
-    /* ── Divider ── */
-    .calc-divider {
-      border: none;
-      border-top: 1px solid rgba(255,255,255,0.1);
-      margin: 18px 0;
-    }
-
-    /* ── Error messages ── */
-    .calc-error {
-      font-size: 0.72rem;
-      color: #ffb085;
-      margin-top: 4px;
-      display: none;
-    }
-    .calc-error.visible { display: block; }
-    .calc-field.has-error input,
-    .calc-field.has-error select {
-      border-color: #ffb085;
-    }
-
-    /* ── Calculate button ── */
-    .calc-submit-btn {
-      width: 100%;
-      background: var(--orange);
-      color: var(--white);
-      font-family: var(--font);
-      font-size: 0.95rem;
-      font-weight: 700;
-      padding: 14px;
-      border-radius: 7px;
-      border: none;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.2s;
-      position: relative;
-      z-index: 1;
-      margin-top: 4px;
-    }
-    .calc-submit-btn:hover { background: #e07e2e; transform: translateY(-1px); }
-    .calc-submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-
-    /* ── Result panel ── */
-    .calc-result {
-      display: none;
-      margin-top: 20px;
-      padding-top: 20px;
-      border-top: 1px solid rgba(255,255,255,0.1);
-      position: relative;
-      z-index: 1;
-      animation: fadeUp 0.4s ease forwards;
-    }
-    .calc-result.visible { display: block; }
-
-    .calc-result-headline {
-      text-align: center;
-      margin-bottom: 16px;
-    }
-    .calc-result-pct {
-      font-size: 3rem;
-      font-weight: 800;
-      color: var(--white);
-      line-height: 1;
-      letter-spacing: -0.03em;
-    }
-    .calc-result-label {
-      font-size: 0.75rem;
-      color: rgba(255,255,255,0.55);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-top: 4px;
-    }
-    .calc-result-scenario {
-      font-size: 0.75rem;
-      color: var(--teal-light);
-      margin-top: 3px;
-    }
-
-    /* ── Contact form (revealed after result) ── */
-    .calc-contact-prompt {
-      background: rgba(255,255,255,0.07);
-      border-radius: 8px;
-      padding: 18px 20px;
-      margin-top: 16px;
-    }
-    .calc-contact-prompt p {
-      font-size: 0.82rem;
-      color: rgba(255,255,255,0.7);
-      line-height: 1.5;
-      margin-bottom: 14px;
-    }
-    .calc-contact-field { margin-bottom: 10px; }
-    .calc-contact-field input {
-      width: 100%;
-      background: rgba(255,255,255,0.09);
-      border: 1px solid rgba(255,255,255,0.18);
-      border-radius: 6px;
-      padding: 9px 13px;
-      color: var(--white);
-      font-family: var(--font);
-      font-size: 0.88rem;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-    .calc-contact-field input:focus { border-color: var(--teal-light); }
-    .calc-contact-field input::placeholder { color: rgba(255,255,255,0.28); }
-    .calc-contact-field .calc-error { margin-top: 3px; }
-
-    .calc-send-btn {
-      width: 100%;
-      background: var(--teal-light);
-      color: var(--teal);
-      font-family: var(--font);
-      font-size: 0.9rem;
-      font-weight: 700;
-      padding: 12px;
-      border-radius: 7px;
-      border: none;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.2s;
-      margin-top: 4px;
-    }
-    .calc-send-btn:hover { background: #4ea9a2; transform: translateY(-1px); }
-    .calc-send-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-
-    .calc-success {
-      display: none;
-      text-align: center;
-      padding: 20px;
-      animation: fadeUp 0.4s ease forwards;
-    }
-    .calc-success.visible { display: block; }
-    .calc-success-icon {
-      font-size: 2rem;
-      margin-bottom: 8px;
-    }
-    .calc-success p {
-      font-size: 0.88rem;
-      color: rgba(255,255,255,0.75);
-      line-height: 1.5;
-    }
-    .calc-success strong { color: var(--teal-light); }
-
-    .calc-note {
-      font-size: 0.72rem;
-      color: rgba(255,255,255,0.3);
-      text-align: center;
-      margin-top: 10px;
-      position: relative;
-      z-index: 1;
-    }
-
-    /* ── Loading spinner ── */
-    .calc-spinner {
-      display: inline-block;
-      width: 14px; height: 14px;
-      border: 2px solid rgba(255,255,255,0.3);
-      border-top-color: var(--white);
-      border-radius: 50%;
-      animation: spin 0.7s linear infinite;
-      vertical-align: middle;
-      margin-right: 6px;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    /* ── Mobile ── */
-    @media (max-width: 768px) {
-      .calculator-inner { grid-template-columns: 1fr; gap: 40px; }
-      .calc-row { grid-template-columns: 1fr; }
-    }
-
-    /* ─── ABOUT ──────────────────────────────────────────────── */
-    .about { background: var(--off-white); }
-    .about-inner {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: center;
-    }
-    .about-photo {
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 12px 48px rgba(14,76,82,0.15);
-      aspect-ratio: 4/3;
-      background: var(--border);
-    }
-    .about-photo img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .about-photo-placeholder {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--text-mid);
-      font-size: 0.85rem;
-      background: #e8eeed;
-    }
-    .about-text .section-body { margin-bottom: 24px; }
-    .about-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 28px;
-    }
-    .about-tag {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 7px 14px;
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: var(--teal);
-    }
-
-    /* ─── CTA BANNER ─────────────────────────────────────────── */
-    .cta-banner {
-      background: linear-gradient(135deg, var(--teal) 0%, #0a3a3f 100%);
-      padding: 80px 5%;
-      text-align: center;
-    }
-    .cta-banner h2 {
-      font-size: clamp(1.8rem, 3vw, 2.6rem);
-      font-weight: 800;
-      color: var(--white);
-      letter-spacing: -0.02em;
-      margin-bottom: 16px;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .cta-banner p {
-      font-size: 1.05rem;
-      color: rgba(255,255,255,0.7);
-      margin-bottom: 36px;
-      max-width: 460px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    /* ─── FOOTER ─────────────────────────────────────────────── */
-    footer {
-      background: var(--teal);
-      padding: 48px 5% 32px;
-    }
-    .footer-inner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 24px;
-      padding-bottom: 28px;
-      border-bottom: 1px solid rgba(255,255,255,0.15);
-      margin-bottom: 24px;
-    }
-    .footer-logo img { height: 30px; }
-    .footer-links {
-      display: flex;
-      gap: 28px;
-      list-style: none;
-    }
-    .footer-links a {
-      font-size: 0.85rem;
-      color: rgba(255,255,255,0.5);
-      transition: color 0.2s;
-    }
-    .footer-links a:hover { color: var(--white); }
-    .footer-social a {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: rgba(255,255,255,0.5);
-      font-size: 0.85rem;
-      font-weight: 600;
-      transition: color 0.2s;
-    }
-    .footer-social a:hover { color: var(--teal-light); }
-    .footer-bottom {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-    .footer-copy {
-      font-size: 0.78rem;
-      color: rgba(255,255,255,0.3);
-    }
-
-    /* ─── VIDEO MODAL ────────────────────────────────────────── */
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 200;
-      background: rgba(0,0,0,0.88);
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-    }
-    .modal-overlay.open { display: flex; }
-    .modal-box {
-      position: relative;
-      width: 100%;
-      max-width: 860px;
-    }
-    .modal-video-wrap {
-      position: relative;
-      aspect-ratio: 16/9;
-      border-radius: 12px;
-      overflow: hidden;
-      background: #000;
-    }
-    .modal-video-wrap iframe {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      border: 0;
-    }
-    .modal-close {
-      position: absolute;
-      top: -44px; right: 0;
-      background: none;
-      border: none;
-      color: rgba(255,255,255,0.75);
-      font-size: 1.6rem;
-      cursor: pointer;
-      line-height: 1;
-      transition: color 0.2s;
-    }
-    .modal-close:hover { color: var(--white); }
-
-    /* ─── ANIMATIONS ─────────────────────────────────────────── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    .reveal {
-      opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 0.65s ease, transform 0.65s ease;
-    }
-    .reveal.visible {
-      opacity: 1;
-      transform: none;
-    }
-
-    /* ─── RESPONSIVE ─────────────────────────────────────────── */
-    @media (max-width: 900px) {
-      .nav-links { display: none; }
-      .nav-links.open {
-        display: flex;
-        flex-direction: column;
-        position: fixed;
-        top: var(--nav-h);
-        left: 0; right: 0;
-        background: var(--teal);
-        padding: 24px 5% 32px;
-        gap: 20px;
-        box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-      }
-      .hamburger { display: flex; }
-      .problem-inner,
-      .references-inner,
-      .calculator-inner,
-      .about-inner { grid-template-columns: 1fr; gap: 40px; }
-      .solution-grid { grid-template-columns: 1fr; }
-      .hero-stats { display: none; }
-      .footer-inner { flex-direction: column; align-items: flex-start; }
-    }
-
-    @media (max-width: 600px) {
-      section { padding: 64px 5%; }
-      .calc-output { grid-template-columns: 1fr; }
-    }
-
-  </style>
+  :focus-visible { outline: 2px solid var(--teal-light); outline-offset: 2px; }
+</style>
 </head>
 <body>
 
-  <!-- ═══ NAV ════════════════════════════════════════════════ -->
-  <nav id="main-nav">
-    <a href="#" class="nav-logo">
+<nav>
+  <div class="nav-inner">
+    <a href="#top" class="nav-logo" aria-label="Kodnyx">
       <img src="kodnyx_white_teal.png" alt="Kodnyx" />
     </a>
-    <ul class="nav-links" id="nav-links">
-      <li><a href="#references" data-lang="en">References</a><a href="#references" data-lang="de">Referenzen</a></li>
-      <li><a href="#calculator" data-lang="en">Savings Calculator</a><a href="#calculator" data-lang="de">Einspar-Rechner</a></li>
-      <li><a href="#about" data-lang="en">About</a><a href="#about" data-lang="de">Über uns</a></li>
-      <li class="nav-lang">
-        <button class="lang-btn active" data-target-lang="en">EN</button>
-        <button class="lang-btn" data-target-lang="de">DE</button>
-      </li>
-      <li>
-        <a href="https://outlook.office.com/bookwithme/user/3cacf49477234033a9f04f34982069a8%40kodnyx.com?anonymous&ismsaljsauthenabled=true" target="_blank" class="nav-cta" data-lang="en">Book a free discovery call</a>
-        <a href="https://outlook.office.com/bookwithme/user/3cacf49477234033a9f04f34982069a8%40kodnyx.com?anonymous&ismsaljsauthenabled=true" target="_blank" class="nav-cta" data-lang="de">Kostenloses Erstgespräch buchen</a>
-      </li>
-    </ul>
-    <div class="hamburger" id="hamburger" aria-label="Menu">
-      <span></span><span></span><span></span>
+    <div class="nav-links">
+      <a class="anchor" href="#how"><span class="de">So funktioniert's</span><span class="en">How it works</span></a>
+      <a class="anchor" href="#fields"><span class="de">Einsatzfelder</span><span class="en">Use cases</span></a>
+      <a class="anchor" href="#refs"><span class="de">Referenzen</span><span class="en">References</span></a>
+      <a class="anchor" href="#about"><span class="de">Über uns</span><span class="en">About</span></a>
+      <button class="lang-btn" id="langBtn" type="button" aria-label="Sprache wechseln">EN</button>
     </div>
-  </nav>
+  </div>
+</nav>
 
-  <!-- ═══ HERO ════════════════════════════════════════════════ -->
-  <section class="hero" id="home">
-    <div class="hero-bg" id="hero-bg"></div>
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-      <span class="hero-eyebrow" data-lang="en">Electrical Architecture Optimisation</span>
-      <span class="hero-eyebrow" data-lang="de">Elektrische Architektur Optimierung</span>
-
-      <h1 data-lang="en">Save up to <em>35% on electricity costs</em></h1>
-      <h1 data-lang="de">Bis zu <em>35% Stromkosten sparen</em></h1>
-
-      <p class="hero-sub" data-lang="en">Kodnyx optimises AC, DC and hybrid electrical layouts for industrial and commercial facilities and data centres.</p>
-      <p class="hero-sub" data-lang="de">Kodnyx optimiert AC-, DC- und hybride Elektroanlagen für Industrie- und Gewerbegebäude sowie Rechenzentren.</p>
-
-      <div class="hero-actions">
-        <a href="https://outlook.office.com/bookwithme/user/3cacf49477234033a9f04f34982069a8%40kodnyx.com?anonymous&ismsaljsauthenabled=true" target="_blank" class="btn-primary" data-lang="en">Book a free discovery call</a>
-        <a href="https://outlook.office.com/bookwithme/user/3cacf49477234033a9f04f34982069a8%40kodnyx.com?anonymous&ismsaljsauthenabled=true" target="_blank" class="btn-primary" data-lang="de">Kostenloses Erstgespräch buchen</a>
-        <button class="btn-ghost" id="open-video" data-lang="en"><span class="play-icon"></span>Watch 30-sec explainer</button>
-        <button class="btn-ghost" id="open-video-de" data-lang="de"><span class="play-icon"></span>Kurzes Erklärvideo ansehen</button>
-      </div>
+<header class="hero" id="top">
+  <div class="wrap">
+    <div class="kicker">DC Explorer</div>
+    <h1>
+      <span class="de">Elektrifizierung,<br>die sich rechnet.</span>
+      <span class="en">Electrification,<br>calculated.</span>
+    </h1>
+    <p class="sub">
+      <span class="de">Der DC Explorer rechnet Standorte live im Gespräch durch. Vom Netzanschluss bis zur Stromverteilung: AC oder DC?</span>
+      <span class="en">The DC Explorer runs a site live in the meeting. From grid connection to power distribution: AC or DC?</span>
+    </p>
+    <div class="hero-ctas">
+      <a class="btn btn-ghost" href="#how"><span class="de">So funktioniert's</span><span class="en">How it works</span></a>
     </div>
+  </div>
+</header>
 
-    <div class="hero-stats">
-      <div class="hero-stat">
-        <div class="hero-stat-number">15–35%</div>
-        <div class="hero-stat-label" data-lang="en">Electricity savings potential</div>
-        <div class="hero-stat-label" data-lang="de">Stromeinsparungspotenzial</div>
+<section id="fork" class="mist">
+  <div class="wrap">
+    <div class="sect-kicker"><span class="de">Für wen</span><span class="en">Who it serves</span></div>
+    <h2><span class="de">Ein Werkzeug, zwei Wege</span><span class="en">One tool, two ways to use it</span></h2>
+    <div class="fork">
+      <div class="fork-card">
+        <h3><span class="de">Ihr Produkt in der Architektur, die gewinnt.</span><span class="en">Your product in the architecture that wins.</span></h3>
+        <p>
+          <span class="de">Der DC Explorer rechnet den Standort Ihres Kunden direkt im Termin durch. Partner nutzen ihn als gebrandete Version und gewinnen damit ihre eigenen Projekte.</span>
+          <span class="en">The DC Explorer calculates your customer's site right in the meeting. Partners use it as a branded version and win their own projects with it.</span>
+        </p>
+        <p class="fork-eg"><span class="de">z. B. Batteriehersteller, Ladetechnik-Anbieter, Systemintegratoren</span><span class="en">for example battery makers, charging hardware vendors, system integrators</span></p>
+        <a class="btn btn-teal fork-btn mail-link" href="#" data-u="kristoffer" data-d="kodnyx.com" data-s="Gebrandete Version DC Explorer"><span class="de">Gebrandete Version anfragen</span><span class="en">Request a branded version</span></a>
       </div>
-      <div class="hero-stat">
-        <div class="hero-stat-number">AC/DC</div>
-        <div class="hero-stat-label" data-lang="en">Hybrid architecture optimisation</div>
-        <div class="hero-stat-label" data-lang="de">Hybride Architekturoptimierung</div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ═══ PROBLEM ══════════════════════════════════════════════ -->
-  <section class="problem" id="problem">
-    <div class="container">
-      <div class="problem-inner">
-        <div class="reveal">
-          <p class="section-label" data-lang="en">The Problem</p>
-          <p class="section-label" data-lang="de">Das Problem</p>
-          <h2 class="section-title" data-lang="en">Electrical architecture is the largest untapped efficiency lever</h2>
-          <h2 class="section-title" data-lang="de">Elektrische Architektur ist der größte ungenutzte Effizienz­hebel</h2>
-          <p class="section-body" data-lang="en">Industrial and commercial facilities and data centres are still designed around legacy AC paradigms. Yet most machines run internally on DC. The result: structural losses that nobody tackles — because the tools and methods to address them haven't existed.</p>
-          <p class="section-body" data-lang="de">Industrie- und Gewerbegebäude sowie Rechenzentren werden noch immer nach veralteten AC-Paradigmen geplant. Dabei laufen die meisten Maschinen mittlerweile intern mit DC. Das Ergebnis: Strukturelle Verluste, die niemand angeht — weil die Methoden und Werkzeuge dafür bisher fehlten.</p>
-        </div>
-        <div class="problem-cards reveal" style="transition-delay: 0.15s">
-          <div class="problem-card">
-            <h3 data-lang="en">Legacy AC design paradigm</h3>
-            <h3 data-lang="de">Veraltete AC-Planungsparadigmen</h3>
-            <p data-lang="en">Facilities are designed for legacy AC assumptions. Adding sources (e.g. PV or battery storage) and loads in DC, the architecture creates avoidable conversion losses at every stage.</p>
-            <p data-lang="de">Anlagen werden nach veralteten AC-Annahmen geplant. Mit zunehmenden DC-Quellen (PV oder Batteriespeicher) und Nutzen entstehen unnötige Umwandlungsverluste auf jeder Stufe.</p>
-          </div>
-          <div class="problem-card">
-            <h3 data-lang="en">Manual optimisation is rare and slow</h3>
-            <h3 data-lang="de">Manuelle Optimierung ist selten und langsam</h3>
-            <p data-lang="en">When optimisation happens at all, it relies on individual expertise and one-off calculations. No systematic process. No scalable method.</p>
-            <p data-lang="de">Wenn Optimierung überhaupt stattfindet, basiert sie auf individuellem Know-how und Einzel­berechnungen. Kein systematischer Prozess. Keine skalierbare Methode.</p>
-          </div>
-          <div class="problem-card">
-            <h3 data-lang="en">Structural inefficiency no one touches</h3>
-            <h3 data-lang="de">Strukturelle Ineffizienz, die niemand angeht</h3>
-            <p data-lang="en">The losses compound silently across the facility's lifetime, adding avoidable cost year by year.</p>
-            <p data-lang="de">Die Verluste summieren sich im Laufe der Lebensdauer der Anlage unbemerkt und verursachen Jahr für Jahr vermeidbare Kosten.</p>
-          </div>
-        </div>
+      <div class="fork-card">
+        <h3><span class="de">Sie elektrifizieren einen eigenen Standort.</span><span class="en">You are electrifying a site of your own.</span></h3>
+        <p>
+          <span class="de">Ob Depot, Produktion oder Gewerbe: Schicken Sie uns die Eckdaten, und wir rechnen gemeinsam durch, was der Standort braucht und in welcher Reihenfolge sich Investitionen lohnen.</span>
+          <span class="en">Whether depot, production or commercial: send us the key data and we work out together what the site needs, and in which order investments pay off.</span>
+        </p>
+        <p class="fork-eg"><span class="de">z. B. Flottenbetreiber, Industrie- und Gewerbeunternehmen, Ladepark-Betreiber</span><span class="en">for example fleet operators, industrial and commercial companies, charge point operators</span></p>
+        <a class="btn btn-teal fork-btn mail-link" href="#" data-u="kristoffer" data-d="kodnyx.com" data-s="Eckdaten Standort"><span class="de">Eckdaten schicken</span><span class="en">Send site data</span></a>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ═══ SOLUTION ═════════════════════════════════════════════ -->
-  <section class="solution" id="solution">
-    <div class="container">
-      <div class="solution-header reveal">
-        <p class="section-label" data-lang="en">What We Do</p>
-        <p class="section-label" data-lang="de">Was wir tun</p>
-        <h2 class="section-title" data-lang="en">Design, Simulate, Optimise</h2>
-        <h2 class="section-title" data-lang="de">Entwerfen, Simulieren, Optimieren</h2>
-        <p class="section-body" data-lang="en">Kodnyx delivers complete electrical architecture optimisation — from first analysis to installer-ready design.</p>
-        <p class="section-body" data-lang="de">Kodnyx bietet eine vollständige Optimierung der elektrischen Architektur – von der ersten Analyse bis zum installationsfertigen Entwurf.</p>
-      </div>
-      <div class="solution-grid">
-        <div class="solution-card reveal" style="transition-delay:0.05s">
-          <p class="solution-step" data-lang="en">Step 01</p>
-          <p class="solution-step" data-lang="de">Schritt 01</p>
-          <h3 data-lang="en">Identify optimal AC/DC/hybrid layout</h3>
-          <h3 data-lang="de">Optimales AC/DC/Hybrid-Layout identifizieren</h3>
-          <p data-lang="en">We analyse the existing electrical architecture and identify where AC-to-DC conversions are avoidable — finding the topology that minimises losses.</p>
-          <p data-lang="de">Wir analysieren die bestehende Elektroarchitektur und identifizieren, wo AC-DC-Umwandlungen vermeidbar sind — und finden die verlustminimale Topologie.</p>
+<section id="how">
+  <div class="wrap">
+    <div class="sect-kicker"><span class="de">So funktioniert's</span><span class="en">How it works</span></div>
+    <h2>
+      <span class="de">AC oder DC? Derselbe Standort, ein volles Jahr</span>
+      <span class="en">AC or DC? The same site, a full year</span>
+    </h2>
+    <div class="how-grid">
+      <div class="how-points">
+        <div class="how-point">
+          <h3><span class="de">Standortdaten des Kunden, keine generischen Annahmen.</span><span class="en">The customer's site data, no generic assumptions.</span></h3>
+          <p><span class="de">Netzanschluss, PV, Speicher, Last oder Flotte und der Standort reichen als Eingabe.</span><span class="en">Grid connection, PV, storage, load or fleet and the location are enough as input.</span></p>
         </div>
-        <div class="solution-card reveal" style="transition-delay:0.12s">
-          <p class="solution-step" data-lang="en">Step 02</p>
-          <p class="solution-step" data-lang="de">Schritt 02</p>
-          <h3 data-lang="en">Validate protection & simulate ROI</h3>
-          <h3 data-lang="de">Schutz validieren & ROI simulieren</h3>
-          <p data-lang="en">Protection concepts are validated upfront. Energy savings are modelled and quantified, enabling clients to see the return on investment before committing to any project.</p>
-          <p data-lang="de">Schutzkonzepte werden vorab validiert. Energieeinsparungen werden modelliert und quantifiziert, sodass Kunden die Rentabilität ihrer Investition erkennen können, bevor sie sich zu einem Projekt verpflichten.</p>
+        <div class="how-point">
+          <h3><span class="de">AC und DC im selben Modell.</span><span class="en">AC and DC in the same model.</span></h3>
+          <p><span class="de">AC und DC laufen durch dasselbe Jahr, nach denselben Regeln. So zeigt der Vergleich, was die Architektur wirklich ausmacht.</span><span class="en">AC and DC run through the same year, under the same rules. So the comparison shows what the architecture really changes.</span></p>
         </div>
-        <div class="solution-card reveal" style="transition-delay:0.2s">
-          <p class="solution-step" data-lang="en">Step 03</p>
-          <p class="solution-step" data-lang="de">Schritt 03</p>
-          <h3 data-lang="en">Deliver installer-ready design</h3>
-          <h3 data-lang="de">Installationsfertige Designs liefern</h3>
-          <p data-lang="en">Clients receive complete designs that can be implemented within new or existing infrastructure — no machine redesign required.</p>
-          <p data-lang="de">Kunden erhalten vollständige Designs, die in einer neuen oder in der bestehenden Infrastruktur umsetzbar sind — kein Maschinenumbau erforderlich.</p>
+        <div class="how-point">
+          <h3><span class="de">Jede Annahme sichtbar und veränderbar.</span><span class="en">Every assumption visible and adjustable.</span></h3>
+          <p><span class="de">Der Explorer wird im Gespräch benutzt: Slider bewegen, Ergebnis sehen.</span><span class="en">The Explorer is used in the conversation: move a slider, see the result.</span></p>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══ REFERENCES ═══════════════════════════════════════════ -->
-  <section class="references" id="references">
-    <div class="container">
-      <div class="references-inner">
-        <div class="reference-card reveal">
-          <div class="reference-card-header">
-            <a href="https://hartig-germany.com/" target="_blank" rel="noopener noreferrer"><img src="hartig.png" alt="Hartig GmbH" /></a>
-            <span class="reference-tag" data-lang="en">Validated</span>
-            <span class="reference-tag" data-lang="de">Validiert</span>
-          </div>
-          <p class="reference-detail" data-lang="en">Production Hall Retrofit · <a href="https://hartig-germany.com/" target="_blank" rel="noopener noreferrer" style="color:var(--teal);border-bottom:1px solid var(--teal-light);">Aschaffenburg, Germany</a></p>
-          <p class="reference-detail" data-lang="de">Produktionshallen-Retrofit · <a href="https://hartig-germany.com/" target="_blank" rel="noopener noreferrer" style="color:var(--teal);border-bottom:1px solid var(--teal-light);">Aschaffenburg</a></p>
-          <ul class="reference-list">
-            <li data-lang="en">No machine redesign required</li>
-            <li data-lang="de">Kein Maschinenumbau erforderlich</li>
-            <li data-lang="en">Direct DC linkage implemented</li>
-            <li data-lang="de">Direkte DC-Kopplung implementiert</li>
-            <li data-lang="en">Rooftop PV directly integrated</li>
-            <li data-lang="de">Dach-PV direkt integriert</li>
-            <li data-lang="en">Protection concept validated</li>
-            <li data-lang="de">Schutzkonzept validiert</li>
+        <div class="how-result">
+          <strong><span class="de">Das Ergebnis:</span><span class="en">The result:</span></strong>
+          <ul>
+            <li><span class="de">Ob die Auslegung trägt: ein Machbarkeitsurteil in drei Stufen, robust, knapp oder nicht machbar.</span><span class="en">Whether the sizing holds: a feasibility verdict in three bands, robust, marginal or infeasible.</span></li>
+            <li><span class="de">Welchen Netzanschluss der Standort wirklich braucht.</span><span class="en">The grid connection the site really needs.</span></li>
+            <li><span class="de">Wie viel PV und Speicher sich lohnen, und der kleinste Speicher, der durch die schlechteste Winterwoche trägt.</span><span class="en">How much PV and battery pay off, and the smallest battery that carries the site through the worst winter week.</span></li>
+            <li><span class="de">Die jährliche Energiedifferenz zwischen AC und DC.</span><span class="en">The annual energy difference between AC and DC.</span></li>
           </ul>
-          <div class="reference-result">
-            <div class="reference-result-number">15%</div>
-            <div class="reference-result-label" data-lang="en">Energy reduction achieved</div>
-            <div class="reference-result-label" data-lang="de">Energiereduktion erreicht</div>
-            <div class="reference-result-next" data-lang="en">Next phase modelling indicates 15–25% potential</div>
-            <div class="reference-result-next" data-lang="de">Nächste Phase zeigt 15–25% Potenzial</div>
-          </div>
-
-          <!-- MD Quote -->
-          <div class="reference-quote">
-            <div class="reference-quote-body">
-              <div class="reference-quote-photo">
-                <img src="hartig_md_quote.jpg" alt="Stephan-Leander Klein, Managing Director Hartig GmbH" />
-              </div>
-              <div class="reference-quote-text">
-                <blockquote data-lang="en">"When I first heard about switching to DC, I doubted whether our machines would qualify. Kodnyx not only showed how our plant could be retrofitted but also how to harness our rooftop PV directly."</blockquote>
-                <blockquote data-lang="de">„Als ich zum ersten Mal von der Umstellung auf Gleichstrom hörte, hatte ich Zweifel, ob unsere Maschinen dafür geeignet wären. Kodnyx zeigte uns nicht nur, wie unsere Anlage nachgerüstet werden könnte, sondern auch, wie wir unsere Dach-PV-Anlage direkt nutzen können."</blockquote>
-                <p class="reference-quote-attribution">Stephan-Leander Klein<br><span data-lang="en">Managing Director, Hartig GmbH &amp; Co KG · Measuring instruments manufacturer</span><span data-lang="de">Geschäftsführer, Hartig GmbH &amp; Co KG · Messgeräte-Hersteller</span></p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Case study PDF link — uncomment when PDF is ready
-          <a href="#" class="reference-cta" data-lang="en">View full case study (PDF)</a>
-          <a href="#" class="reference-cta" data-lang="de">Vollständige Fallstudie (PDF)</a>
-          -->
-        </div>
-
-        <div class="references-context reveal" style="transition-delay:0.15s">
-          <p class="section-label" data-lang="en">References</p>
-          <p class="section-label" data-lang="de">Referenzen</p>
-          <h2 class="section-title" data-lang="en">Validated in an Industrial Facility</h2>
-          <h2 class="section-title" data-lang="de">Validiert in einer Industrieanlage</h2>
-          <p class="section-body" data-lang="en">The Hartig production hall retrofit reflects Kodnyx's structured approach to electrical architecture optimisation.</p>
-          <p class="section-body" data-lang="de">Die Nachrüstung der Produktionshalle von Hartig spiegelt den strukturierten Ansatz von Kodnyx zur Optimierung der elektrischen Architektur wider.</p>
-          <p class="section-body" data-lang="en" style="margin-top:16px">The scope included:</p>
-          <p class="section-body" data-lang="de" style="margin-top:16px">Der Umfang umfasste:</p>
-          <ul class="section-body" data-lang="en" style="margin-top:8px;padding-left:20px;list-style:disc;color:var(--text-mid);font-size:1.05rem;line-height:1.7">
-            <li>Site-level load analysis</li>
-            <li>AC/DC topology modelling</li>
-            <li>Protection concept validation</li>
-            <li>ROI-based performance assessment</li>
-          </ul>
-          <ul class="section-body" data-lang="de" style="margin-top:8px;padding-left:20px;list-style:disc;color:var(--text-mid);font-size:1.05rem;line-height:1.7">
-            <li>Lastanalyse auf Standortebene</li>
-            <li>AC/DC-Topologiemodellierung</li>
-            <li>Validierung des Schutzkonzepts</li>
-            <li>ROI-basierte Leistungsbewertung</li>
-          </ul>
-          <div style="margin-top:36px">
-            <a href="https://outlook.office.com/bookwithme/user/3cacf49477234033a9f04f34982069a8%40kodnyx.com?anonymous&ismsaljsauthenabled=true" target="_blank" class="btn-primary" data-lang="en">Book a free discovery call</a>
-            <a href="https://outlook.office.com/bookwithme/user/3cacf49477234033a9f04f34982069a8%40kodnyx.com?anonymous&ismsaljsauthenabled=true" target="_blank" class="btn-primary" data-lang="de">Ihr nächstes Projekt besprechen</a>
-          </div>
+          <p style="margin-top: 14px; color: var(--ink-mid);"><span class="de">Eine erste Machbarkeitsprüfung, live am konkreten Standort. Bevor jemand eine teure Studie beauftragt oder aus dem Bauch entscheidet.</span><span class="en">A first feasibility check, live on the actual site. Before anyone commissions an expensive study or decides on gut feeling.</span></p>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- ═══ CALCULATOR ══════════════════════════════════════════ -->
-  <section class="calculator" id="calculator">
-    <div class="container">
-      <div class="calculator-inner">
-
-        <!-- Left: intro -->
-        <div class="calc-intro reveal">
-          <p class="section-label" data-lang="en">Savings Calculator</p>
-          <p class="section-label" data-lang="de">Energiespar-Rechner</p>
-          <h2 class="section-title" data-lang="en">Quantify the opportunity</h2>
-          <h2 class="section-title" data-lang="de">Das Potenzial quantifizieren</h2>
-          <p class="section-body" data-lang="en">Enter your facility parameters and get a project-specific savings estimate in seconds. The full breakdown — all saving components, CO₂ impact, and financial summary — is delivered as a PDF to your inbox.</p>
-          <p class="section-body" data-lang="de">Geben Sie Ihre Anlagenparameter ein und erhalten Sie in Sekunden eine projektspezifische Einsparpotenzial-Schätzung. Die vollständige Aufschlüsselung — alle Einsparkomponenten, CO₂-Bilanz und Finanzzusammenfassung — erhalten Sie als PDF in Ihrem Postfach.</p>
-        </div>
-
-        <!-- Right: calculator card -->
-        <div class="calc-card reveal" style="transition-delay:0.15s; position:relative;">
-          <span style="
-            position: absolute;
-            top: 14px; right: 16px;
-            background: var(--orange);
-            color: var(--white);
-            font-size: 0.62rem;
-            font-weight: 800;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            padding: 3px 8px;
-            border-radius: 4px;
-            opacity: 0.9;
-            z-index: 2;
-          ">BETA</span>
-          <form class="calc-form" id="calc-form" novalidate>
-
-            <!-- Row 1: consumption + price -->
-            <div class="calc-row">
-              <div class="calc-field" id="field-E_annual">
-                <label data-lang="en">Annual consumption (kWh/y)</label>
-                <label data-lang="de">Jahresverbrauch (kWh/a)</label>
-                <input type="text" inputmode="numeric" id="inp-E_annual" value="250.000" placeholder="250000" />
-                <div class="calc-error" id="err-E_annual"></div>
-              </div>
-              <div class="calc-field" id="field-c_kWh">
-                <label data-lang="en">Energy price (€/kWh)</label>
-                <label data-lang="de">Energiepreis (€/kWh)</label>
-                <input type="text" inputmode="decimal" id="inp-c_kWh" value="0,22" placeholder="0,22" />
-                <div class="calc-error" id="err-c_kWh"></div>
-              </div>
-            </div>
-
-            <!-- Row 2: PV + scenario -->
-            <div class="calc-row">
-              <div class="calc-field" id="field-PV_kWp">
-                <label data-lang="en">PV system (kWp, 0 = none)</label>
-                <label data-lang="de">PV-Anlage (kWp, 0 = keine)</label>
-                <input type="text" inputmode="numeric" id="inp-PV_kWp" value="50" placeholder="0" />
-                <div class="calc-error" id="err-PV_kWp"></div>
-              </div>
-              <div class="calc-field" id="field-scenario">
-                <label data-lang="en">Scenario</label>
-                <label data-lang="de">Szenario</label>
-                <div class="calc-select-wrap">
-                  <select id="inp-scenario" data-scenario-select>
-                    <option value="Conservative">Conservative</option>
-                    <option value="Expected" selected>Expected</option>
-                    <option value="Ceiling">Ceiling (Optimistic)</option>
-                  </select>
+      <div>
+        <div class="mock" role="img" aria-label="Stilisierte Ansicht des DC Explorers">
+          <div class="mock-head"><span class="mock-dot"></span> DC Explorer</div>
+          <div class="mock-body">
+            <div class="sliders">
+              <div class="slider-row">
+                <div class="slider-label">
+                  <span class="lbl"><span class="de">Netzanschlussleistung</span><span class="en">Grid connection</span></span>
+                  <span class="val">350&nbsp;kW</span>
                 </div>
+                <div class="track"><span class="fill" style="width:34%"></span><span class="thumb" style="left:34%"></span></div>
+              </div>
+              <div class="slider-row">
+                <div class="slider-label">
+                  <span class="lbl"><span class="de">Batteriespeicher</span><span class="en">Battery storage</span></span>
+                  <span class="val">2.100&nbsp;kWh</span>
+                </div>
+                <div class="track"><span class="fill" style="width:22%"></span><span class="thumb" style="left:22%"></span></div>
+              </div>
+              <div class="slider-row">
+                <div class="slider-label">
+                  <span class="lbl"><span class="de">PV-Anlage</span><span class="en">PV system</span></span>
+                  <span class="val">640&nbsp;kWp</span>
+                </div>
+                <div class="track"><span class="fill" style="width:42%"></span><span class="thumb" style="left:42%"></span></div>
+              </div>
+              <div class="slider-row">
+                <div class="slider-label">
+                  <span class="lbl"><span class="de">Ladeleistung</span><span class="en">Charging power</span></span>
+                  <span class="val">320&nbsp;kW</span>
+                </div>
+                <div class="track"><span class="fill" style="width:28%"></span><span class="thumb" style="left:28%"></span></div>
               </div>
             </div>
-
-            <!-- Slider: load peakiness -->
-            <div class="calc-field full">
-              <label data-lang="en">Load profile intensity <span class="calc-hint" title="How spiky your load profile is: flat = constant process load; spiky = large motors, lifts or short high-power bursts.">ⓘ</span></label>
-              <label data-lang="de">Lastprofilintensität <span class="calc-hint" title="Wie ungleichmäßig das Lastprofil ist: gleichmäßig = konstante Prozesslast; spitz = große Motoren, Aufzüge oder kurze Leistungsspitzen.">ⓘ</span></label>
-              <div class="calc-slider-wrap">
-                <input type="range" id="inp-p" min="0" max="1" step="0.05" value="0.60" />
-                <span class="calc-slider-val" id="val-p">0.60</span>
+            <div class="verdicts">
+              <div class="verdict v-warn">
+                <div class="v-arch"><span class="de">AC-Architektur</span><span class="en">AC architecture</span></div>
+                <div class="v-band"><span class="de">Grenzwertig</span><span class="en">Marginal</span></div>
+                <p><span class="de">Mit typischen Komponenten zu knapp, mit Spitzenkomponenten gedeckt. Die Lücke liegt innerhalb der Parameter-Unsicherheit.</span><span class="en">Too tight with typical components, covered with best-in-class ones. The gap sits inside the parameter uncertainty.</span></p>
               </div>
-              <div class="calc-slider-hints">
-                <span data-lang="en">Flat (constant)</span>
-                <span data-lang="de">Gleichmäßig</span>
-                <span data-lang="en">Peaky (high peaks)</span>
-                <span data-lang="de">Sehr spitz</span>
+              <div class="verdict v-ok">
+                <div class="v-arch"><span class="de">DC-Architektur</span><span class="en">DC architecture</span></div>
+                <div class="v-band"><span class="de">Machbar</span><span class="en">Feasible</span></div>
+                <p><span class="de">Auch mit Komponenten am unteren Rand des Bandes gedeckt. Das Ergebnis hängt nicht von optimistischen Geräteannahmen ab.</span><span class="en">Covered even with components at the bottom of the band. The result does not depend on optimistic equipment assumptions.</span></p>
               </div>
-            </div>
-
-            <!-- Slider: DC suitability -->
-            <div class="calc-field full">
-              <label data-lang="en">DC suitability of loads <span class="calc-hint" title="Share of loads that are DC-native or can be fed directly from a DC bus (e.g. drives, EV chargers, LED lighting). Higher = more conversion losses eliminated.">ⓘ</span></label>
-              <label data-lang="de">DC-Eignung der Lasten <span class="calc-hint" title="Anteil der Lasten, die DC-nativ sind oder direkt von einem DC-Bus gespeist werden können (z. B. Antriebe, Ladestationen, LED). Höher = weniger Umwandlungsverluste.">ⓘ</span></label>
-              <div class="calc-slider-wrap">
-                <input type="range" id="inp-x_dc" min="0" max="1" step="0.05" value="0.60" />
-                <span class="calc-slider-val" id="val-x_dc">0.60</span>
-              </div>
-              <div class="calc-slider-hints">
-                <span data-lang="en">Low (mostly AC loads)</span>
-                <span data-lang="de">Niedrig (überwiegend AC)</span>
-                <span data-lang="en">High (mostly DC loads)</span>
-                <span data-lang="de">Hoch (überwiegend DC)</span>
-              </div>
-            </div>
-
-            <!-- Slider: regeneration intensity -->
-            <div class="calc-field full">
-              <label data-lang="en">Regeneration intensity <span class="calc-hint" title="Share of motors/drives with energy recuperation (e.g. regenerative braking, VFDs with regen). Higher = more braking energy recovered into the DC bus.">ⓘ</span></label>
-              <label data-lang="de">Regenerationsintensität <span class="calc-hint" title="Anteil der Motoren/Antriebe mit Energierückspeisung (z. B. Rekuperationsbremsung, rückspeisende Umrichter). Höher = mehr Bremsenergie zurück in den DC-Bus.">ⓘ</span></label>
-              <div class="calc-slider-wrap">
-                <input type="range" id="inp-x_regen" min="0" max="1" step="0.05" value="0.40" />
-                <span class="calc-slider-val" id="val-x_regen">0.40</span>
-              </div>
-              <div class="calc-slider-hints">
-                <span data-lang="en">Low (few regen drives)</span>
-                <span data-lang="de">Niedrig (wenig Rückspeisung)</span>
-                <span data-lang="en">High (many regen drives)</span>
-                <span data-lang="de">Hoch (viel Rückspeisung)</span>
-              </div>
-            </div>
-
-            <!-- Region dropdown -->
-            <div class="calc-field full" id="field-region">
-              <label data-lang="en">Region (for PV yield)</label>
-              <label data-lang="de">Region (für PV-Ertrag)</label>
-              <div class="calc-select-wrap">
-                <select id="inp-region">
-                  <option value="Northern Europe">Northern Europe (~950 kWh/kWp)</option>
-                  <option value="Central Europe" selected>Central Europe (~1050 kWh/kWp)</option>
-                  <option value="Southern Europe">Southern Europe (~1400 kWh/kWp)</option>
-                  <option value="US North">US North (~1200 kWh/kWp)</option>
-                  <option value="US South">US South (~1600 kWh/kWp)</option>
-                  <option value="India/SE Asia">India / SE Asia (~1500 kWh/kWp)</option>
-                  <option value="Default">Other / Unknown (~1100 kWh/kWp)</option>
-                </select>
-              </div>
-              <div class="calc-error" id="err-region"></div>
-            </div>
-
-            <hr class="calc-divider" />
-
-            <!-- Battery storage toggle -->
-            <div class="calc-toggle-row">
-              <label class="toggle-switch" for="inp-has_storage" aria-label="Battery storage present">
-                <input type="checkbox" id="inp-has_storage" checked />
-                <span class="toggle-track"></span>
-              </label>
-              <label for="inp-has_storage" data-lang="en">Battery storage present (or planned)</label>
-              <label for="inp-has_storage" data-lang="de">Batteriespeicher vorhanden (oder geplant)</label>
-            </div>
-
-            <!-- Demand charge toggle -->
-            <div class="calc-toggle-row">
-              <label class="toggle-switch" for="inp-know_demand_charge" aria-label="Demand charge known">
-                <input type="checkbox" id="inp-know_demand_charge" checked />
-                <span class="toggle-track"></span>
-              </label>
-              <label for="inp-know_demand_charge" data-lang="en">I know my demand charge</label>
-              <label for="inp-know_demand_charge" data-lang="de">Ich kenne meinen Leistungspreis</label>
-            </div>
-            <div class="calc-field full" id="demand-field" style="display:block">
-              <label data-lang="en">Demand charge (€/kW·month)</label>
-              <label data-lang="de">Leistungspreis (€/kW · Monat)</label>
-              <input type="text" inputmode="decimal" id="inp-demand_charge" value="12" placeholder="12" />
-              <div class="calc-error" id="err-demand_charge"></div>
-            </div>
-
-            <!-- Calculate button -->
-            <button type="submit" class="calc-submit-btn" id="calc-submit-btn">
-              <span data-lang="en">Calculate</span>
-              <span data-lang="de">Berechnen</span>
-            </button>
-
-          </form>
-
-          <!-- Result panel (shown after calculation) -->
-          <div class="calc-result" id="calc-result">
-            <div class="calc-result-headline">
-              <div class="calc-result-pct" id="result-pct">—</div>
-              <div class="calc-result-label" data-lang="en">Annual electricity savings potential</div>
-              <div class="calc-result-label" data-lang="de">Jährliches Stromeinsparungspotenzial</div>
-              <div class="calc-result-scenario" id="result-disclaimer"></div>
-            </div>
-
-            <!-- Contact form to receive full PDF -->
-            <div class="calc-contact-prompt" id="calc-contact-prompt">
-              <p data-lang="en">Get the full breakdown — conversion, recuperation, PV, peak savings, CO₂ — as a PDF in your inbox.</p>
-              <p data-lang="de">Erhalten Sie die vollständige Aufschlüsselung — Umwandlung, Rekuperation, PV, Spitzenlast, CO₂ — als PDF in Ihrem Postfach.</p>
-              <div class="calc-contact-field">
-                <input type="text" id="inp-name" placeholder="Full name / Vollständiger Name" autocomplete="name" />
-                <div class="calc-error" id="err-name"></div>
-              </div>
-              <div class="calc-contact-field">
-                <input type="email" id="inp-email" placeholder="Work email / Geschäftliche E-Mail" autocomplete="email" />
-                <div class="calc-error" id="err-email"></div>
-              </div>
-              <div class="calc-contact-field">
-                <input type="text" id="inp-company" placeholder="Company / Unternehmen" autocomplete="organization" />
-                <div class="calc-error" id="err-company"></div>
-              </div>
-              <div class="calc-contact-field">
-                <input type="text" id="inp-role" placeholder="Your role / Ihre Funktion" />
-              </div>
-              <button type="button" class="calc-send-btn" id="calc-send-btn">
-                <span data-lang="en">Send my report</span>
-                <span data-lang="de">Bericht zusenden</span>
-              </button>
-            </div>
-
-            <!-- Success state -->
-            <div class="calc-success" id="calc-success">
-              <div class="calc-success-icon">✓</div>
-              <p data-lang="en">Done — <strong>check your inbox.</strong><br>The full breakdown is on its way.</p>
-              <p data-lang="de">Gesendet — <strong>prüfen Sie Ihr Postfach.</strong><br>Die vollständige Aufschlüsselung ist unterwegs.</p>
-            </div>
-          </div>
-
-        </div><!-- /calc-card -->
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══ ABOUT ════════════════════════════════════════════════ -->
-  <section class="about" id="about">
-    <div class="container">
-      <div class="about-inner">
-        <div class="about-photo reveal">
-          <img src="c13_website_team.jpg" alt="Kodnyx team" />
-        </div>
-        <div class="about-text reveal" style="transition-delay:0.15s">
-          <p class="section-label" data-lang="en">About</p>
-          <p class="section-label" data-lang="de">Über uns</p>
-          <h2 class="section-title" data-lang="en">Building the category of electrical architecture optimisation</h2>
-          <h2 class="section-title" data-lang="de">Wir bauen die Kategorie der elektrischen Architekturoptimierung</h2>
-          <p class="section-body" data-lang="en">Kodnyx develops methods and tools for optimising electrical architecture in industrial and commercial facilities and data centres. The founding team combines expertise in electrical power systems, system modelling and industrial deployment.</p>
-          <p class="section-body" data-lang="de">Kodnyx entwickelt Methoden und Werkzeuge zur Optimierung elektrischer Architekturen in Industrie- und Gewerbegebäuden sowie Rechenzentren. Das Gründerteam vereint Expertise in elektrischen Energiesystemen, Systemmodellierung und industrieller Umsetzung.</p>
-          <div class="about-tags">
-            <span class="about-tag">Berlin-based</span>
-            <span class="about-tag" data-lang="en">Engineering-driven</span>
-            <span class="about-tag" data-lang="de">Engineering-getrieben</span>
-            <span class="about-tag" data-lang="en">Deep-tech B2B</span>
-            <span class="about-tag" data-lang="de">Deep-Tech B2B</span>
-          </div>
-          <div style="margin-top:32px">
-            <a href="https://www.linkedin.com/company/kodnyx/" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:10px;color:var(--teal);font-weight:600;font-size:0.9rem;">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-              Follow Kodnyx on LinkedIn
-            </a>
-          </div>
-          <div style="margin-top:28px">
-            <p style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-mid);margin-bottom:14px;" data-lang="en">Supported by</p>
-            <p style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-mid);margin-bottom:14px;" data-lang="de">Unterstützt von</p>
-            <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
-              <a href="https://carbonthirteen.com/" target="_blank" rel="noopener noreferrer" title="Carbon13">
-                <img src="Carbon13_logo.png" alt="Carbon13" style="height:28px;width:auto;opacity:0.75;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.75'" />
-              </a>
-              <a href="https://berlin.impacthub.net/" target="_blank" rel="noopener noreferrer" title="Impact Hub Berlin">
-                <img src="impact_hub.png" alt="Impact Hub Berlin" style="height:28px;width:auto;opacity:0.75;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.75'" />
-              </a>
-              <a href="https://www.germanaccelerator.com/" target="_blank" rel="noopener noreferrer" title="German Accelerator">
-                <img src="German_Accelerator_Logo.png" alt="German Accelerator" style="height:28px;width:auto;opacity:0.75;transition:opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.75'" />
-              </a>              
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══ CTA BANNER ═══════════════════════════════════════════ -->
-  <section class="cta-banner">
-    <div class="container reveal">
-      <h2 data-lang="en">Ready to analyse your electrical architecture?</h2>
-      <h2 data-lang="de">Bereit, Ihre elektrische Architektur zu analysieren?</h2>
-      <p data-lang="en">We work with electrical planners and industrial facilities to evaluate AC/DC optimisation potential.</p>
-      <p data-lang="de">Wir arbeiten mit Elektroplanern und Industriebetrieben, um das AC/DC-Optimierungspotenzial zu bewerten.</p>
-      <a href="https://outlook.office.com/bookwithme/user/3cacf49477234033a9f04f34982069a8%40kodnyx.com?anonymous&ismsaljsauthenabled=true" target="_blank" class="btn-primary" data-lang="en">Request a review</a>
-      <a href="https://outlook.office.com/bookwithme/user/3cacf49477234033a9f04f34982069a8%40kodnyx.com?anonymous&ismsaljsauthenabled=true" target="_blank" class="btn-primary" data-lang="de">Review anfragen</a>
-    </div>
-  </section>
-
-  <!-- ═══ FOOTER ═══════════════════════════════════════════════ -->
-  <footer>
-    <div class="container">
-      <div class="footer-inner">
-        <a href="#" class="footer-logo">
-          <img src="kodnyx_white_teal.png" alt="Kodnyx" />
-        </a>
-        <ul class="footer-links">
-          <li><a href="#references" data-lang="en">References</a><a href="#references" data-lang="de">Referenzen</a></li>
-          <li><a href="#calculator" data-lang="en">Calculator</a><a href="#calculator" data-lang="de">Rechner</a></li>
-          <li><a href="#about" data-lang="en">About</a><a href="#about" data-lang="de">Über uns</a></li>
-          <li><a href="imprint.html" data-lang="en">Imprint</a><a href="imprint.html" data-lang="de">Impressum</a></li>
-        </ul>
-        <div class="footer-social">
-          <a href="https://www.linkedin.com/company/kodnyx/" target="_blank" rel="noopener noreferrer">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-            LinkedIn
-          </a>
+        <div class="mock-note">
+          <span class="de">Stilisierte Darstellung · Werte aus einem realen, anonymisierten Standortlauf</span>
+          <span class="en">Stylised view · values from a real, anonymised site run</span>
         </div>
       </div>
-      <div class="footer-bottom">
-        <p class="footer-copy">© 2026 Kodnyx UG · Berlin</p>
-        <p class="footer-copy">
-          <a href="imprint.html" style="color:inherit" data-lang="en">Imprint & Privacy</a>
-          <a href="imprint.html" style="color:inherit" data-lang="de">Impressum & Datenschutz</a>
+    </div>
+
+    <p class="caveat">
+      <span class="de">Ergebnisse sind qualifizierte Schätzungen auf Basis der Standortangaben, keine Detailplanung. Wirkungsgrade stammen aus gemessenen Quellen. Komponentenpreise sind Richtwerte, keine Lieferantenangebote.</span>
+      <span class="en">Results are qualified estimates based on the site data, not detailed planning. Efficiencies come from measured sources. Component prices are indicative, not supplier quotes.</span>
+    </p>
+  </div>
+</section>
+
+<section id="fields" class="mist">
+  <div class="wrap">
+    <div class="sect-kicker"><span class="de">Einsatzfelder</span><span class="en">Use cases</span></div>
+    <h2>
+      <span class="de">Ein typischer Fall: ein Depot an einem zu kleinen Netzanschluss</span>
+      <span class="en">A typical case: a depot on a grid connection that is too small</span>
+    </h2>
+    <p class="lead">
+      <span class="de">Die Flotte ist bestellt, die Ladeleistung steht fest, und der Netzanschluss war für all das nie ausgelegt. Die Frage ist nicht, ob elektrifiziert wird, sondern was der Standort dafür braucht: mehr Anschluss, ein Speicher, PV auf dem Dach oder eine andere Architektur. Der DC Explorer beantwortet sie, solange die Architekturentscheidung noch offen ist.</span>
+      <span class="en">The fleet is ordered, the charging power is set, and the grid connection was never sized for any of it. The question is not whether to electrify, but what the site needs: a bigger connection, a battery, PV on the roof, or a different architecture. The DC Explorer answers it while the architecture decision is still open.</span>
+    </p>
+    <p class="lead" style="margin-top: 22px;">
+      <span class="de">Das Depot ist dabei nur ein Beispiel: Für die Rechnung ist Laden eine Last wie jede andere. Dieselbe Analyse trägt deshalb überall, wo Erzeugung, Speicher und Lasten an einem Anschluss zusammenkommen: vom Ladehub für LKW und Busse über Industrie-Microgrids bis zum Gewerbestandort mit PV und Speicher.</span>
+      <span class="en">The depot is just one example: to the calculation, charging is a load like any other. The same analysis therefore carries wherever generation, storage and loads meet at one connection: from charging hubs for trucks and buses to industrial DC microgrids to commercial sites with PV and storage.</span>
+    </p>
+  </div>
+</section>
+
+<section id="why">
+  <div class="wrap">
+    <div class="sect-kicker"><span class="de">Hintergrund</span><span class="en">Background</span></div>
+    <h2>
+      <span class="de">Wo DC etwas bringt und wo nicht</span>
+      <span class="en">Where DC delivers, and where it does not</span>
+    </h2>
+    <div class="why-grid">
+      <div class="why-card">
+        <p><span class="de"><strong>Fast alles ist intern schon DC.</strong> Maschinen, Ladepunkte und Server arbeiten längst mit Gleichstrom, und PV und Batterien liefern ihn direkt. Trotzdem läuft fast jeder Standort über ein AC-Netz, mit Umwandlung an jeder Stufe.</span><span class="en"><strong>Almost everything is already DC inside.</strong> Machines, charge points and servers have long run on direct current, and PV and batteries deliver it directly. Yet almost every site runs on an AC grid, converting at every stage.</span></p>
+      </div>
+      <div class="why-card">
+        <p><span class="de"><strong>DC kann viel bringen, je nach Standort.</strong> Weniger Wandlungsverluste, eine kleinere Spitzenlast, weniger Speicher für dasselbe Ergebnis oder mehr Durchsatz an einem vollen Anschluss.</span><span class="en"><strong>DC can deliver a lot, depending on the site.</strong> Fewer conversion losses, a lower peak load, less battery for the same result, or more throughput on a loaded connection.</span></p>
+      </div>
+      <div class="why-card">
+        <p><span class="de"><strong>Und manchmal reicht AC.</strong> Viele Anlagen sind heute schon sehr effizient. Genau deshalb rechnen wir jeden Standort einzeln durch: Wir zeigen, wo ein Standort die Vorteile von DC wirklich nutzt: konkret für den Einzelfall, nicht generisch.</span><span class="en"><strong>And sometimes AC is enough.</strong> Many systems are already very efficient today. That is exactly why we work through every site individually: we show where a site really uses the advantages of DC: concretely for the case at hand, not generically.</span></p>
+      </div>
+    </div>
+    <p style="margin-top: 30px; font-size: 14.5px; color: var(--ink-mid);">
+      <span class="de">Mehr zum Stand der DC-Technik: <a href="https://odca.zvei.org/" target="_blank" rel="noopener" style="color: var(--teal); font-weight: 600;">Open DC Alliance (ODCA)</a></span>
+      <span class="en">More on the state of DC technology: <a href="https://odca.zvei.org/" target="_blank" rel="noopener" style="color: var(--teal); font-weight: 600;">Open DC Alliance (ODCA)</a></span>
+    </p>
+    </div>
+</section>
+
+<section id="refs" class="mist">
+  <div class="wrap">
+    <h2><span class="de">Referenzen</span><span class="en">References</span></h2>
+    <div class="refs">
+      <div class="ref-card">
+        <div class="ref-logo on-teal"><img src="assets/phenogy.png" alt="Phenogy" /></div>
+        <span class="ref-tag"><span class="de">Software im Einsatz</span><span class="en">Software in use</span></span>
+        <h3><a href="https://www.phenogy.com/" target="_blank" rel="noopener">Phenogy AG</a></h3>
+        <p>
+          <span class="de">Phenogy, Hersteller von Natrium-Ionen-Speichern, nutzt eine gebrandete Version des DC Explorers im eigenen Vertrieb. Der klassische Anwendungsfall: ein Depot für schwere E-LKW an einem begrenzten Netzanschluss.</span>
+          <span class="en">Phenogy, a manufacturer of sodium-ion storage systems, uses a branded version of the DC Explorer in its own sales. The classic case: a depot for heavy electric trucks on a limited grid connection.</span>
+        </p>
+      </div>
+      <div class="ref-card">
+        <div class="ref-logo on-teal"><img src="assets/hartig.png" alt="Hartig" /></div>
+        <span class="ref-tag"><span class="de">Projekt in Umsetzung</span><span class="en">Project under way</span></span>
+        <h3><a href="https://hartig-germany.com/" target="_blank" rel="noopener">Hartig GmbH &amp; Co KG</a></h3>
+        <p>
+          <span class="de">Messgeräte-Hersteller, Aschaffenburg. Kodnyx hat das DC-Konzept für die bestehende Fertigung erarbeitet: eine DC-Insel mit den vorhandenen CNC-Maschinen, direkte PV-Kopplung und DC-seitiger Speicher, ohne Maschinenumbau.</span>
+          <span class="en">Precision instruments manufacturer, Aschaffenburg. Kodnyx developed the DC concept for the existing production: a DC island using the machines already in place, direct PV coupling and DC-side storage, no machine replacement.</span>
         </p>
       </div>
     </div>
-  </footer>
+    <blockquote>
+      <span class="de">„Als ich zum ersten Mal von der Umstellung auf Gleichstrom hörte, hatte ich Zweifel, ob unsere Maschinen dafür geeignet wären. Kodnyx zeigte uns nicht nur, wie unsere Anlage nachgerüstet werden könnte, sondern auch, wie wir unsere Dach-PV-Anlage direkt nutzen können."</span>
+      <span class="en">"When I first heard about switching to DC, I doubted whether our machines would qualify. Kodnyx not only showed how our plant could be retrofitted but also how to harness our rooftop PV directly."</span>
+      <div class="quote-src">Stephan-Leander Klein · <span class="de">Geschäftsführer, Hartig GmbH &amp; Co KG</span><span class="en">Managing Director, Hartig GmbH &amp; Co KG</span></div>
+    </blockquote>
+  </div>
+</section>
 
-  <!-- ═══ VIDEO MODAL ══════════════════════════════════════════ -->
-  <div class="modal-overlay" id="video-modal">
-    <div class="modal-box">
-      <button class="modal-close" id="modal-close" aria-label="Close video">✕</button>
-      <div class="modal-video-wrap">
-        <iframe
-          id="modal-iframe"
-          src=""
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allowfullscreen
-        ></iframe>
-      </div>
+<section id="wall">
+  <div class="wrap">
+    <h2><span class="de">Partner</span><span class="en">Partners</span></h2>
+    <div class="wall">
+      <div class="wall-tile has-img"><a class="wall-link" href="https://odca.zvei.org/" target="_blank" rel="noopener"><img class="wall-img" src="assets/odca.svg" alt="ODCA (Open Direct Current Alliance)" /></a><span class="w-role"><span class="de">Mitglied</span><span class="en">Member</span></span></div>
+      <div class="wall-tile has-img"><a class="wall-link" href="https://www.hypersys.de/" target="_blank" rel="noopener"><span class="wall-combo"><img src="assets/hypersys-icon.svg" alt="" /><span class="w-name">Hypersys</span></span></a><span class="w-role"><span class="de">Kooperation</span><span class="en">Partner</span></span></div>
+      <div class="wall-tile has-img"><a class="wall-link" href="https://carbonthirteen.com/" target="_blank" rel="noopener"><img class="wall-img" src="assets/carbon13.png" alt="Carbon13" /></a><span class="w-role"><span class="de">Unterstützt von</span><span class="en">Backed by</span></span></div>
+      <div class="wall-tile has-img"><a class="wall-link" href="https://www.germanaccelerator.com/" target="_blank" rel="noopener"><img class="wall-img" src="assets/german-accelerator.png" alt="German Accelerator" /></a><span class="w-role"><span class="de">Alumni</span><span class="en">Alumni</span></span></div>
+      <div class="wall-tile has-img"><a class="wall-link" href="https://berlin.impacthub.net/" target="_blank" rel="noopener"><img class="wall-img" src="assets/impact-hub.png" alt="Impact Hub Berlin" /></a><span class="w-role"><span class="de">Mitglied</span><span class="en">Member</span></span></div>
     </div>
   </div>
+</section>
 
-  <script>
-    // ─── LANGUAGE TOGGLE ──────────────────────────────────────
-    // YouTube video IDs
-    const EN_VIDEO_EMBED = 'https://www.youtube.com/embed/k6ma3aHYtwQ?autoplay=1&rel=0&origin=https://kodnyx.com';
-    const DE_VIDEO_EMBED = 'https://www.youtube.com/embed/AgLRIxz0KGk?autoplay=1&rel=0&origin=https://kodnyx.com';
-
-    let currentLang = 'de'; // German default
-
-    function setLang(lang) {
-      currentLang = lang;
-      document.querySelectorAll('[data-lang]').forEach(el => {
-        const show = el.dataset.lang === lang;
-        if (show) {
-          el.style.removeProperty('display');
-          // block-level elements need explicit block, not just ''
-          if (['H1','H2','H3','P','DIV','SECTION','UL','LI','SPAN'].includes(el.tagName)) {
-            if (['H1','H2','H3'].includes(el.tagName)) {
-              el.style.display = 'block';
-            }
-            // others: removing display property lets CSS cascade take over naturally
-          }
-        } else {
-          el.style.display = 'none';
-        }
-      });
-      document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.targetLang === lang);
-      });
-      document.documentElement.lang = lang;
-      // Update scenario dropdown option labels
-      const sel = document.getElementById('inp-scenario');
-      if (sel) {
-        const saved = sel.value;
-        sel.querySelectorAll('option').forEach(opt => {
-          const key = opt.value;
-          const labels = { Conservative: {en:'Conservative',de:'Konservativ'}, Expected: {en:'Expected',de:'Erwartet'}, Ceiling: {en:'Ceiling (Optimistic)',de:'Optimistisch'} };
-          if (labels[key]) opt.textContent = labels[key][lang] || opt.textContent;
-        });
-        sel.value = saved;
-      }
-    }
-
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-      btn.addEventListener('click', () => setLang(btn.dataset.targetLang));
-    });
-
-    // init on page load as German
-    setLang('de');
-
-    // ─── NAV SCROLL ───────────────────────────────────────────
-    const nav = document.getElementById('main-nav');
-    window.addEventListener('scroll', () => {
-      nav.classList.toggle('scrolled', window.scrollY > 60);
-    });
-
-    // ─── HAMBURGER ────────────────────────────────────────────
-    document.getElementById('hamburger').addEventListener('click', () => {
-      document.getElementById('nav-links').classList.toggle('open');
-    });
-
-    // ─── HERO BG ──────────────────────────────────────────────
-    const heroBg = document.getElementById('hero-bg');
-    const img = new Image();
-    img.onload = () => heroBg.classList.add('loaded');
-    img.src = 'DSC03355.jpg';
-
-    // ─── VIDEO MODAL ──────────────────────────────────────────
-    const modal = document.getElementById('video-modal');
-    const modalIframe = document.getElementById('modal-iframe');
-
-    document.getElementById('open-video').addEventListener('click', () => {
-      modalIframe.src = EN_VIDEO_EMBED;
-      modal.classList.add('open');
-    });
-    document.getElementById('open-video-de').addEventListener('click', () => {
-      modalIframe.src = DE_VIDEO_EMBED;
-      modal.classList.add('open');
-    });
-    document.getElementById('modal-close').addEventListener('click', () => {
-      modal.classList.remove('open');
-      modalIframe.src = '';
-    });
-    modal.addEventListener('click', e => {
-      if (e.target === modal) {
-        modal.classList.remove('open');
-        modalIframe.src = '';
-      }
-    });
-
-    // ─── SCROLL REVEAL ────────────────────────────────────────
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12 });
-
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-  </script>
-
-  <!-- ═══ COOKIE BANNER ══════════════════════════════════════ -->
-  <style>
-    #cookie-banner {
-      display: none;
-      position: fixed;
-      bottom: 0; left: 0; right: 0;
-      z-index: 300;
-      background: var(--teal);
-      padding: 14px 5%;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 12px;
-      box-shadow: 0 -2px 20px rgba(0,0,0,0.2);
-    }
-    #cookie-banner.show { display: flex; }
-    #cookie-banner p {
-      font-size: 0.82rem;
-      color: rgba(255,255,255,0.85);
-      margin: 0;
-      max-width: 680px;
-    }
-    #cookie-banner a {
-      color: var(--teal-light);
-      text-decoration: underline;
-    }
-    .cookie-btns { display: flex; gap: 10px; flex-shrink: 0; }
-    .cookie-btn-accept {
-      background: var(--orange);
-      color: white;
-      border: none;
-      font-family: var(--font);
-      font-size: 0.82rem;
-      font-weight: 700;
-      padding: 8px 18px;
-      border-radius: 5px;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-    .cookie-btn-decline {
-      background: none;
-      color: rgba(255,255,255,0.6);
-      border: 1px solid rgba(255,255,255,0.25);
-      font-family: var(--font);
-      font-size: 0.82rem;
-      font-weight: 600;
-      padding: 8px 18px;
-      border-radius: 5px;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-  </style>
-
-  <div id="cookie-banner">
-    <p>We use Google Analytics to understand how visitors use this site. <a href="datenschutz.html">Privacy policy</a></p>
-    <div class="cookie-btns">
-      <button class="cookie-btn-accept" id="cookie-accept">OK, got it</button>
-      <button class="cookie-btn-decline" id="cookie-decline">Decline</button>
+<section id="about" class="mist">
+  <div class="wrap">
+    <div class="sect-kicker"><span class="de">Über uns</span><span class="en">About</span></div>
+    <h2><span class="de">Wer dahinter steht</span><span class="en">Who is behind it</span></h2>
+    <p class="lead">
+      <span class="de">Kodnyx baut Software für effiziente Elektrifizierung. Die Vision dahinter: Jeder Standort bekommt die Architektur, die zu ihm passt.</span>
+      <span class="en">Kodnyx builds software for efficient electrification. The vision behind it: every site gets the architecture that fits it.</span>
+    </p>
+    <div class="team-names">
+      <div><span class="nm">Duygu Cagman</span> · <span class="rl"><span class="de">Kunden und Partner</span><span class="en">Customers and partners</span></span></div>
+      <div><span class="nm">Andrés Andrade</span> · <span class="rl">Engineering</span></div>
+      <div><span class="nm">Kristoffer Möller</span> · <span class="rl"><span class="de">Produkt und Tech</span><span class="en">Product and tech</span></span></div>
     </div>
+    <p class="about-contact">
+      <a class="mail-link" href="#" data-u="kristoffer" data-d="kodnyx.com"><span class="de">E-Mail schreiben</span><span class="en">Write an email</span></a>
+      <span aria-hidden="true">·</span>
+      <a href="https://outlook.office.com/bookwithme/user/9130846c184547bda8a00d228ad83d8a%40kodnyx.com?anonymous&amp;ep=bwmEmailSignature" target="_blank" rel="noopener"><span class="de">Termin buchen</span><span class="en">Book a call</span></a>
+    </p>
   </div>
+</section>
 
-  <script>
-    // ─── COOKIE CONSENT ───────────────────────────────────────
-    const cookieBanner = document.getElementById('cookie-banner');
+<footer>
+  <div class="foot-inner">
+    <span>© 2026 Kodnyx</span>
+    <a href="imprint.html"><span class="de">Impressum</span><span class="en">Imprint</span></a>
+    <a href="datenschutz.html"><span class="de">Datenschutz</span><span class="en">Privacy</span></a>
+    <span class="foot-spacer"></span>
+    <a href="https://www.linkedin.com/company/kodnyx/" target="_blank" rel="noopener">LinkedIn</a>
+  </div>
+</footer>
 
-    if (!localStorage.getItem('cookie-consent')) {
-      cookieBanner.classList.add('show');
-    }
-
-    function setConsent(value) {
-      localStorage.setItem('cookie-consent', value);
-      cookieBanner.classList.remove('show');
-      if (value === 'declined') {
-        window['ga-disable-G-WJ4861VRQT'] = true;
-      }
-    }
-
-    document.getElementById('cookie-accept').addEventListener('click', () => setConsent('accepted'));
-    document.getElementById('cookie-decline').addEventListener('click', () => setConsent('declined'));
-  </script>
-
-  <!-- ═══ CALCULATOR SCRIPT ══════════════════════════════════ -->
-  <script>
-    // ─── CONFIG ───────────────────────────────────────────────
-    const WORKER_URL = 'https://kodnyx-calculator.kristoffer-285.workers.dev';
-    // Update to api.kodnyx.com once custom domain is configured in Cloudflare
-
-    // ─── ELEMENT REFS ─────────────────────────────────────────
-    const form         = document.getElementById('calc-form');
-    const submitBtn    = document.getElementById('calc-submit-btn');
-    const resultPanel  = document.getElementById('calc-result');
-    const resultPct    = document.getElementById('result-pct');
-    const resultDiscl  = document.getElementById('result-disclaimer');
-    const contactForm  = document.getElementById('calc-contact-prompt');
-    const sendBtn      = document.getElementById('calc-send-btn');
-    const successPanel = document.getElementById('calc-success');
-    const demandField  = document.getElementById('demand-field');
-    const demandToggle = document.getElementById('inp-know_demand_charge');
-
-    // Slider live display
-    ['p', 'x_dc', 'x_regen'].forEach(id => {
-      const slider = document.getElementById('inp-' + id);
-      const display = document.getElementById('val-' + id);
-      slider.addEventListener('input', () => {
-        display.textContent = parseFloat(slider.value).toFixed(2);
-      });
+<script>
+  (function () {
+    var btn = document.getElementById('langBtn');
+    btn.addEventListener('click', function () {
+      var en = document.body.classList.toggle('lang-en');
+      btn.textContent = en ? 'DE' : 'EN';
+      document.documentElement.setAttribute('lang', en ? 'en' : 'de');
     });
-
-    // Thousand-separator formatting for number inputs
-    const numInputIds = ['inp-E_annual', 'inp-c_kWh', 'inp-PV_kWp', 'inp-demand_charge'];
-    numInputIds.forEach(id => {
-      const el = document.getElementById(id);
-      if (!el) return;
-      // On blur: format with locale separators
-      el.addEventListener('blur', () => {
-        const isDecimal = (id === 'inp-c_kWh' || id === 'inp-demand_charge');
-        const val = isDecimal
-          ? parseDecimalInput(el.value)
-          : parseFloat(el.value.replace(/[^0-9]/g, '') || '0');
-        if (!isNaN(val) && el.value.trim() !== '') {
-          const locale = currentLang === 'de' ? 'de-DE' : 'en-US';
-          const decimals = isDecimal ? 2 : 0;
-          el.value = val.toLocaleString(locale, {minimumFractionDigits: decimals, maximumFractionDigits: decimals});
-        }
-      });
-      // On focus: just select all so user can type freely — never overwrite
-      el.addEventListener('focus', () => { el.select(); });
+    document.documentElement.setAttribute('lang', 'de');
+    document.querySelectorAll('a.mail-link').forEach(function (a) {
+      var addr = a.getAttribute('data-u') + '@' + a.getAttribute('data-d');
+      var subj = a.getAttribute('data-s');
+      a.href = 'mailto:' + addr + (subj ? '?subject=' + encodeURIComponent(subj) : '');
     });
-
-    // Demand charge toggle
-    demandToggle.addEventListener('change', () => {
-      demandField.style.display = demandToggle.checked ? 'block' : 'none';
-    });
-
-    // Parse a locale-formatted decimal string ("0,29" or "0.29") to float
-    function parseDecimalInput(str) {
-      // If both dot and comma present, the one appearing last is the decimal separator
-      const s = str.trim();
-      const lastDot = s.lastIndexOf('.');
-      const lastComma = s.lastIndexOf(',');
-      if (lastComma > lastDot) {
-        // comma is decimal separator (DE): remove dots (thousands), replace comma with dot
-        return parseFloat(s.replace(/\./g, '').replace(',', '.'));
-      } else {
-        // dot is decimal separator (EN): remove commas (thousands)
-        return parseFloat(s.replace(/,/g, ''));
-      }
-    }
-
-    // ─── VALIDATION (client-side mirror of Worker) ────────────
-    function getInputs() {
-      return {
-        E_annual:           parseFloat(document.getElementById('inp-E_annual').value.replace(/[^0-9]/g,'')||'0'),
-        c_kWh:              parseDecimalInput(document.getElementById('inp-c_kWh').value),
-        PV_kWp:             parseFloat(document.getElementById('inp-PV_kWp').value.replace(/[^0-9]/g,'')||'0'),
-        p:                  parseFloat(document.getElementById('inp-p').value),
-        x_dc:               parseFloat(document.getElementById('inp-x_dc').value),
-        x_regen:            parseFloat(document.getElementById('inp-x_regen').value),
-        has_storage:        document.getElementById('inp-has_storage').checked,
-        know_demand_charge: demandToggle.checked,
-        demand_charge:      parseDecimalInput(document.getElementById('inp-demand_charge').value) || 0,
-        scenario:           document.getElementById('inp-scenario').value,
-        region:             document.getElementById('inp-region').value,
-        lang:               currentLang,
-      };
-    }
-
-    function clearErrors() {
-      document.querySelectorAll('.calc-error').forEach(el => {
-        el.textContent = '';
-        el.classList.remove('visible');
-      });
-      document.querySelectorAll('.calc-field').forEach(el => {
-        el.classList.remove('has-error');
-      });
-    }
-
-    function showError(fieldId, msg) {
-      const errEl   = document.getElementById('err-' + fieldId);
-      const fieldEl = document.getElementById('field-' + fieldId);
-      if (errEl)   { errEl.textContent = msg; errEl.classList.add('visible'); }
-      if (fieldEl) { fieldEl.classList.add('has-error'); }
-    }
-
-    const VALIDATION_MSGS = {
-      E_annual: {
-        en: 'Must be greater than 0 kWh.',
-        de: 'Muss größer als 0 kWh sein.',
-      },
-      c_kWh: {
-        en: 'Must be greater than 0 €/kWh.',
-        de: 'Muss größer als 0 €/kWh sein.',
-      },
-      PV_kWp: {
-        en: 'Cannot be negative.',
-        de: 'Darf nicht negativ sein.',
-      },
-      demand_charge: {
-        en: 'Must be greater than 0 €/kW·month.',
-        de: 'Muss größer als 0 €/kW·Monat sein.',
-      },
-    };
-
-    function validateCalcInputs(inputs) {
-      const L = currentLang;
-      let ok = true;
-      if (!inputs.E_annual || inputs.E_annual <= 0) {
-        showError('E_annual', VALIDATION_MSGS.E_annual[L]); ok = false;
-      }
-      if (!inputs.c_kWh || inputs.c_kWh <= 0) {
-        showError('c_kWh', VALIDATION_MSGS.c_kWh[L]); ok = false;
-      }
-      if (inputs.PV_kWp < 0) {
-        showError('PV_kWp', VALIDATION_MSGS.PV_kWp[L]); ok = false;
-      }
-      if (inputs.know_demand_charge && (!inputs.demand_charge || inputs.demand_charge <= 0)) {
-        showError('demand_charge', VALIDATION_MSGS.demand_charge[L]); ok = false;
-      }
-      return ok;
-    }
-
-    // ─── CALCULATE ────────────────────────────────────────────
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      clearErrors();
-      const inputs = getInputs();
-      if (!validateCalcInputs(inputs)) return;
-
-      // Show spinner
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = `<span class="calc-spinner"></span><span data-lang="en">Calculating…</span><span data-lang="de">Berechnung…</span>`;
-      setLang(currentLang); // re-apply lang to spinner button
-
-      try {
-        const res = await fetch(`${WORKER_URL}/calculate`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(inputs),
-        });
-
-        const data = await res.json();
-
-        if (!res.ok) {
-          // Server-side validation errors
-          if (data.errors) {
-            Object.entries(data.errors).forEach(([field, msg]) => showError(field, msg));
-          }
-          return;
-        }
-
-        // Show result
-        const locale = currentLang === 'de' ? 'de-DE' : 'en-US';
-        const pct = (data.percent_save * 100).toLocaleString(locale, {minimumFractionDigits:1, maximumFractionDigits:1}) + ' %';
-        resultPct.textContent = pct;
-        resultDiscl.textContent = currentLang === 'de'
-          ? 'Indikative Schätzung – Abweichungen je nach Anlage möglich.'
-          : 'Indicative estimate — actual savings depend on site conditions.';
-        resultPanel.classList.add('visible');
-
-        // Scroll result into view on mobile
-        if (window.innerWidth < 768) {
-          resultPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }
-
-        // Store inputs for submit step
-        form._lastInputs = inputs;
-
-      } catch (err) {
-        console.error('Calculate error:', err);
-        // Graceful fallback: show generic error
-        showError('E_annual', currentLang === 'de'
-          ? 'Verbindungsfehler. Bitte versuchen Sie es erneut.'
-          : 'Connection error. Please try again.');
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = `<span data-lang="en">Calculate</span><span data-lang="de">Berechnen</span>`;
-        setLang(currentLang);
-      }
-    });
-
-    // ─── SUBMIT (send report) ─────────────────────────────────
-    sendBtn.addEventListener('click', async () => {
-      // Validate contact fields
-      let ok = true;
-      const name    = document.getElementById('inp-name').value.trim();
-      const email   = document.getElementById('inp-email').value.trim();
-      const company = document.getElementById('inp-company').value.trim();
-      const role    = document.getElementById('inp-role').value.trim();
-
-      const L = currentLang;
-
-      if (!name) {
-        const el = document.getElementById('err-name');
-        el.textContent = L === 'de' ? 'Bitte geben Sie Ihren Namen ein.' : 'Please enter your name.';
-        el.classList.add('visible'); ok = false;
-      }
-      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        const el = document.getElementById('err-email');
-        el.textContent = L === 'de' ? 'Bitte geben Sie eine gültige E-Mail-Adresse ein.' : 'Please enter a valid email.';
-        el.classList.add('visible'); ok = false;
-      }
-      if (!company) {
-        const el = document.getElementById('err-company');
-        el.textContent = L === 'de' ? 'Bitte geben Sie Ihr Unternehmen ein.' : 'Please enter your company.';
-        el.classList.add('visible'); ok = false;
-      }
-      if (!ok) return;
-
-      sendBtn.disabled = true;
-      sendBtn.innerHTML = `<span class="calc-spinner"></span><span data-lang="en">Sending…</span><span data-lang="de">Wird gesendet…</span>`;
-      setLang(currentLang);
-
-      try {
-        const res = await fetch(`${WORKER_URL}/submit`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            inputs:  form._lastInputs,
-            contact: { name, email, company, role },
-            lang:    currentLang,
-          }),
-        });
-
-        if (res.ok) {
-          contactForm.style.display = 'none';
-          successPanel.classList.add('visible');
-        } else {
-          const data = await res.json();
-          if (data.errors) {
-            Object.entries(data.errors).forEach(([field, msg]) => {
-              const el = document.getElementById('err-' + field);
-              if (el) { el.textContent = msg; el.classList.add('visible'); }
-            });
-          }
-          sendBtn.disabled = false;
-          sendBtn.innerHTML = `<span data-lang="en">Send my report</span><span data-lang="de">Bericht zusenden</span>`;
-          setLang(currentLang);
-        }
-      } catch (err) {
-        console.error('Submit error:', err);
-        sendBtn.disabled = false;
-        sendBtn.innerHTML = `<span data-lang="en">Send my report</span><span data-lang="de">Bericht zusenden</span>`;
-        setLang(currentLang);
-        const el = document.getElementById('err-email');
-        if (el) {
-          el.textContent = L === 'de' ? 'Verbindungsfehler. Bitte versuchen Sie es erneut.' : 'Connection error. Please try again.';
-          el.classList.add('visible');
-        }
-      }
-    });
-
-    // Re-run calculate when scenario changes (if result already shown)
-    document.getElementById('inp-scenario').addEventListener('change', () => {
-      if (resultPanel.classList.contains('visible')) {
-        form.dispatchEvent(new Event('submit'));
-      }
-    });
-  </script>
-
+  })();
+</script>
 </body>
 </html>
