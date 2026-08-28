@@ -5,27 +5,24 @@ Framework, kein Paketmanager — reines HTML mit inline `<style>` und `<script>`
 
 ## Deployment
 
-**Push auf `main` = live.** Es gibt keine Staging-Stufe und keinen CI-Schritt.
-Jeder Commit auf `main` ist nach ~1 Minute unter der jeweiligen Pages-URL
-öffentlich. Entsprechend vorsichtig pushen.
+**Push auf `main` = live auf kodnyx.com.** Es gibt keine Staging-Stufe und
+keinen CI-Schritt. Jeder Commit auf `main` ist nach ~1 Minute öffentlich.
+Entsprechend vorsichtig pushen und vorher lokal ansehen.
 
-## Remotes — wir sind mitten im Umzug
+## Remotes
 
 | Remote   | Repo                                   | Rolle |
 |----------|----------------------------------------|-------|
-| `origin` | `kodnyx13/kodnyx13.github.io`          | **Zielrepo**, Firmen-Org. Hier wird entwickelt. Preview: `https://kodnyx13.github.io` |
-| `old`    | `kodnyx-kris/kodnyx-kris.github.io`    | Altrepo, Privat-Account. Bedient aktuell **die Live-Domain `kodnyx.com`**. Nur noch für Hotfixes. |
+| `origin` | `kodnyx13/kodnyx13.github.io`          | **Das Live-Repo** (Firmen-Org). Bedient `kodnyx.com` seit dem Cutover am 28.08.2026. HTTPS wird erzwungen. |
+| `old`    | `kodnyx-kris/kodnyx-kris.github.io`    | Altrepo, Privat-Account, ohne Domain. Nur noch Historie; Push-URL ist absichtlich deaktiviert. |
 
-Die Umstellung der Custom Domain auf `origin` passiert erst zum Launch des
-Redesigns. Bis dahin gilt:
-
-- **Die Datei `CNAME` darf in `origin` nicht existieren.** Sonst streiten sich
-  altes und neues Repo um `kodnyx.com`. Die Domain wird am Launch-Tag über die
-  Repo-Settings gesetzt, GitHub schreibt die Datei dann selbst.
+- **Die Datei `CNAME` (Inhalt `kodnyx.com`) gehört jetzt ins Repo** — GitHub
+  hat sie beim Setzen der Domain selbst angelegt. Nicht löschen.
 - **Das Repo muss public bleiben.** `kodnyx13` ist auf dem GitHub-Free-Plan,
   dort gibt es Pages nur für öffentliche Repos.
 
 DNS liegt bei IONOS und wird ausschließlich von Kristoffer geändert.
+Apex-A-Records zeigen auf die GitHub-Pages-IPs (185.199.108–111.153).
 
 ## Lokale Vorschau
 
@@ -73,7 +70,10 @@ Verbindliche Marken-Vorgaben:
 
 ## Bekannte Baustellen
 
-- „Enforce HTTPS" ist am Live-Repo **aus** — beim Cutover aktivieren (am neuen
-  Repo ist es bereits an).
-- Die Domain ist bei GitHub **nicht verifiziert** (kein `_github-pages-challenge`
-  TXT-Record) — beim Cutover für die Org `kodnyx13` nachholen.
+- Die Domain ist bei GitHub für die Org `kodnyx13` **nicht verifiziert**
+  (kein `_github-pages-challenge`-TXT-Record bei IONOS) — nachholen, schützt
+  gegen Domain-Übernahme.
+- Der `www`-CNAME bei IONOS zeigt noch auf `kodnyx-kris.github.io`. Funktioniert
+  (GitHub routet über den Host-Header), sollte aber auf `kodnyx13.github.io`
+  umgestellt werden.
+- Altrepo `kodnyx-kris/kodnyx-kris.github.io` ist noch nicht archiviert.
