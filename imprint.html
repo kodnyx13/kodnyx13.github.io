@@ -217,14 +217,23 @@
     <div class="imprint-section">
       <h2>Umsatzsteuer-ID</h2>
       <p>
-        <span class="placeholder">⚠ USt-IdNr. wird nach Zuteilung ergänzt</span>
+        Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:<br>
+        DE463633432
       </p>
     </div>
 
     <div class="imprint-section">
       <h2>Kontakt</h2>
       <p>
-        E-Mail: <a href="/cdn-cgi/l/email-protection#98fcede1ffedd8f3f7fcf6e1e0b6fbf7f5"><span class="__cf_email__" data-cfemail="8aeefff3edffcae1e5eee4f3f2a4e9e5e7">[email&#160;protected]</span></a>
+        E-Mail: <a href="#" id="imprint-mail">wird geladen …</a>
+        <script>
+          (function () {
+            var a = document.getElementById('imprint-mail');
+            var addr = ['duygu', 'kodnyx.com'].join('@');
+            a.href = 'mailto:' + addr;
+            a.textContent = addr;
+          })();
+        </script>
       </p>
     </div>
 
