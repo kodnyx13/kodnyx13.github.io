@@ -24,6 +24,14 @@ Entsprechend vorsichtig pushen und vorher lokal ansehen.
 DNS liegt bei IONOS und wird ausschließlich von Kristoffer geändert.
 Apex-A-Records zeigen auf die GitHub-Pages-IPs (185.199.108–111.153).
 
+## Issues und Board
+
+- **Issues leben im privaten Repo `kodnyx13/website`** (enthält keinen Code).
+  Dieses Repo ist public; Issues sind hier seit 25.09.2026 abgeschaltet.
+- Board: privates Org-Projekt "website board" (`kodnyx13`, Projekt 2).
+- Commit-Messages hier sind öffentlich: keine internen Details und keine
+  Verweise auf Issues im privaten Tracker (Kundennamen: siehe Textregeln).
+
 ## Lokale Vorschau
 
 Über das Browser-Pane, Konfiguration in `.claude/launch.json`
