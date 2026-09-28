@@ -19,10 +19,6 @@
     --ink:        #0D1F22;
     --ink-mid:    #3A5C60;
     --line:       rgba(14,76,82,.14);
-    --ok:         #2F8C6A;
-    --ok-tint:    #EDF6F1;
-    --warn:       #C97A1F;
-    --warn-tint:  #FBF3E8;
     --font: 'Plus Jakarta Sans', 'Segoe UI', system-ui, sans-serif;
     --nav-h: 66px;
   }
@@ -39,6 +35,8 @@
     line-height: 1.65;
     -webkit-font-smoothing: antialiased;
   }
+
+  .nobr { white-space: nowrap; }
 
   /* language toggle: DE default, body.lang-en shows EN */
   .en { display: none; }
@@ -57,12 +55,12 @@
     font-size: 12.5px; font-weight: 700; letter-spacing: .14em;
     text-transform: uppercase; color: var(--teal-light);
   }
+  .hero .kicker { color: #8ACDC7; }
 
   /* ── nav ──────────────────────────────────────── */
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 50;
     background: var(--teal);
-    border-bottom: 1px solid rgba(255,255,255,.08);
   }
   .nav-inner {
     max-width: 1060px; margin: 0 auto; padding: 0 24px;
@@ -102,7 +100,7 @@
 
   /* ── hero ─────────────────────────────────────── */
   .hero {
-    background: var(--teal-deep);
+    background: var(--teal);
     color: #fff;
     padding: calc(var(--nav-h) + 84px) 0 92px;
     text-align: center;
@@ -159,7 +157,7 @@
   .fork-link:hover { color: var(--teal-light); }
 
   /* So funktioniert's */
-  .how-grid { display: grid; grid-template-columns: 5fr 6fr; gap: 48px; margin-top: 44px; align-items: start; }
+  .how-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 44px; align-items: start; }
   @media (max-width: 900px) { .how-grid { grid-template-columns: 1fr; } }
   .how-points { display: flex; flex-direction: column; gap: 26px; }
   .how-point h3 { font-size: 17px; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
@@ -172,43 +170,28 @@
   .how-result ul { margin: 8px 0 0; padding-left: 18px; display: flex; flex-direction: column; gap: 6px; color: var(--ink-mid); }
   .caveat { margin-top: 34px; font-size: 12.5px; color: var(--ink-mid); opacity: .75; max-width: 820px; line-height: 1.6; }
 
-  /* stylised tool mock */
-  .mock {
-    background: var(--paper); border: 1px solid var(--line); border-radius: 12px;
-    box-shadow: 0 18px 44px rgba(14,76,82,.10);
-    overflow: hidden; font-size: 13px;
+  /* conversation demo (GIF from the DC Explorer) */
+  .demo { margin: 40px auto 0; max-width: 720px; }
+  .demo-frame {
+    position: relative; border-radius: 12px; overflow: hidden;
+    border: 1px solid var(--line); box-shadow: 0 18px 44px rgba(14,76,82,.10);
+    background: var(--paper);
   }
-  .mock-head {
-    background: var(--teal); color: #fff; padding: 10px 18px;
-    display: flex; align-items: center; gap: 10px;
-    font-weight: 700; font-size: 12.5px; letter-spacing: .08em; text-transform: uppercase;
+  .demo-frame img { display: block; width: 100%; height: auto; }
+  .demo-frame img.en { display: none; }
+  body.lang-en .demo-frame img.en { display: block; }
+  body.lang-en .demo-frame img.de { display: none; }
+  .demo-pause {
+    position: absolute; right: 12px; bottom: 12px;
+    background: rgba(9,52,57,.82); color: #fff; border: 0; border-radius: 6px;
+    padding: 7px 12px; font: 700 12.5px var(--font); cursor: pointer;
   }
-  .mock-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--teal-light); }
-  .mock-body { padding: 20px; display: flex; flex-direction: column; gap: 18px; }
-  .sliders { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 22px; }
-  @media (max-width: 480px) { .sliders { grid-template-columns: 1fr; } }
-  .slider-row { display: flex; flex-direction: column; gap: 7px; }
-  .slider-label { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
-  .slider-label .lbl { color: var(--ink-mid); font-weight: 500; }
-  .slider-label .val { font-weight: 800; color: var(--ink); font-size: 14px; font-variant-numeric: tabular-nums; white-space: nowrap; }
-  .track { position: relative; height: 5px; border-radius: 3px; background: #E3ECEA; }
-  .fill { position: absolute; inset: 0 auto 0 0; border-radius: 3px; background: var(--teal-light); }
-  .thumb {
-    position: absolute; top: 50%; transform: translate(-50%,-50%);
-    width: 14px; height: 14px; border-radius: 50%;
-    background: var(--paper); border: 3.5px solid var(--teal);
-  }
-  .verdicts { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-  @media (max-width: 480px) { .verdicts { grid-template-columns: 1fr; } }
-  .verdict { border-radius: 8px; padding: 14px 16px; border: 1px solid; }
-  .verdict .v-arch { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; opacity: .75; }
-  .verdict .v-band { font-size: 16px; font-weight: 800; letter-spacing: .02em; margin: 2px 0 8px; }
-  .verdict p { font-size: 12.5px; line-height: 1.5; }
-  .v-warn { background: var(--warn-tint); border-color: rgba(201,122,31,.3); color: #5C3A10; }
-  .v-warn .v-band { color: var(--warn); }
-  .v-ok { background: var(--ok-tint); border-color: rgba(47,140,106,.3); color: #1C4A38; }
-  .v-ok .v-band { color: var(--ok); }
-  .mock-note { text-align: center; font-size: 12px; color: var(--ink-mid); opacity: .7; margin-top: 12px; }
+  .demo-pause:hover { background: var(--teal-deep); }
+  @media (max-width: 600px) { .demo-pause { right: 6px; bottom: 6px; min-height: 24px; padding: 4px 8px; font-size: 11px; } }
+  .demo-pause .lbl-play { display: none; }
+  .demo-pause[data-paused="true"] .lbl-play { display: inline; }
+  .demo-pause[data-paused="true"] .lbl-pause { display: none; }
+  .demo figcaption { margin-top: 12px; font-size: 12.5px; color: var(--ink-mid); opacity: .8; text-align: center; }
 
   /* Einsatzfelder */
   .fields-strip {
@@ -217,23 +200,6 @@
   .field-tag {
     background: var(--paper); border: 1px solid var(--line); border-radius: 999px;
     padding: 9px 18px; font-size: 14.5px; font-weight: 600; color: var(--teal);
-  }
-
-  /* Hintergrund */
-  .why-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 22px; margin-top: 40px; }
-  @media (max-width: 860px) { .why-grid { grid-template-columns: 1fr; } }
-  .why-card { border-top: 3px solid var(--teal-light); padding-top: 18px; }
-  .why-card p { color: var(--ink-mid); font-size: 15.5px; }
-  .why-card strong { color: var(--ink); }
-  .wp-slot {
-    margin-top: 44px; border: 1.5px dashed var(--line); border-radius: 10px;
-    padding: 18px 22px; font-size: 13.5px; color: var(--ink-mid);
-    display: flex; align-items: center; gap: 12px;
-  }
-  .wp-slot .tag {
-    font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
-    color: var(--ink-mid); border: 1px solid var(--line);
-    padding: 3px 8px; border-radius: 4px; white-space: nowrap;
   }
 
   /* Referenzen */
@@ -350,8 +316,8 @@
       <img src="kodnyx_white_teal.png" alt="Kodnyx" />
     </a>
     <div class="nav-links">
-      <a class="anchor" href="#how"><span class="de">So funktioniert's</span><span class="en">How it works</span></a>
       <a class="anchor" href="#fields"><span class="de">Einsatzfelder</span><span class="en">Use cases</span></a>
+      <a class="anchor" href="#how"><span class="de">So funktioniert's</span><span class="en">How it works</span></a>
       <a class="anchor" href="#refs"><span class="de">Referenzen</span><span class="en">References</span></a>
       <a class="anchor" href="#about"><span class="de">Über uns</span><span class="en">About</span></a>
       <button class="lang-btn" id="langBtn" type="button" aria-label="Sprache wechseln">EN</button>
@@ -367,8 +333,8 @@
       <span class="en">Electrification,<br>calculated.</span>
     </h1>
     <p class="sub">
-      <span class="de">Der DC Explorer rechnet Standorte live im Gespräch durch. Vom Netzanschluss bis zur Stromverteilung: AC oder DC?</span>
-      <span class="en">The DC Explorer runs a site live in the meeting. From grid connection to power distribution: AC or DC?</span>
+      <span class="de">Reicht der Netzanschluss für neue <span class="nobr">E-Lkw</span>, oder braucht es einen Speicher? Der DC Explorer rechnet das live im Gespräch aus.</span>
+      <span class="en">Is the grid connection enough for new electric trucks, or do you need a battery? The DC Explorer works it out live in the meeting.</span>
     </p>
     <div class="hero-ctas">
       <a class="btn btn-ghost" href="#how"><span class="de">So funktioniert's</span><span class="en">How it works</span></a>
@@ -382,19 +348,19 @@
     <h2><span class="de">Ein Werkzeug, zwei Wege</span><span class="en">One tool, two ways to use it</span></h2>
     <div class="fork">
       <div class="fork-card">
-        <h3><span class="de">Ihr Produkt in der Architektur, die gewinnt.</span><span class="en">Your product in the architecture that wins.</span></h3>
+        <h3><span class="de">Sie verkaufen Ladelösungen oder Speicher.</span><span class="en">You sell charging or storage solutions.</span></h3>
         <p>
-          <span class="de">Der DC Explorer rechnet den Standort Ihres Kunden direkt im Termin durch. Partner nutzen ihn als gebrandete Version und gewinnen damit ihre eigenen Projekte.</span>
-          <span class="en">The DC Explorer calculates your customer's site right in the meeting. Partners use it as a branded version and win their own projects with it.</span>
+          <span class="de">Ihr Kunde fragt, ob der Anschluss reicht. Mit dem DC Explorer beantworten Sie das selbst, direkt im Termin. Ihre Version trägt Ihr Logo und rechnet mit den Produkten, die Sie anbieten.</span>
+          <span class="en">Your customer asks whether the connection is enough. With the DC Explorer, you answer that yourself, right in the meeting. Your version carries your logo and calculates with the products you offer.</span>
         </p>
-        <p class="fork-eg"><span class="de">Batteriehersteller, Ladetechnik-Anbieter, Systemintegratoren</span><span class="en">Battery makers, charging hardware vendors, system integrators</span></p>
+        <p class="fork-eg"><span class="de">Hersteller, Händler, Systemintegratoren, Installateure</span><span class="en">Manufacturers, distributors, system integrators, installers</span></p>
         <a class="btn btn-teal fork-btn mail-link" href="#" data-u="kristoffer" data-d="kodnyx.com" data-s="Gebrandete Version DC Explorer"><span class="de">Gebrandete Version anfragen</span><span class="en">Request a branded version</span></a>
       </div>
       <div class="fork-card">
         <h3><span class="de">Sie elektrifizieren einen eigenen Standort.</span><span class="en">You are electrifying a site of your own.</span></h3>
         <p>
-          <span class="de">Ob Depot, Produktion oder Gewerbe: Schicken Sie uns die Eckdaten, und wir rechnen gemeinsam durch, was der Standort braucht und in welcher Reihenfolge sich Investitionen lohnen.</span>
-          <span class="en">Whether depot, production or commercial: send us the key data and we work out together what the site needs, and in which order investments pay off.</span>
+          <span class="de">Depot, Produktion oder Gewerbe: Schicken Sie uns die Eckdaten. Wir rechnen mit Ihnen durch, was der Standort braucht und was sich zuerst lohnt.</span>
+          <span class="en">Depot, production or commercial site: send us the key data. We work out with you what the site needs and what pays off first.</span>
         </p>
         <p class="fork-eg"><span class="de">Flottenbetreiber, Industrie- und Gewerbeunternehmen, Ladepark-Betreiber</span><span class="en">Fleet operators, industrial and commercial companies, charge point operators</span></p>
         <a class="btn btn-teal fork-btn mail-link" href="#" data-u="kristoffer" data-d="kodnyx.com" data-s="Eckdaten Standort"><span class="de">Eckdaten schicken</span><span class="en">Send site data</span></a>
@@ -403,102 +369,7 @@
   </div>
 </section>
 
-<section id="how">
-  <div class="wrap">
-    <div class="sect-kicker"><span class="de">So funktioniert's</span><span class="en">How it works</span></div>
-    <h2>
-      <span class="de">AC oder DC? Derselbe Standort, ein volles Jahr</span>
-      <span class="en">AC or DC? The same site, a full year</span>
-    </h2>
-    <div class="how-grid">
-      <div class="how-points">
-        <div class="how-point">
-          <h3><span class="de">Standortdaten des Kunden, keine generischen Annahmen.</span><span class="en">The customer's site data, no generic assumptions.</span></h3>
-          <p><span class="de">Netzanschluss, PV, Speicher, Last oder Flotte und der Standort reichen als Eingabe.</span><span class="en">Grid connection, PV, storage, load or fleet and the location are enough as input.</span></p>
-        </div>
-        <div class="how-point">
-          <h3><span class="de">AC und DC im selben Modell.</span><span class="en">AC and DC in the same model.</span></h3>
-          <p><span class="de">AC und DC laufen durch dasselbe Jahr, nach denselben Regeln. So zeigt der Vergleich, was die Architektur wirklich ausmacht.</span><span class="en">AC and DC run through the same year, under the same rules. So the comparison shows what the architecture really changes.</span></p>
-        </div>
-        <div class="how-point">
-          <h3><span class="de">Jede Annahme sichtbar und veränderbar.</span><span class="en">Every assumption visible and adjustable.</span></h3>
-          <p><span class="de">Der Explorer wird im Gespräch benutzt: Slider bewegen, Ergebnis sehen.</span><span class="en">The Explorer is used in the conversation: move a slider, see the result.</span></p>
-        </div>
-        <div class="how-result">
-          <strong><span class="de">Das Ergebnis:</span><span class="en">The result:</span></strong>
-          <ul>
-            <li><span class="de">Ob die Auslegung trägt: ein Machbarkeitsurteil in drei Stufen, robust, grenzwertig oder nicht machbar.</span><span class="en">Whether the sizing holds: a feasibility verdict in three bands, robust, marginal or infeasible.</span></li>
-            <li><span class="de">Welchen Netzanschluss der Standort wirklich braucht.</span><span class="en">The grid connection the site really needs.</span></li>
-            <li><span class="de">Wie viel PV und Speicher sich lohnen, und der kleinste Speicher, der durch die schlechteste Winterwoche trägt.</span><span class="en">How much PV and battery pay off, and the smallest battery that carries the site through the worst winter week.</span></li>
-            <li><span class="de">Die jährliche Energiedifferenz zwischen AC und DC.</span><span class="en">The annual energy difference between AC and DC.</span></li>
-          </ul>
-          <p style="margin-top: 14px; color: var(--ink-mid);"><span class="de">Eine erste Machbarkeitsprüfung, live am konkreten Standort. Bevor jemand eine teure Studie beauftragt oder aus dem Bauch entscheidet.</span><span class="en">A first feasibility check, live on the actual site. Before anyone commissions an expensive study or decides on gut feeling.</span></p>
-        </div>
-      </div>
-
-      <div>
-        <div class="mock" role="img" aria-label="Stilisierte Ansicht des DC Explorers">
-          <div class="mock-head"><span class="mock-dot"></span> DC Explorer</div>
-          <div class="mock-body">
-            <div class="sliders">
-              <div class="slider-row">
-                <div class="slider-label">
-                  <span class="lbl"><span class="de">Netzanschlussleistung</span><span class="en">Grid connection</span></span>
-                  <span class="val">350&nbsp;kW</span>
-                </div>
-                <div class="track"><span class="fill" style="width:34%"></span><span class="thumb" style="left:34%"></span></div>
-              </div>
-              <div class="slider-row">
-                <div class="slider-label">
-                  <span class="lbl"><span class="de">Batteriespeicher</span><span class="en">Battery storage</span></span>
-                  <span class="val"><span class="de">2.100</span><span class="en">2,100</span>&nbsp;kWh</span>
-                </div>
-                <div class="track"><span class="fill" style="width:22%"></span><span class="thumb" style="left:22%"></span></div>
-              </div>
-              <div class="slider-row">
-                <div class="slider-label">
-                  <span class="lbl"><span class="de">PV-Anlage</span><span class="en">PV system</span></span>
-                  <span class="val">640&nbsp;kWp</span>
-                </div>
-                <div class="track"><span class="fill" style="width:42%"></span><span class="thumb" style="left:42%"></span></div>
-              </div>
-              <div class="slider-row">
-                <div class="slider-label">
-                  <span class="lbl"><span class="de">Ladeleistung</span><span class="en">Charging power</span></span>
-                  <span class="val">320&nbsp;kW</span>
-                </div>
-                <div class="track"><span class="fill" style="width:28%"></span><span class="thumb" style="left:28%"></span></div>
-              </div>
-            </div>
-            <div class="verdicts">
-              <div class="verdict v-warn">
-                <div class="v-arch"><span class="de">AC-Architektur</span><span class="en">AC architecture</span></div>
-                <div class="v-band"><span class="de">Grenzwertig</span><span class="en">Marginal</span></div>
-                <p><span class="de">Mit typischen Komponenten zu knapp, mit Spitzenkomponenten gedeckt. Die Lücke liegt innerhalb der Parameter-Unsicherheit.</span><span class="en">Too tight with typical components, covered with best-in-class ones. The gap sits inside the parameter uncertainty.</span></p>
-              </div>
-              <div class="verdict v-ok">
-                <div class="v-arch"><span class="de">DC-Architektur</span><span class="en">DC architecture</span></div>
-                <div class="v-band"><span class="de">Robust</span><span class="en">Robust</span></div>
-                <p><span class="de">Auch mit Komponenten am unteren Rand des Bandes gedeckt. Das Ergebnis hängt nicht von optimistischen Geräteannahmen ab.</span><span class="en">Covered even with components at the bottom of the band. The result does not depend on optimistic equipment assumptions.</span></p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="mock-note">
-          <span class="de">Stilisierte Darstellung · Werte aus einem realen, anonymisierten Standortlauf</span>
-          <span class="en">Stylised view · values from a real, anonymised site run</span>
-        </div>
-      </div>
-    </div>
-
-    <p class="caveat">
-      <span class="de">Ergebnisse sind qualifizierte Schätzungen auf Basis der Standortangaben, keine Detailplanung. Wirkungsgrade stammen aus gemessenen Quellen. Komponentenpreise sind Richtwerte, keine Lieferantenangebote.</span>
-      <span class="en">Results are qualified estimates based on the site data, not detailed planning. Efficiencies come from measured sources. Component prices are indicative, not supplier quotes.</span>
-    </p>
-  </div>
-</section>
-
-<section id="fields" class="mist">
+<section id="fields">
   <div class="wrap">
     <div class="sect-kicker"><span class="de">Einsatzfelder</span><span class="en">Use cases</span></div>
     <h2>
@@ -506,42 +377,74 @@
       <span class="en">A typical case: a depot on a grid connection that is too small</span>
     </h2>
     <p class="lead">
-      <span class="de">Die Flotte ist bestellt, die Ladeleistung steht fest, und der Netzanschluss war für all das nie ausgelegt. Die Frage ist nicht, ob elektrifiziert wird, sondern was der Standort dafür braucht: mehr Anschluss, ein Speicher, PV auf dem Dach oder eine andere Architektur. Der DC Explorer beantwortet sie, solange die Architekturentscheidung noch offen ist.</span>
-      <span class="en">The fleet is ordered, the charging power is set, and the grid connection was never sized for any of it. The question is not whether to electrify, but what the site needs: a bigger connection, a battery, PV on the roof, or a different architecture. The DC Explorer answers it while the architecture decision is still open.</span>
+      <span class="de">Die Flotte ist bestellt, die Ladeleistung steht fest. Nur der Netzanschluss war dafür nie ausgelegt. Reicht ein Speicher? Hilft PV auf dem Dach? Oder braucht der Standort mehr Anschluss? Der DC Explorer rechnet das durch, bevor die Entscheidung fällt.</span>
+      <span class="en">The fleet is ordered and the charging power is set. Only the grid connection was never sized for it. Is a battery enough? Does rooftop PV help? Or does the site need a bigger connection? The DC Explorer works it out before the decision is made.</span>
     </p>
     <p class="lead" style="margin-top: 22px;">
-      <span class="de">Das Depot ist dabei nur ein Beispiel: Für die Rechnung ist Laden eine Last wie jede andere. Dieselbe Analyse trägt deshalb überall, wo Erzeugung, Speicher und Lasten an einem Anschluss zusammenkommen: vom Ladehub für LKW und Busse über Industrie-Microgrids bis zum Gewerbestandort mit PV und Speicher.</span>
-      <span class="en">The depot is just one example: to the calculation, charging is a load like any other. The same analysis therefore carries wherever generation, storage and loads meet at one connection: from charging hubs for trucks and buses to industrial DC microgrids to commercial sites with PV and storage.</span>
+      <span class="de">Das Depot ist nur ein Beispiel. Die Rechnung passt überall, wo PV, Speicher und Verbraucher an einem Anschluss hängen: im Ladehub, in der Fabrik oder am Gewerbestandort.</span>
+      <span class="en">The depot is just one example. The calculation fits wherever PV, storage and loads share one connection: at a charging hub, in a factory or at a commercial site.</span>
     </p>
   </div>
 </section>
 
-<section id="why">
+<section id="how" class="mist">
   <div class="wrap">
-    <div class="sect-kicker"><span class="de">Hintergrund</span><span class="en">Background</span></div>
+    <div class="sect-kicker"><span class="de">So funktioniert's</span><span class="en">How it works</span></div>
     <h2>
-      <span class="de">Wo DC etwas bringt und wo nicht</span>
-      <span class="en">Where DC delivers, and where it does not</span>
+      <span class="de">Ein Standort, ein volles Jahr, live durchgerechnet</span>
+      <span class="en">One site, a full year, calculated live</span>
     </h2>
-    <div class="why-grid">
-      <div class="why-card">
-        <p><span class="de"><strong>Fast alles ist intern schon DC.</strong> Maschinen, Ladepunkte und Server arbeiten längst mit Gleichstrom, und PV und Batterien liefern ihn direkt. Trotzdem läuft fast jeder Standort über ein AC-Netz, mit Umwandlung an jeder Stufe.</span><span class="en"><strong>Almost everything is already DC inside.</strong> Machines, charge points and servers have long run on direct current, and PV and batteries deliver it directly. Yet almost every site runs on an AC grid, converting at every stage.</span></p>
+    <figure class="demo">
+      <div class="demo-frame">
+        <img class="demo-img de" src="assets/explorer-gespraech-de.gif?v=2" data-poster="assets/explorer-gespraech-de-poster.webp?v=2" width="1120" height="620" loading="lazy"
+             alt="Beispiel aus einem Verkaufsgespräch. Links fragt ein Fuhrparkleiter, ob der Netzanschluss für vier E-Lkw reicht. Rechts rechnet der DC Explorer. Der Speicher wächst, bis DC machbar ist. AC bleibt grenzwertig." />
+        <img class="demo-img en" src="assets/explorer-gespraech-en.gif?v=2" data-poster="assets/explorer-gespraech-en-poster.webp?v=2" width="1120" height="620" loading="lazy"
+             alt="Example from a sales conversation. On the left, a fleet manager asks whether the grid connection is enough for four electric trucks. On the right, the DC Explorer calculates. The battery grows until DC is feasible. AC stays marginal." />
+        <button class="demo-pause" type="button" data-paused="false">
+          <span class="lbl-pause"><span class="de">Animation anhalten</span><span class="en">Pause animation</span></span>
+          <span class="lbl-play"><span class="de">Animation abspielen</span><span class="en">Play animation</span></span>
+        </button>
       </div>
-      <div class="why-card">
-        <p><span class="de"><strong>DC kann viel bringen, je nach Standort.</strong> Weniger Wandlungsverluste, eine kleinere Spitzenlast, weniger Speicher für dasselbe Ergebnis oder mehr Durchsatz an einem vollen Anschluss.</span><span class="en"><strong>DC can deliver a lot, depending on the site.</strong> Fewer conversion losses, a lower peak load, less battery for the same result, or more throughput on a loaded connection.</span></p>
+      <figcaption>
+        <span class="de">Beispiel aus einem Verkaufsgespräch, nachgestellt. Die Zahlen rechnet der DC Explorer für einen Standort in Meitingen.</span>
+        <span class="en">Example from a sales conversation, re-enacted. The DC Explorer calculates the numbers for a site in Meitingen.</span>
+      </figcaption>
+    </figure>
+    <div class="how-grid">
+      <div class="how-points">
+        <div class="how-point">
+          <h3><span class="de">Jede Annahme sichtbar und veränderbar.</span><span class="en">Every assumption visible and adjustable.</span></h3>
+          <p><span class="de">Regler bewegen, Ergebnis sofort sehen.</span><span class="en">Move a slider, see the result at once.</span></p>
+        </div>
+        <div class="how-point">
+          <h3><span class="de">Echte Standortdaten.</span><span class="en">Real site data.</span></h3>
+          <p><span class="de">Netzanschluss, PV, Speicher, Last und Ort genügen.</span><span class="en">Grid connection, PV, storage, load and location are enough.</span></p>
+        </div>
+        <div class="how-point">
+          <h3><span class="de">AC und DC im selben Modell.</span><span class="en">AC and DC in the same model.</span></h3>
+          <p><span class="de">Gleiches Jahr, gleiche Regeln.</span><span class="en">Same year, same rules.</span></p>
+        </div>
       </div>
-      <div class="why-card">
-        <p><span class="de"><strong>Und manchmal reicht AC.</strong> Viele Anlagen sind heute schon sehr effizient. Genau deshalb rechnen wir jeden Standort einzeln durch. Wir zeigen, wo ein Standort die Vorteile von DC wirklich nutzt, konkret für den Einzelfall, nicht generisch.</span><span class="en"><strong>And sometimes AC is enough.</strong> Many systems are already very efficient today. That is exactly why we work through every site individually. We show where a site really uses the advantages of DC, concretely for the case at hand, not generically.</span></p>
+      <div class="how-result">
+        <strong><span class="de">Eine erste Auslegung, live durchgespielt:</span><span class="en">A first design, played through live:</span></strong>
+        <ul>
+          <li><span class="de">Wie viel PV und Speicher braucht der Standort?</span><span class="en">How much PV and storage does the site need?</span></li>
+          <li><span class="de">Trägt der Standort auch die schlechteste Winterwoche?</span><span class="en">Does the site hold in the worst winter week?</span></li>
+          <li><span class="de"><span class="nobr">E-Lkw</span> oder Diesel: Was rechnet sich?</span><span class="en">Electric truck or diesel: which pays off?</span></li>
+          <li><span class="de">AC oder DC: Was passt zum Standort?</span><span class="en">AC or DC: which fits the site?</span></li>
+        </ul>
+        <p style="margin-top: 14px; color: var(--ink-mid);"><span class="de">Die Antwort gibt es im Termin. Nicht erst nach einer Vorstudie.</span><span class="en">You get the answer in the meeting, not after a pre-study.</span></p>
       </div>
     </div>
-    <p style="margin-top: 30px; font-size: 14.5px; color: var(--ink-mid);">
-      <span class="de">Mehr zum Stand der DC-Technik: <a href="https://odca.zvei.org/" target="_blank" rel="noopener" style="color: var(--teal); font-weight: 600;">Open DC Alliance (ODCA)</a></span>
-      <span class="en">More on the state of DC technology: <a href="https://odca.zvei.org/" target="_blank" rel="noopener" style="color: var(--teal); font-weight: 600;">Open DC Alliance (ODCA)</a></span>
+
+    <p class="caveat">
+      <span class="de">Die Ergebnisse sind qualifizierte Schätzungen aus den Standortangaben. Sie ersetzen keine Detailplanung. Die Wirkungsgrade stammen aus gemessenen Quellen. Die Komponentenpreise sind Richtwerte, keine Lieferantenangebote.</span>
+      <span class="en">The results are qualified estimates from the site data. They do not replace detailed planning. The efficiencies come from measured sources. The component prices are indicative, not supplier quotes.</span>
     </p>
-    </div>
+  </div>
 </section>
 
-<section id="refs" class="mist">
+<section id="refs">
   <div class="wrap">
     <h2><span class="de">Referenzen</span><span class="en">References</span></h2>
     <div class="refs">
@@ -550,8 +453,8 @@
         <span class="ref-tag"><span class="de">Software im Einsatz</span><span class="en">Software in use</span></span>
         <h3><a href="https://www.phenogy.com/" target="_blank" rel="noopener">Phenogy AG</a></h3>
         <p>
-          <span class="de">Phenogy, Hersteller von Natrium-Ionen-Speichern, nutzt eine gebrandete Version des DC Explorers im eigenen Vertrieb. Der klassische Anwendungsfall: ein Depot für schwere E-LKW an einem begrenzten Netzanschluss.</span>
-          <span class="en">Phenogy, a manufacturer of sodium-ion storage systems, uses a branded version of the DC Explorer in its own sales. The classic case: a depot for heavy electric trucks on a limited grid connection.</span>
+          <span class="de">Phenogy stellt Natrium-Ionen-Speicher her. Der eigene Vertrieb nutzt eine gebrandete Version des DC Explorers. Der typische Fall: ein Depot für schwere <span class="nobr">E-Lkw</span> an einem begrenzten Netzanschluss.</span>
+          <span class="en">Phenogy makes sodium-ion storage systems. Its sales team uses a branded version of the DC Explorer. The typical case: a depot for heavy electric trucks on a limited grid connection.</span>
         </p>
       </div>
       <div class="ref-card">
@@ -559,8 +462,8 @@
         <span class="ref-tag"><span class="de">Projekt in Umsetzung</span><span class="en">Project under way</span></span>
         <h3><a href="https://hartig-germany.com/" target="_blank" rel="noopener">Hartig GmbH &amp; Co KG</a></h3>
         <p>
-          <span class="de">Messgeräte-Hersteller, Aschaffenburg. Kodnyx hat das DC-Konzept für die bestehende Fertigung erarbeitet: eine DC-Insel mit den vorhandenen CNC-Maschinen, direkte PV-Kopplung und DC-seitiger Speicher, ohne Maschinenumbau.</span>
-          <span class="en">Precision instruments manufacturer, Aschaffenburg. Kodnyx developed the DC concept for the existing production: a DC island using the machines already in place, direct PV coupling and DC-side storage, no machine replacement.</span>
+          <span class="de">Messgeräte-Hersteller, Aschaffenburg. Kodnyx hat das DC-Konzept für die Fertigung erarbeitet: eine DC-Insel mit PV und Speicher, ohne Umbau der Maschinen.</span>
+          <span class="en">Precision instruments manufacturer, Aschaffenburg. Kodnyx developed the DC concept for the production: a DC island with PV and storage, without modifying the machines.</span>
         </p>
       </div>
     </div>
@@ -572,7 +475,7 @@
   </div>
 </section>
 
-<section id="wall">
+<section id="wall" class="mist">
   <div class="wrap">
     <h2><span class="de">Partner</span><span class="en">Partners</span></h2>
     <div class="wall">
@@ -585,13 +488,13 @@
   </div>
 </section>
 
-<section id="about" class="mist">
+<section id="about">
   <div class="wrap">
     <div class="sect-kicker"><span class="de">Über uns</span><span class="en">About</span></div>
     <h2><span class="de">Wer dahinter steht</span><span class="en">Who is behind it</span></h2>
     <p class="lead">
-      <span class="de">Kodnyx baut Software für effiziente Elektrifizierung. Die Vision dahinter: Jeder Standort bekommt die Architektur, die zu ihm passt.</span>
-      <span class="en">Kodnyx builds software for efficient electrification. The vision behind it: every site gets the architecture that fits it.</span>
+      <span class="de">Kodnyx baut Software für effiziente Elektrifizierung. Unsere Vision: Jeder Standort bekommt die Architektur, die zu ihm passt.</span>
+      <span class="en">Kodnyx builds software for efficient electrification. Our vision: every site gets the architecture that fits it.</span>
     </p>
     <div class="team-names">
       <div><span class="nm">Duygu Cagman</span> · <span class="rl"><span class="de">Kunden und Partner</span><span class="en">Customers and partners</span></span></div>
@@ -638,6 +541,22 @@
       document.documentElement.setAttribute('lang', en ? 'en' : 'de');
     });
     document.documentElement.setAttribute('lang', 'de');
+
+    var demoBtn = document.querySelector('.demo-pause');
+    if (demoBtn) {
+      var demoImgs = document.querySelectorAll('.demo-img');
+      var setPaused = function (paused) {
+        demoImgs.forEach(function (img) {
+          if (!img.dataset.anim) img.dataset.anim = img.getAttribute('src');
+          img.src = paused ? img.dataset.poster : img.dataset.anim;
+        });
+        demoBtn.setAttribute('data-paused', paused ? 'true' : 'false');
+      };
+      demoBtn.addEventListener('click', function () {
+        setPaused(demoBtn.getAttribute('data-paused') !== 'true');
+      });
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce), (max-width: 600px)').matches) setPaused(true);
+    }
     document.querySelectorAll('a.mail-link').forEach(function (a) {
       var addr = a.getAttribute('data-u') + '@' + a.getAttribute('data-d');
       var subj = a.getAttribute('data-s');
