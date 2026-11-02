@@ -89,7 +89,10 @@
     max-width: 620px;
   }
   .wp-teaser { margin-top: 20px; color: var(--ink); font-size: 16px; max-width: 620px; }
-  .wp-for { margin-top: 14px; color: var(--ink-mid); font-size: 14.5px; max-width: 620px; }
+  .wp-for {
+    margin-top: 14px; color: var(--teal); font-size: 15px; font-weight: 600; max-width: 620px;
+    padding-left: 12px; border-left: 3px solid var(--teal-light);
+  }
 
   .dl { margin-top: 32px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; }
   .btn-dl {
@@ -155,9 +158,9 @@
     .wp-text .kicker { order: 1; }
     .wp-text h1 { order: 2; }
     .wp-text .wp-sub { order: 3; }
-    .wp-text .dl { order: 4; margin-top: 22px; }
-    .wp-text .wp-teaser { order: 5; margin-top: 28px; }
-    .wp-text .wp-for { order: 6; }
+    .wp-text .wp-for { order: 4; }
+    .wp-text .dl { order: 5; margin-top: 22px; }
+    .wp-text .wp-teaser { order: 6; margin-top: 28px; }
     .author-grid { grid-template-columns: 1fr; }
     .authors { padding: 56px 0 64px; }
   }
@@ -222,14 +225,14 @@
         <div class="kicker">White Paper · November 2026</div>
         <h1>Einspeisen oder verkaufen</h1>
         <p class="wp-sub">8&nbsp;MWp hinter einem 1,4-MW-Netzanschluss: warum die Auswahl der Abnehmer über Erlös, Anschluss und Elektroarchitektur zugleich entscheidet</p>
-        <p class="wp-teaser">Ein Energiepark mit 8&nbsp;MWp Photovoltaik und nur 1,4&nbsp;MW Netzanschluss. Muss man warten oder kleiner bauen? Das White Paper zeigt am Beispiel: Wer den Strom vor Ort verkauft, erlöst rund das Vierfache der Einspeisung (in der Modellrechnung 19 statt 4,5&nbsp;ct/kWh), und das Lastprofil der Abnehmer entscheidet über Anschluss und Elektroarchitektur. Ein gemeinsames Papier von HyperSys und Kodnyx.</p>
         <p class="wp-for">Für Projektentwickler, EPCs, Anbieter von Ladeinfrastruktur und Betreiber von Gewerbe- und Depotflächen.</p>
+        <p class="wp-teaser">Ein Energiepark mit 8&nbsp;MWp Photovoltaik und nur 1,4&nbsp;MW Netzanschluss. Muss man warten oder kleiner bauen? Das White Paper zeigt am Beispiel: Wer den Strom vor Ort verkauft, erlöst rund das Vierfache der Einspeisung (in der Modellrechnung 19 statt 4,5&nbsp;ct/kWh), und das Lastprofil der Abnehmer entscheidet über Anschluss und Elektroarchitektur. Ein gemeinsames Papier von HyperSys und Kodnyx.</p>
         <div class="dl">
           <a class="btn-dl js-pdf" href="https://files.kodnyx.com/whitepaper/einspeisen-oder-verkaufen.pdf">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
             White Paper herunterladen
           </a>
-          <span class="dl-meta">PDF, 12 Seiten, 3,3&nbsp;MB, ohne Anmeldung</span>
+          <span class="dl-meta">PDF, 12 Seiten, 3,3&nbsp;MB, kostenlos, ohne Anmeldung</span>
         </div>
       </div>
       <figure class="wp-cover">
@@ -273,7 +276,7 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
           White Paper herunterladen
         </a>
-        <span class="dl-meta">PDF, 12 Seiten, 3,3&nbsp;MB, ohne Anmeldung</span>
+        <span class="dl-meta">PDF, 12 Seiten, 3,3&nbsp;MB, kostenlos, ohne Anmeldung</span>
       </div>
     </div>
   </section>
