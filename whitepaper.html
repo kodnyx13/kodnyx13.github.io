@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Einspeisen oder verkaufen: White Paper von HyperSys und Kodnyx</title>
+  <meta name="description" content="Ein Energiepark mit 8 MWp Photovoltaik und nur 1,4 MW Netzanschluss. Muss man warten oder kleiner bauen? Ein gemeinsames White Paper von HyperSys und Kodnyx." />
+  <link rel="canonical" href="https://kodnyx.com/whitepaper" />
+
+  <!-- Vorschau beim Teilen (LinkedIn, Mail, Messenger) -->
+  <meta property="og:type" content="article" />
+  <meta property="og:locale" content="de_DE" />
+  <meta property="og:site_name" content="Kodnyx" />
+  <meta property="og:url" content="https://kodnyx.com/whitepaper" />
+  <meta property="og:title" content="Einspeisen oder verkaufen: 8 MWp hinter einem 1,4-MW-Netzanschluss" />
+  <meta property="og:description" content="Muss man warten oder kleiner bauen? Das White Paper zeigt am Beispiel: Wer den Strom vor Ort verkauft, erlöst ein Vielfaches der Einspeisung. Ein gemeinsames Papier von HyperSys und Kodnyx." />
+  <meta property="og:image" content="https://kodnyx.com/assets/whitepaper/og-1200x627.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="627" />
+  <meta property="og:image:alt" content="Luftbild eines Energieparks mit Photovoltaik, Batteriespeichern und Ladepark im Abendlicht. KI-generierte Illustration, kein realer Standort." />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="assets/whitepaper/cover-760.webp" type="image/webp">
+<style>
+  :root {
+    --teal:       #0E4C52;
+    --teal-deep:  #0A3A3F;
+    --teal-light: #5FB7B0;
+    --orange:     #F79646;
+    --paper:      #FFFFFF;
+    --mist:       #F4F6F5;
+    --ink:        #0D1F22;
+    --ink-mid:    #3A5C60;
+    --line:       rgba(14,76,82,.14);
+    --font: 'Plus Jakarta Sans', 'Segoe UI', system-ui, sans-serif;
+    --nav-h: 66px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: var(--font);
+    color: var(--ink);
+    background: var(--paper);
+    font-size: 16.5px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 { line-height: 1.15; text-wrap: balance; margin: 0; }
+  p { margin: 0; }
+  a { color: inherit; }
+  img { max-width: 100%; }
+  .nobr { white-space: nowrap; }
+  .wrap { max-width: 1060px; margin: 0 auto; padding: 0 24px; }
+
+  /* nav */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; background: var(--teal); }
+  .nav-inner {
+    max-width: 1060px; margin: 0 auto; padding: 0 24px;
+    height: var(--nav-h); display: flex; align-items: center; gap: 26px;
+  }
+  .nav-logo img { height: 30px; display: block; }
+  .nav-links { margin-left: auto; }
+  .nav-links a { color: #DCEBE9; text-decoration: none; font-size: 14.5px; font-weight: 500; }
+  .nav-links a:hover { color: #fff; }
+
+  /* hero */
+  .wp-hero {
+    background: var(--mist);
+    padding: calc(var(--nav-h) + 64px) 0 72px;
+  }
+  .wp-grid {
+    display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr);
+    gap: 56px; align-items: center;
+  }
+  .kicker {
+    font-size: 12.5px; font-weight: 700; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--teal-light);
+  }
+  .wp-hero h1 {
+    font-size: clamp(36px, 5.4vw, 56px); font-weight: 800;
+    letter-spacing: -0.02em; color: var(--teal); margin: 12px 0 16px;
+  }
+  .wp-sub {
+    font-size: 19px; font-weight: 600; color: var(--ink); line-height: 1.45;
+    max-width: 620px;
+  }
+  .wp-teaser { margin-top: 22px; color: var(--ink-mid); font-size: 17px; max-width: 620px; }
+
+  .dl { margin-top: 32px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; }
+  .btn-dl {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--teal); color: #fff; text-decoration: none;
+    font-weight: 700; font-size: 16px; padding: 15px 26px; border-radius: 6px;
+  }
+  .btn-dl:hover { filter: brightness(1.15); }
+  .btn-dl svg { width: 18px; height: 18px; flex: none; }
+  .dl-meta { font-size: 14px; color: var(--ink-mid); }
+
+  .wp-cover { margin: 0; }
+  .wp-cover img {
+    display: block; width: 100%; height: auto; aspect-ratio: 760 / 1076;
+    border-radius: 4px; background: #d9d6cc;
+    box-shadow: 0 22px 50px rgba(14,76,82,.18), 0 2px 6px rgba(14,76,82,.08);
+  }
+  .wp-cover figcaption { margin-top: 12px; font-size: 13px; color: var(--ink-mid); }
+
+  /* authors */
+  .authors { padding: 72px 0 80px; }
+  .authors h2 {
+    font-size: clamp(24px, 3.2vw, 30px); font-weight: 800;
+    letter-spacing: -0.015em; color: var(--teal); margin: 10px 0 28px;
+  }
+  .author-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .author {
+    border: 1px solid var(--line); border-radius: 10px; padding: 28px;
+    display: flex; flex-direction: column; gap: 22px;
+  }
+  .author-logo { height: 72px; display: flex; align-items: center; }
+  .author-logo img { height: 44px; width: auto; display: block; }
+  .author-logo img.kx { height: 72px; margin-left: -6px; }
+  .author .nm { font-weight: 700; font-size: 17px; }
+  .author .co { color: var(--ink-mid); font-size: 15px; }
+  .author .co a { color: var(--teal); text-decoration: none; border-bottom: 1px solid var(--teal-light); }
+  .author .co a:hover { color: var(--teal-light); }
+  .authors .dl { margin-top: 40px; }
+
+  footer { background: var(--teal-deep); color: #9FB9B7; padding: 30px 0; font-size: 13.5px; }
+  .foot-inner {
+    max-width: 1060px; margin: 0 auto; padding: 0 24px;
+    display: flex; flex-wrap: wrap; gap: 10px 28px; align-items: center;
+  }
+  footer a { color: #C9DEDC; text-decoration: none; }
+  footer a:hover { color: #fff; }
+  .foot-spacer { flex: 1; }
+
+  :focus-visible { outline: 2px solid var(--teal-light); outline-offset: 2px; }
+
+  @media (max-width: 820px) {
+    .wp-hero { padding: calc(var(--nav-h) + 36px) 0 56px; }
+    .wp-grid { grid-template-columns: 1fr; gap: 40px; }
+    .wp-cover { max-width: 340px; }
+    .wp-sub { font-size: 17.5px; }
+    .author-grid { grid-template-columns: 1fr; }
+    .authors { padding: 56px 0 64px; }
+  }
+  @media (max-width: 420px) {
+    .btn-dl { width: 100%; justify-content: center; }
+  }
+
+  /* cookie banner (identisch zu index.html) */
+  #cookie-banner {
+    display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 300;
+    background: var(--teal-deep); color: #C9DEDC;
+    padding: 14px 24px; border-top: 1px solid rgba(255,255,255,.1);
+  }
+  #cookie-banner.show { display: block; }
+  .cookie-inner {
+    max-width: 1060px; margin: 0 auto;
+    display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+  }
+  .cookie-inner p { font-size: 13px; line-height: 1.5; flex: 1; min-width: 260px; }
+  .cookie-inner a { color: #fff; text-decoration: underline; }
+  .cookie-btns { display: flex; gap: 10px; }
+  .cookie-accept {
+    background: var(--paper); color: var(--teal);
+    border: none; border-radius: 6px; padding: 9px 18px;
+    font: 700 13px var(--font); cursor: pointer;
+  }
+  .cookie-accept:hover { background: #E8F1F0; }
+  .cookie-decline {
+    background: none; color: #C9DEDC;
+    border: 1px solid rgba(255,255,255,.4); border-radius: 6px; padding: 9px 18px;
+    font: 600 13px var(--font); cursor: pointer;
+  }
+  .cookie-decline:hover { color: #fff; border-color: #fff; }
+</style>
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo" aria-label="Kodnyx Startseite">
+      <img src="kodnyx_white_teal.png" alt="Kodnyx" />
+    </a>
+    <div class="nav-links">
+      <a href="/">Zur Website</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <header class="wp-hero">
+    <div class="wrap wp-grid">
+      <div>
+        <div class="kicker">White Paper · November 2026</div>
+        <h1>Einspeisen oder verkaufen</h1>
+        <p class="wp-sub">8&nbsp;MWp hinter einem 1,4-MW-Netzanschluss: warum die Auswahl der Abnehmer über Erlös, Anschluss und Elektroarchitektur zugleich entscheidet</p>
+        <p class="wp-teaser">Ein Energiepark mit 8&nbsp;MWp Photovoltaik und nur 1,4&nbsp;MW Netzanschluss. Muss man warten oder kleiner bauen? Das White Paper zeigt am Beispiel: Wer den Strom vor Ort verkauft, erlöst ein Vielfaches der Einspeisung, und das Lastprofil der Abnehmer entscheidet über Anschluss und Architektur. Ein gemeinsames Papier von HyperSys und Kodnyx.</p>
+        <div class="dl">
+          <a class="btn-dl js-pdf" href="https://files.kodnyx.com/whitepaper/einspeisen-oder-verkaufen.pdf">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            White Paper herunterladen
+          </a>
+          <span class="dl-meta">PDF, 12 Seiten, 3,3&nbsp;MB</span>
+        </div>
+      </div>
+      <figure class="wp-cover">
+        <picture>
+          <source srcset="assets/whitepaper/cover-760.webp" type="image/webp">
+          <img src="assets/whitepaper/cover-760.jpg" width="760" height="1076"
+               alt="Titelseite des White Papers: Luftbild eines Energieparks mit Photovoltaik, Batteriespeichern und Ladepark im Abendlicht." />
+        </picture>
+        <figcaption>Titelbild: KI-generierte Illustration, kein realer Standort.</figcaption>
+      </figure>
+    </div>
+  </header>
+
+  <section class="authors">
+    <div class="wrap">
+      <div class="kicker">Autoren</div>
+      <h2>Ein gemeinsames Papier von HyperSys und Kodnyx</h2>
+      <div class="author-grid">
+        <div class="author">
+          <div class="author-logo"><img src="assets/whitepaper/hypersys.svg" alt="HyperSys" width="191" height="44" /></div>
+          <div>
+            <div class="nm">Dr. Michael Schmitz</div>
+            <div class="co"><a href="https://www.hypersys.de/" target="_blank" rel="noopener">HyperSys GmbH</a></div>
+          </div>
+        </div>
+        <div class="author">
+          <div class="author-logo"><img class="kx" src="assets/whitepaper/kodnyx.svg" alt="Kodnyx" width="133" height="72" /></div>
+          <div>
+            <div class="nm">Dr. Kristoffer Möller</div>
+            <div class="co"><a href="/">Kodnyx</a></div>
+          </div>
+        </div>
+      </div>
+      <div class="dl">
+        <a class="btn-dl js-pdf" href="https://files.kodnyx.com/whitepaper/einspeisen-oder-verkaufen.pdf">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+          White Paper herunterladen
+        </a>
+        <span class="dl-meta">PDF, 12 Seiten, 3,3&nbsp;MB</span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <span>© 2026 Kodnyx</span>
+    <a href="imprint.html">Impressum</a>
+    <a href="datenschutz.html">Datenschutz</a>
+    <span class="foot-spacer"></span>
+    <a href="https://www.linkedin.com/company/kodnyx/" target="_blank" rel="noopener">LinkedIn</a>
+  </div>
+</footer>
+
+<div id="cookie-banner" role="dialog" aria-label="Cookie-Hinweis">
+  <div class="cookie-inner">
+    <p>Wir nutzen Google Analytics, um zu verstehen, wie Besucher diese Seite verwenden. <a href="datenschutz.html">Datenschutz</a></p>
+    <div class="cookie-btns">
+      <button class="cookie-accept" id="cookie-accept" type="button">Einverstanden</button>
+      <button class="cookie-decline" id="cookie-decline" type="button">Ablehnen</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    /* Download-Link: UTM-Parameter der Seite an die PDF-URL haengen, damit das
+       Server-Log auf files.kodnyx.com jeden Download einer Quelle zuordnen kann.
+       via=seite unterscheidet Klicks auf dieser Seite von direkt geteilten PDF-Links. */
+    var KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
+    var STORE = 'wp-utm';
+    var utm = {};
+    try {
+      var qs = new URLSearchParams(location.search);
+      KEYS.forEach(function (k) { if (qs.get(k)) utm[k] = qs.get(k); });
+      if (Object.keys(utm).length) {
+        sessionStorage.setItem(STORE, JSON.stringify(utm));
+      } else {
+        utm = JSON.parse(sessionStorage.getItem(STORE) || '{}') || {};
+      }
+    } catch (e) {}
+    document.querySelectorAll('a.js-pdf').forEach(function (a) {
+      try {
+        var u = new URL(a.getAttribute('href'));
+        Object.keys(utm).forEach(function (k) { u.searchParams.set(k, utm[k]); });
+        u.searchParams.set('via', 'seite');
+        a.href = u.toString();
+      } catch (e) {}
+    });
+
+    var banner = document.getElementById('cookie-banner');
+    function loadGA() {
+      var sc = document.createElement('script');
+      sc.async = true;
+      sc.src = 'https://www.googletagmanager.com/gtag/js?id=G-WJ4861VRQT';
+      document.head.appendChild(sc);
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', 'G-WJ4861VRQT', { anonymize_ip: true });
+    }
+    var consent = null;
+    try { consent = localStorage.getItem('cookie-consent'); } catch (e) {}
+    if (consent === 'accepted') {
+      loadGA();
+    } else if (!consent) {
+      banner.classList.add('show');
+    }
+    function setConsent(value) {
+      try { localStorage.setItem('cookie-consent', value); } catch (e) {}
+      banner.classList.remove('show');
+      if (value === 'accepted') loadGA();
+    }
+    document.getElementById('cookie-accept').addEventListener('click', function () { setConsent('accepted'); });
+    document.getElementById('cookie-decline').addEventListener('click', function () { setConsent('declined'); });
+  })();
+</script>
+</body>
+</html>

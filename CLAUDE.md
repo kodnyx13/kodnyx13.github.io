@@ -42,6 +42,14 @@ Apex-A-Records zeigen auf die GitHub-Pages-IPs (185.199.108–111.153).
 - `index.html` — die Relaunch-Seite (DC Explorer). One-Pager mit Anker-Nav,
   Design-Tokens in `:root`, DE default + EN-Toggle (`.de`/`.en`-Spans,
   Klasse `lang-en` auf `body`), Cookie-Banner mit Opt-in-GA.
+- `whitepaper.html` — Landingpage White Paper „Einspeisen oder verkaufen“
+  (HyperSys + Kodnyx), erreichbar als `kodnyx.com/whitepaper` (ohne Slash,
+  daher keine Weiterleitung, UTM-Parameter bleiben erhalten). Bilder in
+  `assets/whitepaper/`. **Das PDF liegt nicht im Repo**, sondern auf
+  `files.kodnyx.com/whitepaper/einspeisen-oder-verkaufen.pdf` (Hetzner, Caddy,
+  Server-Log zählt jeden Download ohne Cookies). Die Seite hängt die
+  `utm_*`-Parameter ihrer URL plus `via=seite` an den PDF-Link. Kein Verzeichnis
+  `whitepaper/` im Repo anlegen, sonst leitet GitHub Pages auf `/whitepaper/` um.
 - `imprint.html`, `datenschutz.html` — Rechtstexte, eigenes Nav zurück zu `index.html`
 - `assets/` — Bilder der Relaunch-Seite (Partner-Logos, Referenz-Logos, Favicons)
 - `app/` — Demos (`dc_diagnostic_demo.html`, `smartere-demo.html`) plus
