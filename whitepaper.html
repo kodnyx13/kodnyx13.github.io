@@ -13,7 +13,7 @@
   <meta property="og:site_name" content="Kodnyx" />
   <meta property="og:url" content="https://kodnyx.com/whitepaper" />
   <meta property="og:title" content="Einspeisen oder verkaufen: 8 MWp hinter einem 1,4-MW-Netzanschluss" />
-  <meta property="og:description" content="Muss man warten oder kleiner bauen? Das White Paper zeigt am Beispiel: Wer den Strom vor Ort verkauft, erlöst ein Vielfaches der Einspeisung. Ein gemeinsames Papier von HyperSys und Kodnyx." />
+  <meta property="og:description" content="Muss man warten oder kleiner bauen? Das White Paper zeigt am Beispiel: Wer den Strom vor Ort verkauft, erlöst rund das Vierfache der Einspeisung. Ein gemeinsames Papier von HyperSys und Kodnyx." />
   <meta property="og:image" content="https://kodnyx.com/assets/whitepaper/og-1200x627.jpg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="627" />
@@ -81,20 +81,21 @@
     text-transform: uppercase; color: var(--teal-light);
   }
   .wp-hero h1 {
-    font-size: clamp(36px, 5.4vw, 56px); font-weight: 800;
+    font-size: clamp(32px, 4.4vw, 46px); font-weight: 800;
     letter-spacing: -0.02em; color: var(--teal); margin: 12px 0 16px;
   }
   .wp-sub {
-    font-size: 19px; font-weight: 600; color: var(--ink); line-height: 1.45;
+    font-size: 17px; font-weight: 600; color: var(--ink); line-height: 1.5;
     max-width: 620px;
   }
-  .wp-teaser { margin-top: 22px; color: var(--ink-mid); font-size: 17px; max-width: 620px; }
+  .wp-teaser { margin-top: 20px; color: var(--ink); font-size: 16px; max-width: 620px; }
+  .wp-for { margin-top: 14px; color: var(--ink-mid); font-size: 14.5px; max-width: 620px; }
 
   .dl { margin-top: 32px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; }
   .btn-dl {
     display: inline-flex; align-items: center; gap: 10px;
     background: var(--teal); color: #fff; text-decoration: none;
-    font-weight: 700; font-size: 16px; padding: 15px 26px; border-radius: 6px;
+    font-weight: 700; font-size: 15.5px; padding: 14px 24px; border-radius: 6px;
   }
   .btn-dl:hover { filter: brightness(1.15); }
   .btn-dl svg { width: 18px; height: 18px; flex: none; }
@@ -111,7 +112,7 @@
   /* authors */
   .authors { padding: 72px 0 80px; }
   .authors h2 {
-    font-size: clamp(24px, 3.2vw, 30px); font-weight: 800;
+    font-size: clamp(22px, 2.8vw, 26px); font-weight: 800;
     letter-spacing: -0.015em; color: var(--teal); margin: 10px 0 28px;
   }
   .author-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
@@ -120,13 +121,18 @@
     display: flex; flex-direction: column; gap: 22px;
   }
   .author-logo { height: 72px; display: flex; align-items: center; }
-  .author-logo img { height: 44px; width: auto; display: block; }
+  .author-logo img { height: 40px; width: auto; display: block; }
   .author-logo img.kx { height: 72px; margin-left: -6px; }
-  .author .nm { font-weight: 700; font-size: 17px; }
-  .author .co { color: var(--ink-mid); font-size: 15px; }
+  .author .nm { font-weight: 700; font-size: 16px; }
+  .author .co { color: var(--ink-mid); font-size: 14.5px; }
+  .author .about { font-size: 14.5px; color: var(--ink); line-height: 1.6; }
+  .author .mail { margin-top: auto; font-size: 14.5px; }
+  .author .mail a { color: var(--teal); font-weight: 700; text-decoration: none; border-bottom: 2px solid var(--teal-light); padding-bottom: 1px; }
+  .author .mail a:hover { color: var(--teal-light); }
   .author .co a { color: var(--teal); text-decoration: none; border-bottom: 1px solid var(--teal-light); }
   .author .co a:hover { color: var(--teal-light); }
   .authors .dl { margin-top: 40px; }
+  .authors-lead { color: var(--ink-mid); font-size: 15.5px; margin: -14px 0 26px; max-width: 620px; }
 
   footer { background: var(--teal-deep); color: #9FB9B7; padding: 30px 0; font-size: 13.5px; }
   .foot-inner {
@@ -143,7 +149,15 @@
     .wp-hero { padding: calc(var(--nav-h) + 36px) 0 56px; }
     .wp-grid { grid-template-columns: 1fr; gap: 40px; }
     .wp-cover { max-width: 340px; }
-    .wp-sub { font-size: 17.5px; }
+    .wp-sub { font-size: 16px; }
+    /* Handy: Download direkt unter den Untertitel, damit er beim ersten Blick sichtbar ist */
+    .wp-text { display: flex; flex-direction: column; }
+    .wp-text .kicker { order: 1; }
+    .wp-text h1 { order: 2; }
+    .wp-text .wp-sub { order: 3; }
+    .wp-text .dl { order: 4; margin-top: 22px; }
+    .wp-text .wp-teaser { order: 5; margin-top: 28px; }
+    .wp-text .wp-for { order: 6; }
     .author-grid { grid-template-columns: 1fr; }
     .authors { padding: 56px 0 64px; }
   }
@@ -177,6 +191,13 @@
     font: 600 13px var(--font); cursor: pointer;
   }
   .cookie-decline:hover { color: #fff; border-color: #fff; }
+  @media (max-width: 600px) {
+    #cookie-banner { padding: 10px 16px; }
+    .cookie-inner { gap: 8px 12px; }
+    .cookie-inner p { font-size: 12px; min-width: 0; flex-basis: 100%; }
+    .cookie-btns { gap: 8px; }
+    .cookie-accept, .cookie-decline { padding: 7px 14px; font-size: 12.5px; }
+  }
 </style>
   <link rel="icon" type="image/png" href="assets/favicon.png" />
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
@@ -197,17 +218,18 @@
 <main>
   <header class="wp-hero">
     <div class="wrap wp-grid">
-      <div>
+      <div class="wp-text">
         <div class="kicker">White Paper · November 2026</div>
         <h1>Einspeisen oder verkaufen</h1>
         <p class="wp-sub">8&nbsp;MWp hinter einem 1,4-MW-Netzanschluss: warum die Auswahl der Abnehmer über Erlös, Anschluss und Elektroarchitektur zugleich entscheidet</p>
-        <p class="wp-teaser">Ein Energiepark mit 8&nbsp;MWp Photovoltaik und nur 1,4&nbsp;MW Netzanschluss. Muss man warten oder kleiner bauen? Das White Paper zeigt am Beispiel: Wer den Strom vor Ort verkauft, erlöst ein Vielfaches der Einspeisung, und das Lastprofil der Abnehmer entscheidet über Anschluss und Architektur. Ein gemeinsames Papier von HyperSys und Kodnyx.</p>
+        <p class="wp-teaser">Ein Energiepark mit 8&nbsp;MWp Photovoltaik und nur 1,4&nbsp;MW Netzanschluss. Muss man warten oder kleiner bauen? Das White Paper zeigt am Beispiel: Wer den Strom vor Ort verkauft, erlöst rund das Vierfache der Einspeisung (in der Modellrechnung 19 statt 4,5&nbsp;ct/kWh), und das Lastprofil der Abnehmer entscheidet über Anschluss und Elektroarchitektur. Ein gemeinsames Papier von HyperSys und Kodnyx.</p>
+        <p class="wp-for">Für Projektentwickler, EPCs, Anbieter von Ladeinfrastruktur und Betreiber von Gewerbe- und Depotflächen.</p>
         <div class="dl">
           <a class="btn-dl js-pdf" href="https://files.kodnyx.com/whitepaper/einspeisen-oder-verkaufen.pdf">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
             White Paper herunterladen
           </a>
-          <span class="dl-meta">PDF, 12 Seiten, 3,3&nbsp;MB</span>
+          <span class="dl-meta">PDF, 12 Seiten, 3,3&nbsp;MB, ohne Anmeldung</span>
         </div>
       </div>
       <figure class="wp-cover">
@@ -225,20 +247,25 @@
     <div class="wrap">
       <div class="kicker">Autoren</div>
       <h2>Ein gemeinsames Papier von HyperSys und Kodnyx</h2>
+      <p class="authors-lead">Fragen zum Papier oder zu Ihrem Standort? Schreiben Sie direkt an einen der beiden Autoren.</p>
       <div class="author-grid">
         <div class="author">
-          <div class="author-logo"><img src="assets/whitepaper/hypersys.svg" alt="HyperSys" width="191" height="44" /></div>
+          <div class="author-logo"><img src="assets/whitepaper/hypersys.svg" alt="HyperSys" width="174" height="40" /></div>
           <div>
             <div class="nm">Dr. Michael Schmitz</div>
             <div class="co"><a href="https://www.hypersys.de/" target="_blank" rel="noopener">HyperSys GmbH</a></div>
           </div>
+          <p class="about">HyperSys GmbH verfügt über umfassende Kompetenz in den Bereichen Energieversorgungssysteme, Energiewandlung, Energiespeicher, Leistungselektronik und Systemintegration. Das Unternehmen entwickelt und realisiert innovative Lösungen für anspruchsvolle Anwendungen der elektrischen Energieversorgung.</p>
+          <div class="mail"><a class="mail-link" href="https://www.hypersys.de/" data-u="michael.schmitz" data-d="hypersys.de" data-s="White Paper Einspeisen oder verkaufen">E-Mail an Michael Schmitz</a></div>
         </div>
         <div class="author">
           <div class="author-logo"><img class="kx" src="assets/whitepaper/kodnyx.svg" alt="Kodnyx" width="133" height="72" /></div>
           <div>
             <div class="nm">Dr. Kristoffer Möller</div>
-            <div class="co"><a href="/">Kodnyx</a></div>
+            <div class="co"><a href="/">Kodnyx UG (haftungsbeschränkt)</a></div>
           </div>
+          <p class="about">Kodnyx entwickelt digitale Werkzeuge, mit denen sich Energieprojekte früh bewerten lassen: Netzanschluss, Photovoltaik, Speicher und Ladeinfrastruktur, in Wechselstrom-, Gleichstrom- oder Hybridarchitektur. Ziel ist es, Entscheidern in Industrie, Logistik und Mittelstand bereits zu Beginn eines Vorhabens eine fundierte Grundlage zu geben.</p>
+          <div class="mail"><a class="mail-link" href="/" data-u="kristoffer" data-d="kodnyx.com" data-s="White Paper Einspeisen oder verkaufen">E-Mail an Kristoffer Möller</a></div>
         </div>
       </div>
       <div class="dl">
@@ -246,7 +273,7 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
           White Paper herunterladen
         </a>
-        <span class="dl-meta">PDF, 12 Seiten, 3,3&nbsp;MB</span>
+        <span class="dl-meta">PDF, 12 Seiten, 3,3&nbsp;MB, ohne Anmeldung</span>
       </div>
     </div>
   </section>
@@ -296,6 +323,13 @@
         u.searchParams.set('via', 'seite');
         a.href = u.toString();
       } catch (e) {}
+    });
+
+    document.querySelectorAll('a.mail-link').forEach(function (a) {
+      var addr = a.getAttribute('data-u') + '@' + a.getAttribute('data-d');
+      var subj = a.getAttribute('data-s');
+      a.href = 'mailto:' + addr + (subj ? '?subject=' + encodeURIComponent(subj) : '');
+      a.removeAttribute('target');
     });
 
     var banner = document.getElementById('cookie-banner');
