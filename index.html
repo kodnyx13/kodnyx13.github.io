@@ -94,8 +94,13 @@
   }
   .btn-ghost:hover { border-color: #fff; }
   .nav-cta { padding: 9px 16px; font-size: 14px; }
+  .nav-links a { white-space: nowrap; }
   @media (max-width: 860px) {
     .nav-links a.anchor { display: none; }
+  }
+  @media (max-width: 400px) {
+    .nav-inner { gap: 14px; padding: 0 16px; }
+    .nav-links { gap: 16px; }
   }
 
   /* ── hero ─────────────────────────────────────── */
@@ -233,6 +238,19 @@
   }
   .quote-src { margin-top: 12px; font-size: 13.5px; color: var(--ink-mid); font-weight: 400; }
 
+  /* White Paper teaser */
+  section.wp-band { background: var(--teal); color: #fff; padding: 64px 0; }
+  .wp-band-grid { display: grid; grid-template-columns: 170px 1fr; gap: 44px; align-items: center; }
+  @media (max-width: 640px) { .wp-band-grid { grid-template-columns: 1fr; gap: 26px; } }
+  .wp-band-cover { display: block; width: 170px; }
+  @media (max-width: 640px) { .wp-band-cover { width: 130px; } }
+  .wp-band-cover img { display: block; width: 100%; height: auto; border-radius: 4px; box-shadow: 0 14px 34px rgba(0,0,0,.28); }
+  .wp-band .sect-kicker { color: #8ACDC7; }
+  .wp-band h2 { color: #fff; margin: 10px 0 12px; }
+  .wp-band .lead { color: #C9DEDC; }
+  .wp-band-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; margin-top: 26px; }
+  .wp-band-meta { font-size: 13px; color: #9FB9B7; }
+
   /* logo wall */
   .wall { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 36px; }
   .wall { gap: 40px; align-items: center; }
@@ -323,6 +341,7 @@
       <a class="anchor" href="#how"><span class="de">So funktioniert's</span><span class="en">How it works</span></a>
       <a class="anchor" href="#refs"><span class="de">Referenzen</span><span class="en">References</span></a>
       <a class="anchor" href="#about"><span class="de">Über uns</span><span class="en">About</span></a>
+      <a href="/whitepaper?via=start"><span class="de">White Paper</span><span class="en">White paper</span></a>
       <a class="mail-link" href="#" data-u="kristoffer" data-d="kodnyx.com" data-s="Kontakt über kodnyx.com"><span class="de">Kontakt</span><span class="en">Contact</span></a>
       <button class="lang-btn" id="langBtn" type="button" aria-label="Sprache wechseln">EN</button>
     </div>
@@ -481,6 +500,29 @@
       <span class="en">"When I first heard about switching to DC, I doubted whether our machines would qualify. Kodnyx not only showed how our plant could be retrofitted but also how to harness our rooftop PV directly."</span>
       <div class="quote-src">Stephan-Leander Klein · <span class="de">Geschäftsführer, Hartig GmbH &amp; Co KG</span><span class="en">Managing Director, Hartig GmbH &amp; Co KG</span></div>
     </blockquote>
+  </div>
+</section>
+
+<section id="whitepaper" class="wp-band">
+  <div class="wrap wp-band-grid">
+    <a class="wp-band-cover" href="/whitepaper?via=start" tabindex="-1" aria-hidden="true">
+      <picture>
+        <source srcset="assets/whitepaper/cover-760.webp" type="image/webp">
+        <img src="assets/whitepaper/cover-760.jpg" width="760" height="1076" alt="" loading="lazy" />
+      </picture>
+    </a>
+    <div>
+      <div class="sect-kicker"><span class="de">White Paper · November 2026</span><span class="en">White paper · November 2026 · in German</span></div>
+      <h2 lang="de">Einspeisen oder verkaufen</h2>
+      <p class="lead">
+        <span class="de">8&nbsp;MWp hinter einem 1,4-MW-Netzanschluss: warum die Auswahl der Abnehmer über Erlös, Anschluss und Elektroarchitektur zugleich entscheidet. Ein gemeinsames Papier von HyperSys und Kodnyx.</span>
+        <span class="en">8&nbsp;MWp behind a 1.4&nbsp;MW grid connection: why the choice of on-site buyers decides revenue, connection and electrical architecture at once. A joint paper by HyperSys and Kodnyx.</span>
+      </p>
+      <div class="wp-band-cta">
+        <a class="btn btn-light" href="/whitepaper?via=start"><span class="de">Zum White Paper</span><span class="en">Read the white paper (German)</span></a>
+        <span class="wp-band-meta"><span class="de">PDF, 12 Seiten, kostenlos, ohne Anmeldung</span><span class="en">PDF, 12 pages, free, no sign-up</span></span>
+      </div>
+    </div>
   </div>
 </section>
 

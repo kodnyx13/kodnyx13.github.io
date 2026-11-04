@@ -310,12 +310,18 @@
   (function () {
     /* Download-Link: UTM-Parameter der Seite an die PDF-URL haengen, damit das
        Server-Log auf files.kodnyx.com jeden Download einer Quelle zuordnen kann.
-       via=seite unterscheidet Klicks auf dieser Seite von direkt geteilten PDF-Links. */
+       via=seite unterscheidet Klicks auf dieser Seite von direkt geteilten PDF-Links,
+       via=start markiert Besucher, die ueber den Link auf der Startseite kamen
+       (die Startseite haengt bewusst keine utm_* an, sonst ginge die Quelle in GA verloren).
+       via wird nicht gespeichert, die UTMs schon: wer ueber einen Outreach-Link kam und
+       ueber die Startseite zurueckkehrt, zaehlt mit den Outreach-UTMs plus via=start. */
     var KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
     var STORE = 'wp-utm';
     var utm = {};
+    var via = 'seite';
     try {
       var qs = new URLSearchParams(location.search);
+      if (qs.get('via') === 'start') via = 'start';
       KEYS.forEach(function (k) { if (qs.get(k)) utm[k] = qs.get(k); });
       if (Object.keys(utm).length) {
         sessionStorage.setItem(STORE, JSON.stringify(utm));
@@ -327,7 +333,7 @@
       try {
         var u = new URL(a.getAttribute('href'));
         Object.keys(utm).forEach(function (k) { u.searchParams.set(k, utm[k]); });
-        u.searchParams.set('via', 'seite');
+        u.searchParams.set('via', via);
         a.href = u.toString();
       } catch (e) {}
     });
