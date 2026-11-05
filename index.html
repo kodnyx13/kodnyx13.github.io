@@ -4,7 +4,80 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kodnyx: Elektrifizierung, die sich rechnet</title>
-  <meta name="description" content="Der DC Explorer rechnet Standorte live im Gespräch durch. Vom Netzanschluss bis zur Stromverteilung: AC oder DC?" />
+  <meta name="description" content="Kodnyx macht Software für den Vertrieb von Energieprojekten. Wer Speicher, Ladeinfrastruktur oder E-Lkw verkauft, beantwortet damit Kundenfragen im Gespräch." />
+  <link rel="canonical" href="https://kodnyx.com/" />
+
+  <!-- Vorschau beim Teilen (LinkedIn, Mail, Messenger) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="de_DE" />
+  <meta property="og:site_name" content="Kodnyx" />
+  <meta property="og:url" content="https://kodnyx.com/" />
+  <meta property="og:title" content="Kodnyx: Elektrifizierung, die sich rechnet" />
+  <meta property="og:description" content="Kodnyx macht Software für den Vertrieb von Energieprojekten. Wer Speicher, Ladeinfrastruktur oder E-Lkw verkauft, beantwortet damit Kundenfragen im Gespräch." />
+  <meta property="og:image" content="https://kodnyx.com/assets/og-start-1200x627.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="627" />
+  <meta property="og:image:alt" content="Nachgestelltes Verkaufsgespräch mit dem DC Explorer: Der Fuhrparkleiter fragt, ob 100 kW Netzanschluss reichen, der Vertrieb antwortet: Mit 1.200 kWh Speicher geht das. Daneben das Depot mit vier E-Lkw, PV und Speicher." />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Strukturierte Daten (schema.org): Firma, Gründer, Website, DC Explorer. @id von Firma und Person wie auf /whitepaper -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://kodnyx.com/#organization",
+        "name": "Kodnyx",
+        "legalName": "Kodnyx UG (haftungsbeschränkt)",
+        "url": "https://kodnyx.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://kodnyx.com/assets/apple-touch-icon.png"
+        },
+        "description": "Kodnyx macht Software für den Vertrieb von Energieprojekten. Wer Speicher, Ladeinfrastruktur oder E-Lkw verkauft, beantwortet damit Kundenfragen im Gespräch.",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Tunnelstr. 45",
+          "postalCode": "10245",
+          "addressLocality": "Berlin",
+          "addressCountry": "DE"
+        },
+        "founder": { "@id": "https://kodnyx.com/#kristoffer-moeller" },
+        "sameAs": ["https://www.linkedin.com/company/kodnyx/"]
+      },
+      {
+        "@type": "Person",
+        "@id": "https://kodnyx.com/#kristoffer-moeller",
+        "name": "Kristoffer Möller",
+        "honorificPrefix": "Dr.",
+        "givenName": "Kristoffer",
+        "familyName": "Möller",
+        "jobTitle": "Co-Founder",
+        "worksFor": { "@id": "https://kodnyx.com/#organization" },
+        "url": "https://www.linkedin.com/in/kristoffer-moeller/",
+        "sameAs": ["https://www.linkedin.com/in/kristoffer-moeller/"]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://kodnyx.com/#website",
+        "name": "Kodnyx",
+        "url": "https://kodnyx.com/",
+        "inLanguage": "de-DE",
+        "publisher": { "@id": "https://kodnyx.com/#organization" }
+      },
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://kodnyx.com/#dc-explorer",
+        "name": "DC Explorer",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web",
+        "description": "Reicht der Netzanschluss für neue E-Lkw, oder braucht es einen Speicher? Der DC Explorer rechnet das live im Gespräch aus.",
+        "publisher": { "@id": "https://kodnyx.com/#organization" }
+      }
+    ]
+  }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
