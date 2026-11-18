@@ -9,13 +9,21 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WJ4861VRQT"></script>
+  <!-- Google Analytics: lädt nur nach Einwilligung im Cookie-Banner der Startseite (localStorage 'cookie-consent') -->
   <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-WJ4861VRQT');
+    (function () {
+      var consent = null;
+      try { consent = localStorage.getItem('cookie-consent'); } catch (e) {}
+      if (consent !== 'accepted') return;
+      var sc = document.createElement('script');
+      sc.async = true;
+      sc.src = 'https://www.googletagmanager.com/gtag/js?id=G-WJ4861VRQT';
+      document.head.appendChild(sc);
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', 'G-WJ4861VRQT', { anonymize_ip: true });
+    })();
   </script>
 
   <style>
@@ -274,3 +282,8 @@
   <footer>
     <p class="footer-copy">
       © 2026 Kodnyx UG · Berlin
+    </p>
+  </footer>
+
+</body>
+</html>

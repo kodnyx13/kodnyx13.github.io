@@ -9,13 +9,21 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WJ4861VRQT"></script>
+  <!-- Google Analytics: lädt nur nach Einwilligung im Cookie-Banner der Startseite (localStorage 'cookie-consent') -->
   <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-WJ4861VRQT', { 'anonymize_ip': true });
+    (function () {
+      var consent = null;
+      try { consent = localStorage.getItem('cookie-consent'); } catch (e) {}
+      if (consent !== 'accepted') return;
+      var sc = document.createElement('script');
+      sc.async = true;
+      sc.src = 'https://www.googletagmanager.com/gtag/js?id=G-WJ4861VRQT';
+      document.head.appendChild(sc);
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', 'G-WJ4861VRQT', { anonymize_ip: true });
+    })();
   </script>
 
   <style>
@@ -179,7 +187,7 @@
       position: relative;
     }
     .ds-section ul li::before {
-      content: '–';
+      content: '•';
       position: absolute;
       left: 0;
       color: var(--teal-light);
@@ -254,8 +262,8 @@
         <li><a href="#grundsaetze">Grundsätze der Datenverarbeitung</a></li>
         <li><a href="#website">Aufruf der Website</a></li>
         <li><a href="#analytics">Google Analytics</a></li>
-        <li><a href="#youtube">YouTube (Videoeinbettung)</a></li>
         <li><a href="#kontakt">Kontaktaufnahme per E-Mail</a></li>
+        <li><a href="#newsletter">Newsletter</a></li>
         <li><a href="#rechte">Ihre Rechte</a></li>
         <li><a href="#speicherdauer">Speicherdauer</a></li>
         <li><a href="#aenderungen">Änderungen</a></li>
@@ -269,7 +277,7 @@
       <p>
         Kodnyx UG (haftungsbeschränkt)<br>
         Tunnelstr. 45, 10245 Berlin<br>
-        E-Mail: <a href="/cdn-cgi/l/email-protection#6b0f1e120c1e2b00040f05121345080406"><span class="__cf_email__" data-cfemail="781c0d011f0d3813171c160100561b1715">[email&#160;protected]</span></a>
+        E-Mail: <a class="mail-link" href="#" data-u="duygu" data-d="kodnyx.com">E-Mail schreiben</a>
       </p>
     </div>
 
@@ -311,16 +319,17 @@
     </div>
 
     <!-- 5 -->
-    <div class="ds-section" id="youtube">
-      <h2>5. YouTube (Videoeinbettung)</h2>
-      <p>Auf dieser Website sind Videos der YouTube LLC, 901 Cherry Ave., San Bruno, CA 94066, USA, eingebettet. Beim Abspielen eines Videos wird eine Verbindung zu den Servern von YouTube hergestellt. Dabei kann YouTube Informationen über Ihr Nutzerverhalten erfassen.</p>
-      <p>Wenn Sie in Ihrem YouTube-Konto eingeloggt sind, ermöglichen Sie YouTube, Ihr Surfverhalten direkt Ihrem persönlichen Profil zuzuordnen. Die Einbettung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an ansprechender Darstellung unserer Inhalte). Weitere Informationen: <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">policies.google.com/privacy</a>.</p>
+    <div class="ds-section" id="kontakt">
+      <h2>5. Kontaktaufnahme per E-Mail</h2>
+      <p>Wenn Sie uns per E-Mail kontaktieren, werden die von Ihnen übermittelten Daten (Ihre E-Mail-Adresse sowie Inhalt und Metadaten der Nachricht) zum Zweck der Bearbeitung Ihrer Anfrage gespeichert. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b bzw. lit. f DSGVO. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.</p>
     </div>
 
     <!-- 6 -->
-    <div class="ds-section" id="kontakt">
-      <h2>6. Kontaktaufnahme per E-Mail</h2>
-      <p>Wenn Sie uns per E-Mail kontaktieren, werden die von Ihnen übermittelten Daten (Ihre E-Mail-Adresse sowie Inhalt und Metadaten der Nachricht) zum Zweck der Bearbeitung Ihrer Anfrage gespeichert. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b bzw. lit. f DSGVO. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.</p>
+    <div class="ds-section" id="newsletter">
+      <h2>6. Newsletter</h2>
+      <p>Auf unserer Startseite können Sie unseren Newsletter abonnieren. Er erscheint etwa alle sechs Wochen. Dafür benötigen wir Ihre E-Mail-Adresse und Ihre Einwilligung, die Sie mit dem Haken im Formular erteilen. Rechtsgrundlage ist Art. 6 Abs. 1 lit. a DSGVO. Nach dem Absenden erhalten Sie eine E-Mail mit einem Bestätigungslink. Erst wenn Sie diesen anklicken, nehmen wir Sie in den Verteiler auf (Double-Opt-in). So stellen wir sicher, dass die Anmeldung von Ihnen stammt.</p>
+      <p>Das Anmeldeformular ist ein eigenes Formular auf unserer Seite. Erst wenn Sie auf „Anmelden“ klicken, werden Ihre E-Mail-Adresse, der Text Ihrer Einwilligung sowie Adresse und Name der Seite an HubSpot übertragen. Technisch bedingt erhält HubSpot dabei auch Ihre IP-Adresse und Angaben zu Ihrem Browser. HubSpot speichert den Zeitpunkt der Anmeldung. Vorher werden keine Inhalte von HubSpot geladen und keine Cookies von HubSpot gesetzt. HubSpot ist das System, mit dem wir Kontakte verwalten und den Newsletter versenden. Anbieter ist die HubSpot Ireland Limited, 1 Sir John Rogerson's Quay, Dublin 2, Irland, die in unserem Auftrag tätig ist (Auftragsverarbeitung nach Art. 28 DSGVO). Unsere Daten liegen im Rechenzentrum von HubSpot in der EU. Ein Zugriff durch die HubSpot, Inc. in den USA ist nicht auszuschließen; er erfolgt auf Grundlage des EU-US Data Privacy Framework sowie von Standardvertragsklauseln (Art. 45, Art. 46 Abs. 2 lit. c DSGVO).</p>
+      <p>Sie können den Newsletter jederzeit abbestellen, über den Link in jeder Ausgabe oder mit einer kurzen Nachricht an uns. Damit widerrufen Sie Ihre Einwilligung mit Wirkung für die Zukunft. Ihre E-Mail-Adresse löschen wir dann aus dem Verteiler. Den Nachweis Ihrer Einwilligung bewahren wir so lange auf, wie wir ihn zur Abwehr von Ansprüchen benötigen.</p>
     </div>
 
     <!-- 7 -->
@@ -336,7 +345,7 @@
         <li>Recht auf Widerspruch gegen die Verarbeitung (Art. 21 DSGVO)</li>
         <li>Recht auf Widerruf einer erteilten Einwilligung (Art. 7 Abs. 3 DSGVO)</li>
       </ul>
-      <p>Zur Ausübung Ihrer Rechte wenden Sie sich bitte an: <a href="/cdn-cgi/l/email-protection#bedacbc7d9cbfed5d1dad0c7c690ddd1d3"><span class="__cf_email__" data-cfemail="f793828e9082b79c9893998e8fd994989a">[email&#160;protected]</span></a></p>
+      <p>Zur Ausübung Ihrer Rechte wenden Sie sich bitte an: <a class="mail-link" href="#" data-u="duygu" data-d="kodnyx.com">E-Mail schreiben</a></p>
       <p>Unbeschadet anderweitiger verwaltungsrechtlicher oder gerichtlicher Rechtsbehelfe steht Ihnen das Recht auf Beschwerde bei einer Datenschutz-Aufsichtsbehörde zu. Die zuständige Aufsichtsbehörde für Berlin ist die Berliner Beauftragte für Datenschutz und Informationsfreiheit: <a href="https://www.datenschutz-berlin.de" target="_blank" rel="noopener noreferrer">datenschutz-berlin.de</a>.</p>
     </div>
 
@@ -356,4 +365,24 @@
 
     <div class="ds-section">
       <h2>Weiterführend</h2>
-      <p><a href="imprint.ht
+      <p><a href="imprint.html">Impressum →</a></p>
+    </div>
+
+  </div>
+
+  <footer>
+    <p class="footer-copy">
+      © 2026 Kodnyx UG · Berlin
+    </p>
+  </footer>
+
+<script>
+  // E-Mail-Adressen nie im Klartext im Quelltext: Link wird hier zusammengesetzt
+  document.querySelectorAll('a.mail-link').forEach(function (a) {
+    var addr = a.getAttribute('data-u') + '@' + a.getAttribute('data-d');
+    a.href = 'mailto:' + addr;
+    a.textContent = addr;
+  });
+</script>
+</body>
+</html>
